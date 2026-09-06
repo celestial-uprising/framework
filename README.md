@@ -2,11 +2,11 @@
 
 ## celestial-framework
 
-CFW (currently the 'main' of this repo) features a ublue-hci base, with several small reductions. Then, built into the immutable image itself: minimal, preconfigured niri desktop with a clean and useful defaults, matching waybar fuzzel, and opinionated-yet-minimal kitty. Modern tools (eza, ripgrep, btop, etc) are included out-of-the-box, as well as rustup for maintaining the latest toolchain, and neovim (as well as its dependencies, and those of lazyvim, and even vim itself).
+CFW features a ublue-hci base, with several small reductions. Then, built into the immutable image itself: minimal, preconfigured niri desktop with a clean and useful defaults, matching waybar fuzzel, and opinionated-yet-minimal kitty. Modern tools (eza, ripgrep, btop, etc) are included out-of-the-box, as well as rustup for maintaining the latest toolchain, and neovim (as well as its dependencies, and those of lazyvim, and even vim itself).
 
 # CF is proudly built for everyone, by lesbidoodles
 
-## Roadmap for Celestia-Framework
+## Roadmap for Celestial-Framework
 
 **CF** will have three planned 'sub-versions' (as well as nvidia variants for each)
 
