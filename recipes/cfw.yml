@@ -54,6 +54,7 @@ modules:
         - traceroute
         - whois
         - swaybg
+        - flatpak
     remove:
       packages:
         - nano
