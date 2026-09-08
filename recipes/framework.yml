@@ -85,4 +85,10 @@ modules:
       - source: system
         destination: /
 
+  - type: fonts
+    fonts:
+      url-fonts:
+        - name: VictorMonoNerdFont
+          url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.5.1/VictorMono.zip
+
   - type: signing
