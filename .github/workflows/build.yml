@@ -29,9 +29,12 @@ jobs:
           - framework.yml
           - framework-headless.yml
           - framework-mini.yml
+          - framework-nvidia.yml
+          - framework-headless-nvidia.yml
+          - framework-mini.yml
     steps:
       # the build is fully handled by the reusable github action
-      - name: Build Custom Image
+      - name: Build Custom Images
         uses: blue-build/github-action@v1.11
         with:
           recipe: ${{ matrix.recipe }}
