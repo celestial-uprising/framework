@@ -1,0 +1,93 @@
+---
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
+name: framework-nv-mini
+description: for humans- by lesbidoodles ; with hope for a better future
+base-image: ghcr.io/ublue-os/ucore
+image-version: testing-nvidia
+# module configuration, executed in order
+modules:
+  - type: files
+    files:
+      - source: system
+        destination: /
+
+  - type: dnf
+    repos:
+      copr:
+        - atim/starship
+        - yalter/niri
+    install:
+      packages:
+        - sddm-conf
+        - sddm-wayland-generic
+        - waybar
+        - fuzzel
+        - kitty
+        - niri
+        - vim
+        - fzf
+        - ripgrep
+        - zoxide
+        - fd-find
+        - bat
+        - eza
+        - btop
+        - nvtop
+        - radeontop
+        - starship
+        - tree-sitter-cli
+        - rocm-smi-devel
+        - neovim
+        - python3-neovim
+        - wl-clipboard
+        - luarocks
+        - git
+        - wget
+        - s-tui
+        - libdrm-devel
+        - gdu
+        - ncdu
+        - tree
+        - diskus
+        - nmap
+        - traceroute
+        - whois
+        - swaybg
+        - flatpak
+        - loupe
+    remove:
+      packages:
+        - nano
+        - alacritty
+        - nano-default-editor
+        - nfs-client-utils
+        - nfs-common-utils
+        - azure-vm-utils
+        - cockpit
+        - cockpit-bridge
+        - cockpit-ws
+        - weston-terminal
+
+  - type: default-flatpaks
+    configurations:
+      - notify: true
+        scope: system
+        # If no repo information is specified, Flathub will be used by default
+        install: # system flatpaks
+          - net.codelogistics.webapps
+          - net.waterfox.waterfox
+          - org.virt_manager.virt-manager
+      - scope: user # Also add Flathub user repo, but no user packages
+
+  - type: files
+    files:
+      - source: system
+        destination: /
+
+  - type: fonts
+    fonts:
+      url-fonts:
+        - name: VictorMonoNerdFont
+          url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.5.1/VictorMono.zip
+
+  - type: signing
