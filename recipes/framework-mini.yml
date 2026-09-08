@@ -1,8 +1,8 @@
 ---
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
-name: cfw
+name: Celestial Uprising Framework [mini]
 description: for humans- by lesbidoodles ; with hope for a better future
-base-image: ghcr.io/ublue-os/ucore-hci
+base-image: ghcr.io/ublue-os/ucore
 image-version: testing
 # module configuration, executed in order
 modules:
@@ -44,7 +44,6 @@ modules:
         - git
         - wget
         - s-tui
-        - stress-ng
         - libdrm-devel
         - gdu
         - ncdu
@@ -55,6 +54,7 @@ modules:
         - whois
         - swaybg
         - flatpak
+        - loupe
     remove:
       packages:
         - nano
@@ -66,6 +66,7 @@ modules:
         - cockpit
         - cockpit-bridge
         - cockpit-ws
+        - weston-terminal
 
   - type: default-flatpaks
     configurations:
@@ -74,7 +75,6 @@ modules:
         # If no repo information is specified, Flathub will be used by default
         install: # system flatpaks
           - net.codelogistics.webapps
-          - org.gnome.Loupe
           - net.waterfox.waterfox
           - org.virt_manager.virt-manager
       - scope: user # Also add Flathub user repo, but no user packages
