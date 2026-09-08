@@ -2,8 +2,8 @@
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
 name: framework-mini-nvidia
 description: for humans- by lesbidoodles ; with hope for a better future
-base-image: ghcr.io/ublue-os/ucore-nvidia
-image-version: testing
+base-image: ghcr.io/ublue-os/ucore
+image-version: testing-nvidia
 # module configuration, executed in order
 modules:
   - type: files
