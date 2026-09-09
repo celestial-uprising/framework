@@ -6,7 +6,7 @@ base-image: ghcr.io/ublue-os/ucore
 image-version: testing
 stages:
   - name: yazi-builder
-    from: docker.io/library/fedora:latest # Clean image to compile on
+    from: docker.io/library/fedora:latest
     modules:
       - type: script
         snippets:
@@ -28,7 +28,7 @@ stages:
           - |
             dnf install -y git gcc protobuf-compiler
 
-            curl --proto '=https' --tlsv1.2 -sSf https://rustup.rs | sh -s -- -y
+            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
             source "$HOME/.cargo/env"
 
             git clone https://github.com/herdrdev/herdr.git /tmp/herdr
