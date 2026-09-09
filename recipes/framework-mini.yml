@@ -115,6 +115,7 @@ modules:
         - swaybg
         - flatpak
         - loupe
+        - remmina
     remove:
       packages:
         - nano
@@ -131,6 +132,10 @@ modules:
       - notify: true
         scope: system
         install: # system flatpaks
+          - md.obsidian.Obsidian
+          - io.github.olaproeis.Ferrite
+          - com.valvesoftware.SteamLink
+          - de.haeckerfelix.Shortwave
           - net.codelogistics.webapps
           - net.waterfox.waterfox
           - org.virt_manager.virt-manager
@@ -172,10 +177,16 @@ modules:
     snippets:
       - |
         for group in wheel render libvirt docker video; do
-          getent group "$group" >/dev/null || groupadd -r "$group"
+          if ! getent group "$group" >/dev/null; then
+            groupadd -r "$group" || true
+          fi
         done
 
-        useradd -m -G wheel,render,libvirt,docker,video -f -p $(openssl passwd -6 'celestial') shepherd
+        if ! getent passwd shepherd >/dev/null; then
+          useradd -m -G wheel,render,libvirt,docker,video -f -o -p $(openssl passwd -6 'celestial') shepherd || true
+        else
+          usermod -aG wheel,render,libvirt,docker,video shepherd || true
+        fi
 
         mkdir -p /etc/profile.d
         echo 'if [[ $- == *i* ]]; then eval "$(flyline init)"; fi' > /etc/profile.d/flyline.sh
