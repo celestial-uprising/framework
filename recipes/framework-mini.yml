@@ -26,15 +26,12 @@ stages:
       - type: script
         snippets:
           - |
-            # Install build dependencies
             dnf install -y git gcc cargo
 
-            # Clone and build herdr from source
-            git clone https://github.com /tmp/herdr
+            git clone https://github.com/herdrdev/herdr.git /tmp/herdr
             cd /tmp/herdr
             cargo build --release --locked
 
-            # Ensure the binary is placed in a predictable location
             mkdir -p /tmp/bin
             cp target/release/herdr /tmp/bin/
   - name: flyline-builder
@@ -43,15 +40,12 @@ stages:
       - type: script
         snippets:
           - |
-            # Install build dependencies
             dnf install -y git gcc cargo
 
-            # Clone and build flyline from source
-            git clone https://github.com /tmp/flyline
+            git clone https://github.com/HalFrgrd/flyline.git /tmp/flyline
             cd /tmp/flyline
             cargo build --release --locked
 
-            # Stage the final binary
             mkdir -p /tmp/bin
             cp target/release/flyline /tmp/bin/
   - name: uv-builder
@@ -60,14 +54,11 @@ stages:
       - type: script
         snippets:
           - |
-            # Install build dependencies
             dnf install -y gcc cargo
 
-            # Build uv from source using cargo install into a temporary root
             mkdir -p /tmp/bin
             CARGO_HOME=/tmp/cargo cargo install --root /tmp/build --locked uv
 
-            # Move compiled binaries to our staging area
             cp /tmp/build/bin/uv* /tmp/bin/
 modules:
   - type: files
@@ -79,8 +70,10 @@ modules:
       copr:
         - atim/starship
         - yalter/niri
+        - atim/lazygit
     install:
       packages:
+        - lazygit
         - glibc-langpack-en
         - sddm-conf
         - sddm-wayland-generic
