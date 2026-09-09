@@ -15,8 +15,8 @@ dest: /usr/bin/herdr
 
 type: copy
 from: rust-build
-src: /tmp/bin/libflyline.so
-dest: /usr/lib/bash/libflyline.so
+src: /tmp/bin/flyline
+dest: /usr/lib/bash/flyline
 
 type: copy
 from: rust-build

@@ -23,7 +23,7 @@ stages:
             cp target/release/herdr /tmp/bin/
             git clone https://github.com/HalFrgrd/flyline.git /tmp/flyline
             cd /tmp/flyline && cargo build --release --locked
-            cp target/release/libflyline.so /tmp/bin/
+            cp target/release/flyline /tmp/bin/
             CARGO_HOME=/tmp/cargo cargo install --root /tmp/build uv
             cp /tmp/build/bin/uv* /tmp/bin/
 modules:
