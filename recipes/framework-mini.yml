@@ -11,16 +11,11 @@ stages:
       - type: script
         snippets:
           - |
-            dnf install -y git gcc protobuf-compiler
+            dnf install -y git gcc protobuf-compiler zig
 
             curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
             source "$HOME/.cargo/env"
 
-            ZIG_VERSION="0.15.2"
-            curl -sSL https://ziglang.org -o /tmp/zig.tar.xz
-            tar -xf /tmp/zig.tar.xz -C /opt/
-            ln -s /opt/zig-linux-x86_64-$ZIG_VERSION/zig /usr/local/bin/zig
-            
             mkdir -p /tmp/bin
             
             git clone https://github.com/sxyazi/yazi.git /tmp/yazi
