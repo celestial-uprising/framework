@@ -5,12 +5,12 @@ description: for humans- by lesbidoodles ; with hope for a better future
 base-image: ghcr.io/ublue-os/ucore
 image-version: testing
 stages:
-  - from-file: include/rust_build.in
+  - from-file: include/rust_build.yml
 modules:
-  - from-file: include/files.in
-  - from-file: include/copy.in
-  - from-file: include/dnf.in
-  - from-file: include/flatpak.in
-  - from-file: include/scripts.in
+  - from-file: include/files.yml
+  - from-file: include/copy.yml
+  - from-file: include/dnf.yml
+  - from-file: include/flatpak.yml
+  - from-file: include/scripts.yml
 
   - type: signing
