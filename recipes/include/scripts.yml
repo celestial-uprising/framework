@@ -15,8 +15,8 @@ snippets:
     
     mkdir -p /etc/profile.d
     
-    echo 'if [[ $- == *i* ]]; then eval "$(flyline init)"; fi' > /etc/profile.d/flyline.sh
-    
+    echo 'if [[ $- == *i* ]]; then enable -f /usr/lib/bash/libflyline.so flyline; fi' > /etc/profile.d/flyline.sh
+
     cat << 'EOF' > /etc/profile.d/distrobox-aliases.sh
     alias db="distrobox enter"
     alias dbc="distrobox create"

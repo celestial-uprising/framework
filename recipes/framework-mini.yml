@@ -24,7 +24,7 @@ stages:
             
             git clone https://github.com/HalFrgrd/flyline.git /tmp/flyline
             cd /tmp/flyline && cargo build --release --locked
-            cp target/release/flyline /tmp/bin/
+            cp target/release/libflyline.so /tmp/bin/
             
             CARGO_HOME=/tmp/cargo cargo install --root /tmp/build uv
             cp /tmp/build/bin/uv* /tmp/bin/
@@ -43,13 +43,8 @@ modules:
 
   - type: copy
     from: rust-build
-    src: /tmp/bin/herdr
-    dest: /usr/bin/herdr
-
-  - type: copy
-    from: rust-build
-    src: /tmp/bin/flyline
-    dest: /usr/lib/bash/flyline
+    src: /tmp/bin/libflyline.so
+    dest: /usr/lib/bash/libflyline.so
 
   - type: copy
     from: rust-build
