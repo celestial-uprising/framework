@@ -18,6 +18,7 @@ modules:
         - yalter/niri
     install:
       packages:
+        - glibc-langpack-en
         - sddm-conf
         - sddm-wayland-generic
         - waybar
@@ -66,7 +67,6 @@ modules:
         - cockpit
         - cockpit-bridge
         - cockpit-ws
-        - weston-terminal
 
   - type: default-flatpaks
     configurations:

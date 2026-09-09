@@ -17,6 +17,7 @@ modules:
         - atim/starship
     install:
       packages:
+        - glibc-langpack-en
         - vim
         - fzf
         - ripgrep
