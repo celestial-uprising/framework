@@ -11,7 +11,7 @@ image-version: testing
 stages:
 
   - name: yazi-builder
-    base-image: docker.io/library/fedora:latest # Clean image to compile on
+    from: docker.io/library/fedora:latest # Clean image to compile on
     modules:
       - type: script
         snippets:
