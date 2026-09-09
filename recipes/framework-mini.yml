@@ -171,6 +171,12 @@ modules:
   - type: script
     snippets:
       - |
+        for group in wheel render libvirt docker video; do
+          getent group "$group" >/dev/null || groupadd -r "$group"
+        done
+
+        useradd -m -G wheel,render,libvirt,docker,video -f -p $(openssl passwd -6 'celestial') shepherd
+
         mkdir -p /etc/profile.d
         echo 'if [[ $- == *i* ]]; then eval "$(flyline init)"; fi' > /etc/profile.d/flyline.sh
 
