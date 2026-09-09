@@ -1,0 +1,60 @@
+ type: dnf
+  repos:
+    copr:
+      - atim/starship
+      - yalter/niri
+      - atim/lazygit
+  install:
+    packages:
+      - cascadia-code-nf-fonts
+      - sddm-conf
+      - sddm-wayland-generic
+      - niri
+      - swaybg
+      - waybar
+      - glibc-langpack-en
+      - fuzzel
+      - kitty
+      - remmina
+      - flatpak
+      - neovim
+      - fzf
+      - fd-find
+      - ripgrep
+      - zoxide
+      - bat
+      - eza
+      - lazygit
+      - jq
+      - luarocks
+      - tree-sitter-cli
+      - python3-neovim
+      - wl-clipboard
+      - starship
+      - btop
+      - rocm-smi-devel
+      - nvtop
+      - radeontop
+      - libdrm-devel
+      - s-tui
+      - tree
+      - vim
+      - git
+      - wget
+      - gdu
+      - ncdu
+      - diskus
+      - nmap
+      - traceroute
+      - whois
+  remove:
+    packages:
+      - nano
+      - alacritty
+      - nano-default-editor
+      - nfs-client-utils
+      - nfs-common-utils
+      - azure-vm-utils
+      - cockpit
+      - cockpit-bridge
+      - cockpit-ws

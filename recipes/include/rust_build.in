@@ -1,0 +1,21 @@
+name: rust-build
+from: docker.io/library/fedora:latest
+modules:
+  - type: script
+    snippets:
+      - |
+        dnf install -y git gcc protobuf-compiler
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+        source "$HOME/.cargo/env"
+        mkdir -p /tmp/bin
+        git clone https://github.com/sxyazi/yazi.git /tmp/yazi
+        cd /tmp/yazi && cargo build --release --locked
+        cp target/release/ya* /tmp/bin/
+        git clone https://github.com/herdrdev/herdr.git /tmp/herdr
+        cd /tmp/herdr && cargo build --release --locked
+        cp target/release/herdr /tmp/bin/
+        git clone https://github.com/HalFrgrd/flyline.git /tmp/flyline
+        cd /tmp/flyline && cargo build --release --locked
+        cp target/release/libflyline.so /tmp/bin/
+        CARGO_HOME=/tmp/cargo cargo install --root /tmp/build uv
+        cp /tmp/build/bin/uv* /tmp/bin/
