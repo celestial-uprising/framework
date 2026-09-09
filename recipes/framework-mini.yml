@@ -18,7 +18,6 @@ modules:
         - yalter/niri
     install:
       packages:
-        - yazi
         - glibc-langpack-en
         - sddm-conf
         - sddm-wayland-generic

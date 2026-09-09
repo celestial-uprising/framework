@@ -17,7 +17,6 @@ modules:
         - atim/starship
     install:
       packages:
-        - yazi
         - glibc-langpack-en
         - vim
         - fzf
