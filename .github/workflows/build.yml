@@ -11,7 +11,6 @@ on:
   pull_request:
   workflow_dispatch: # allow manually triggering builds
 concurrency:
-  # only run one build at a time
   group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
   cancel-in-progress: true
 jobs:
@@ -26,14 +25,8 @@ jobs:
       fail-fast: false # stop GH from cancelling all matrix builds if one fails
       matrix:
         recipe:
-          - framework.yml
-          - framework-headless.yml
           - framework-mini.yml
-          - framework-nv.yml
-          - framework-nv-headless.yml
-          - framework-nv-mini.yml
     steps:
-      # the build is fully handled by the reusable github action
       - name: Build Custom Images
         uses: blue-build/github-action@v1.12
         with:
