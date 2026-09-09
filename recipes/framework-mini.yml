@@ -56,11 +56,6 @@ modules:
     src: /tmp/bin/uvx
     dest: /usr/bin/uvx
 
-  - type: copy
-    from: rust-build
-    src: /tmp/bin/uvw
-    dest: /usr/bin/uvw
-
   - from-file: include/dnf.yml
   - from-file: include/flatpak.yml
   - from-file: include/scripts.yml
