@@ -31,11 +31,6 @@ modules:
     files:
       - source: system
         destination: /
-  - type: fonts
-    fonts:
-      url-fonts:
-        - name: VictorMonoNerdFont
-          url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.5.1/VictorMono.zip
   - type: copy
     from: rust-builder
     src: /tmp/bin/yazi
@@ -72,6 +67,7 @@ modules:
         - atim/lazygit
     install:
       packages:
+        - cascadia-code-nf-fonts
         - sddm-conf
         - sddm-wayland-generic
         - niri
