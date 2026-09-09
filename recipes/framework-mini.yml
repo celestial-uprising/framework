@@ -1,15 +1,10 @@
 ---
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
-
 name: framework-mini
 description: for humans- by lesbidoodles ; with hope for a better future
-
 base-image: ghcr.io/ublue-os/ucore
 image-version: testing
-
-
 stages:
-
   - name: yazi-builder
     from: docker.io/library/fedora:latest # Clean image to compile on
     modules:
@@ -25,15 +20,60 @@ stages:
             mkdir -p /tmp/bin
             cp target/release/yazi /tmp/bin/
             cp target/release/ya /tmp/bin/
+  - name: herdr-builder
+    from: docker.io/library/fedora:latest
+    modules:
+      - type: script
+        snippets:
+          - |
+            # Install build dependencies
+            dnf install -y git gcc cargo
 
+            # Clone and build herdr from source
+            git clone https://github.com /tmp/herdr
+            cd /tmp/herdr
+            cargo build --release --locked
 
+            # Ensure the binary is placed in a predictable location
+            mkdir -p /tmp/bin
+            cp target/release/herdr /tmp/bin/
+  - name: flyline-builder
+    from: docker.io/library/fedora:latest
+    modules:
+      - type: script
+        snippets:
+          - |
+            # Install build dependencies
+            dnf install -y git gcc cargo
+
+            # Clone and build flyline from source
+            git clone https://github.com /tmp/flyline
+            cd /tmp/flyline
+            cargo build --release --locked
+
+            # Stage the final binary
+            mkdir -p /tmp/bin
+            cp target/release/flyline /tmp/bin/
+  - name: uv-builder
+    from: docker.io/library/fedora:latest
+    modules:
+      - type: script
+        snippets:
+          - |
+            # Install build dependencies
+            dnf install -y gcc cargo
+
+            # Build uv from source using cargo install into a temporary root
+            mkdir -p /tmp/bin
+            CARGO_HOME=/tmp/cargo cargo install --root /tmp/build --locked uv
+
+            # Move compiled binaries to our staging area
+            cp /tmp/build/bin/uv* /tmp/bin/
 modules:
-
   - type: files
     files:
       - source: system
         destination: /
-
   - type: dnf
     repos:
       copr:
@@ -79,7 +119,6 @@ modules:
         - swaybg
         - flatpak
         - loupe
-
     remove:
       packages:
         - nano
@@ -91,7 +130,6 @@ modules:
         - cockpit
         - cockpit-bridge
         - cockpit-ws
-
   - type: default-flatpaks
     configurations:
       - notify: true
@@ -101,22 +139,52 @@ modules:
           - net.waterfox.waterfox
           - org.virt_manager.virt-manager
       - scope: user
-
   - type: fonts
     fonts:
       url-fonts:
         - name: VictorMonoNerdFont
           url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.5.1/VictorMono.zip
-
   - type: copy
     from: yazi-builder
     src: /tmp/bin/yazi
     dest: /usr/bin/yazi
-
   - type: copy
     from: yazi-builder
     src: /tmp/bin/ya
     dest: /usr/bin/ya
+  - type: copy
+    from: herdr-builder
+    src: /tmp/bin/herdr
+    dest: /usr/bin/herdr
+  - type: copy
+    from: flyline-builder
+    src: /tmp/bin/flyline
+    dest: /usr/bin/flyline
+  - type: copy
+    from: uv-builder
+    src: /tmp/bin/uv
+    dest: /usr/bin/uv
+  - type: copy
+    from: uv-builder
+    src: /tmp/bin/uvx
+    dest: /usr/bin/uvx
+  - type: copy
+    from: uv-builder
+    src: /tmp/bin/uvw
+    dest: /usr/bin/uvw
+  - type: script
+    snippets:
+      - |
+        mkdir -p /etc/profile.d
+        echo 'if [[ $- == *i* ]]; then eval "$(flyline init)"; fi' > /etc/profile.d/flyline.sh
 
+        cat << 'EOF' > /etc/profile.d/distrobox-aliases.sh
+        alias db="distrobox enter"
+        alias dbc="distrobox create"
+        EOF
+
+        echo 'export STARSHIP_CONFIG=/etc/starship.toml' > /etc/profile.d/starship-env.sh
+        echo 'eval "$(starship init bash)"' > /etc/profile.d/starship.sh
+        starship preset jetpack -o /etc/starship.toml
 
   - type: signing
