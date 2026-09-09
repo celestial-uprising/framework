@@ -26,7 +26,10 @@ stages:
       - type: script
         snippets:
           - |
-            dnf install -y git gcc cargo
+            dnf install -y git gcc protobuf-compiler
+
+            curl --proto '=https' --tlsv1.2 -sSf https://rustup.rs | sh -s -- -y
+            source "$HOME/.cargo/env"
 
             git clone https://github.com/herdrdev/herdr.git /tmp/herdr
             cd /tmp/herdr
