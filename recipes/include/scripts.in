@@ -1,22 +1,27 @@
 type: script
-  snippets:
-    - |
-      for group in wheel render libvirt docker video; do
-      if ! getent group "$group" >/dev/null; then
-      groupadd -r "$group" || true
-      fi
-      done
-      if ! getent passwd shepherd >/dev/null; then
-      useradd -m -G wheel,render,libvirt,docker,video -f -o -p $(openssl passwd -6 celestial) shepherd || true
-      else
-      usermod -aG wheel,render,libvirt,docker,video shepherd || true
-      fi
-      mkdir -p /etc/profile.d
-      echo 'if [[ $- == *i* ]]; then enable -f /usr/lib/bash/libflyline.so flyline; fi' > /etc/profile.d/flyline.sh
-      cat << 'EOF' > /etc/profile.d/distrobox-aliases.sh
-      alias db="distrobox enter"
-      alias dbc="distrobox create"
-      EOF
-      echo 'export STARSHIP_CONFIG=/etc/starship.toml' > /etc/profile.d/starship-env.sh
-      echo 'eval "$(starship init bash)"' > /etc/profile.d/starship.sh
-      starship preset jetpack -o /etc/starship.toml
+snippets:
+  - |
+    for group in wheel render libvirt docker video; do
+    if ! getent group "$group" >/dev/null; then
+    groupadd -r "$group" || true
+    fi
+    done
+    
+    if ! getent passwd shepherd >/dev/null; then
+    useradd -m -G wheel,render,libvirt,docker,video -f -o -p $(openssl passwd -6 celestial) shepherd || true
+    else
+    usermod -aG wheel,render,libvirt,docker,video shepherd || true
+    fi
+    
+    mkdir -p /etc/profile.d
+    
+    echo 'if [[ $- == *i* ]]; then enable -f /usr/lib/bash/libflyline.so flyline; fi' > /etc/profile.d/flyline.sh
+    
+    cat << 'EOF' > /etc/profile.d/distrobox-aliases.sh
+    alias db="distrobox enter"
+    alias dbc="distrobox create"
+    EOF
+
+    echo 'export STARSHIP_CONFIG=/etc/starship.toml' > /etc/profile.d/starship-env.sh
+    echo 'eval "$(starship init bash)"' > /etc/profile.d/starship.sh
+    starship preset jetpack -o /etc/starship.toml
