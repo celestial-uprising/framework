@@ -11,7 +11,7 @@ stages:
       - type: script
         snippets:
           - |
-            dnf install -y git gcc protobuf-compiler zig
+            dnf install -y git gcc protobuf-compiler
 
             curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
             source "$HOME/.cargo/env"
@@ -21,10 +21,6 @@ stages:
             git clone https://github.com/sxyazi/yazi.git /tmp/yazi
             cd /tmp/yazi && cargo build --release --locked
             cp target/release/ya* /tmp/bin/
-            
-            git clone https://github.com/herdrdev/herdr.git /tmp/herdr
-            cd /tmp/herdr && cargo build --release --locked
-            cp target/release/herdr /tmp/bin/
             
             git clone https://github.com/HalFrgrd/flyline.git /tmp/flyline
             cd /tmp/flyline && cargo build --release --locked
