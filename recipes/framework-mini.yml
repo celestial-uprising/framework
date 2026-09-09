@@ -5,69 +5,65 @@ description: for humans- by lesbidoodles ; with hope for a better future
 base-image: ghcr.io/ublue-os/ucore
 image-version: testing
 stages:
-  - name: yazi-builder
-    from: docker.io/library/fedora:latest
-    modules:
-      - type: script
-        snippets:
-          - |
-            dnf install -y git gcc cargo
-
-            git clone https://github.com/sxyazi/yazi.git /tmp/yazi
-            cd /tmp/yazi
-            cargo build --release --locked
-
-            mkdir -p /tmp/bin
-            cp target/release/yazi /tmp/bin/
-            cp target/release/ya /tmp/bin/
-  - name: herdr-builder
+  - name: rust-builder
     from: docker.io/library/fedora:latest
     modules:
       - type: script
         snippets:
           - |
             dnf install -y git gcc protobuf-compiler
-
-            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+            curl --proto '=https' --tlsv1.2 -sSf https://rustup.rs | sh -s -- -y
             source "$HOME/.cargo/env"
-
+            mkdir -p /tmp/bin
+            git clone https://github.com/sxyazi/yazi.git /tmp/yazi
+            cd /tmp/yazi && cargo build --release --locked
+            cp target/release/yazi /tmp/bin/
+            cp target/release/ya /tmp/bin/
             git clone https://github.com/herdrdev/herdr.git /tmp/herdr
-            cd /tmp/herdr
-            cargo build --release --locked
-
-            mkdir -p /tmp/bin
+            cd /tmp/herdr && cargo build --release --locked
             cp target/release/herdr /tmp/bin/
-  - name: flyline-builder
-    from: docker.io/library/fedora:latest
-    modules:
-      - type: script
-        snippets:
-          - |
-            dnf install -y git gcc cargo
-
             git clone https://github.com/HalFrgrd/flyline.git /tmp/flyline
-            cd /tmp/flyline
-            cargo build --release --locked
-
-            mkdir -p /tmp/bin
+            cd /tmp/flyline && cargo build --release --locked
             cp target/release/flyline /tmp/bin/
-  - name: uv-builder
-    from: docker.io/library/fedora:latest
-    modules:
-      - type: script
-        snippets:
-          - |
-            dnf install -y gcc cargo
-
-            mkdir -p /tmp/bin
-            CARGO_HOME=/tmp/cargo cargo install --root /tmp/build --locked uv
-
+            CARGO_HOME=/tmp/cargo cargo install --root /tmp/build uv
             cp /tmp/build/bin/uv* /tmp/bin/
 modules:
   - type: files
     files:
       - source: system
         destination: /
+  - type: fonts
+    fonts:
+      url-fonts:
+        - name: VictorMonoNerdFont
+          url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.5.1/VictorMono.zip
+  - type: copy
+    from: rust-builder
+    src: /tmp/bin/yazi
+  - type: copy
+    from: rust-builder
+    src: /tmp/bin/ya
+    dest: /usr/bin/ya
+  - type: copy
+    from: rust-builder
+    src: /tmp/bin/herdr
+    dest: /usr/bin/herdr
+  - type: copy
+    from: rust-builder
+    src: /tmp/bin/flyline
+    dest: /usr/bin/flyline
+  - type: copy
+    from: rust-builder
+    src: /tmp/bin/uv
+    dest: /usr/bin/uv
+  - type: copy
+    from: rust-builder
+    src: /tmp/bin/uvx
+    dest: /usr/bin/uvx
+  - type: copy
+    from: rust-builder
+    src: /tmp/bin/uvw
+    dest: /usr/bin/uvw
   - type: dnf
     repos:
       copr:
@@ -76,46 +72,46 @@ modules:
         - atim/lazygit
     install:
       packages:
-        - lazygit
-        - glibc-langpack-en
         - sddm-conf
         - sddm-wayland-generic
+        - niri
+        - swaybg
         - waybar
+        - glibc-langpack-en
         - fuzzel
         - kitty
-        - niri
-        - vim
+        - remmina
+        - flatpak
+        - neovim
         - fzf
+        - fd-find
         - ripgrep
         - zoxide
-        - fd-find
         - bat
         - eza
-        - btop
-        - nvtop
-        - radeontop
-        - starship
+        - lazygit
+        - jq
+        - luarocks
         - tree-sitter-cli
-        - rocm-smi-devel
-        - neovim
         - python3-neovim
         - wl-clipboard
-        - luarocks
+        - starship
+        - btop
+        - rocm-smi-devel
+        - nvtop
+        - radeontop
+        - libdrm-devel
+        - s-tui
+        - tree
+        - vim
         - git
         - wget
-        - s-tui
-        - libdrm-devel
         - gdu
         - ncdu
-        - tree
         - diskus
         - nmap
         - traceroute
         - whois
-        - swaybg
-        - flatpak
-        - loupe
-        - remmina
     remove:
       packages:
         - nano
@@ -140,39 +136,6 @@ modules:
           - net.waterfox.waterfox
           - org.virt_manager.virt-manager
       - scope: user
-  - type: fonts
-    fonts:
-      url-fonts:
-        - name: VictorMonoNerdFont
-          url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.5.1/VictorMono.zip
-  - type: copy
-    from: yazi-builder
-    src: /tmp/bin/yazi
-    dest: /usr/bin/yazi
-  - type: copy
-    from: yazi-builder
-    src: /tmp/bin/ya
-    dest: /usr/bin/ya
-  - type: copy
-    from: herdr-builder
-    src: /tmp/bin/herdr
-    dest: /usr/bin/herdr
-  - type: copy
-    from: flyline-builder
-    src: /tmp/bin/flyline
-    dest: /usr/bin/flyline
-  - type: copy
-    from: uv-builder
-    src: /tmp/bin/uv
-    dest: /usr/bin/uv
-  - type: copy
-    from: uv-builder
-    src: /tmp/bin/uvx
-    dest: /usr/bin/uvx
-  - type: copy
-    from: uv-builder
-    src: /tmp/bin/uvw
-    dest: /usr/bin/uvw
   - type: script
     snippets:
       - |
