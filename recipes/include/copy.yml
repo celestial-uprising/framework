@@ -1,34 +1,17 @@
 type: copy
 from: rust-build
-src: /tmp/bin/yazi
-dest: /usr/bin/yazi
-
-type: copy
-from: rust-build
-src: /tmp/bin/ya
-dest: /usr/bin/ya
-
-type: copy
-from: rust-build
-src: /tmp/bin/herdr
-dest: /usr/bin/herdr
-
-type: copy
-from: rust-build
-src: /tmp/bin/flyline
-dest: /usr/lib/bash/flyline
-
-type: copy
-from: rust-build
-src: /tmp/bin/uv
-dest: /usr/bin/uv
-
-type: copy
-from: rust-build
-src: /tmp/bin/uvx
-dest: /usr/bin/uvx
-
-type: copy
-from: rust-build
-src: /tmp/bin/uvw
-dest: /usr/bin/uvw
+files:
+  - src: /tmp/bin/yazi
+    dest: /usr/bin/yazi
+  - src: /tmp/bin/ya
+    dest: /usr/bin/ya
+  - src: /tmp/bin/herdr
+    dest: /usr/bin/herdr
+  - src: /tmp/bin/flyline
+    dest: /usr/lib/bash/flyline
+  - src: /tmp/bin/uv
+    dest: /usr/bin/uv
+  - src: /tmp/bin/uvx
+    dest: /usr/bin/uvx
+  - src: /tmp/bin/uvw
+    dest: /usr/bin/uvw
