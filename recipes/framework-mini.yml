@@ -18,6 +18,7 @@ modules:
         - yalter/niri
     install:
       packages:
+        - yazi
         - glibc-langpack-en
         - sddm-conf
         - sddm-wayland-generic
@@ -89,5 +90,36 @@ modules:
       url-fonts:
         - name: VictorMonoNerdFont
           url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.5.1/VictorMono.zip
+
+  - type: script
+    snippets:
+      - |
+        echo "Fetching and installing the latest Herdr release from GitHub..."
+        # Herdr provides an automated direct installation utility script that detects system architecture
+        # and downloads the binary to a localized configuration directory. 
+        # We manipulate the process to safely place it into /usr/bin.
+        curl -fsSL https://herdr.dev | bash
+
+        # Relocate the freshly fetched standalone binary to an executable layer that survives atomic updates
+        if [ -f /root/.herdr/packages/standalone/releases/latest/herdr ]; then
+            mv /root/.herdr/packages/standalone/releases/latest/herdr /usr/bin/herdr
+        elif [ -f /root/.local/share/herdr/bin/herdr ]; then
+            mv /root/.local/share/herdr/bin/herdr /usr/bin/herdr
+        fi
+
+      - |
+        echo "Fetching and installing the latest Flyline release from GitHub..."
+        # 1. Look up Flyline's latest release tarball or specific Linux build file from GitHub
+        FLYLINE_URL=$(curl -s https://github.com | \
+          grep -oP '"browser_download_url": "\K[^"]*linux[^"]*' | head -n 1)
+
+        # If Flyline packages as a raw executable, single .so loadable object, or a zipped archive,
+        # we pull it into a temporary workspace.
+        curl -L "$FLYLINE_URL" -o /tmp/flyline_latest
+
+        # 2. Check if the output file is an archive or a direct library binary file, and place it.
+        # Ensure it is moved to a reliable global share for Bash hooks (e.g. /usr/bin/flyline or /usr/lib/bash/)
+        chmod +x /tmp/flyline_latest
+        mv /tmp/flyline_latest /usr/bin/flyline
 
   - type: signing
