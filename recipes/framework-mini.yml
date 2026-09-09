@@ -12,19 +12,18 @@ stages:
         snippets:
           - |
             dnf install -y git gcc protobuf-compiler
-            curl --proto '=https' --tlsv1.2 -sSf https://rustup.rs | sh -s -- -y
+            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
             source "$HOME/.cargo/env"
             mkdir -p /tmp/bin
             git clone https://github.com/sxyazi/yazi.git /tmp/yazi
             cd /tmp/yazi && cargo build --release --locked
-            cp target/release/yazi /tmp/bin/
-            cp target/release/ya /tmp/bin/
+            cp target/release/ya* /tmp/bin/
             git clone https://github.com/herdrdev/herdr.git /tmp/herdr
             cd /tmp/herdr && cargo build --release --locked
             cp target/release/herdr /tmp/bin/
             git clone https://github.com/HalFrgrd/flyline.git /tmp/flyline
             cd /tmp/flyline && cargo build --release --locked
-            cp target/release/flyline /tmp/bin/
+            cp target/release/libflyline.so /tmp/bin/
             CARGO_HOME=/tmp/cargo cargo install --root /tmp/build uv
             cp /tmp/build/bin/uv* /tmp/bin/
 modules:
@@ -51,8 +50,8 @@ modules:
     dest: /usr/bin/herdr
   - type: copy
     from: rust-builder
-    src: /tmp/bin/flyline
-    dest: /usr/bin/flyline
+    src: /tmp/bin/libflyline.so
+    dest: /usr/lib/bash/libflyline.so
   - type: copy
     from: rust-builder
     src: /tmp/bin/uv
@@ -145,21 +144,17 @@ modules:
             groupadd -r "$group" || true
           fi
         done
-
         if ! getent passwd shepherd >/dev/null; then
           useradd -m -G wheel,render,libvirt,docker,video -f -o -p $(openssl passwd -6 'celestial') shepherd || true
         else
           usermod -aG wheel,render,libvirt,docker,video shepherd || true
         fi
-
         mkdir -p /etc/profile.d
-        echo 'if [[ $- == *i* ]]; then eval "$(flyline init)"; fi' > /etc/profile.d/flyline.sh
-
+        echo 'if [[ $- == *i* ]]; then enable -f /usr/lib/bash/libflyline.so flyline; fi' > /etc/profile.d/flyline.sh
         cat << 'EOF' > /etc/profile.d/distrobox-aliases.sh
         alias db="distrobox enter"
         alias dbc="distrobox create"
         EOF
-
         echo 'export STARSHIP_CONFIG=/etc/starship.toml' > /etc/profile.d/starship-env.sh
         echo 'eval "$(starship init bash)"' > /etc/profile.d/starship.sh
         starship preset jetpack -o /etc/starship.toml
