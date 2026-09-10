@@ -1,16 +1,16 @@
 type: dnf
 repos:
   copr:
+    - ulysg/xwayland-satellite
     - yalter/niri-git
     - avengemedia/dms
-    - solopasha/xwayland
     - sneexy/zen-browser
 install:
   packages:
     - xdg-desktop-portal-gnome
     - xdg-desktop-portal-gtk
     - niri
-    - xwayland
+    - xwayland-satellite
     - wl-clipboard
     - dms
     - quickshell
