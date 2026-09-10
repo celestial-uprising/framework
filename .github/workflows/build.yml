@@ -43,6 +43,12 @@ jobs:
       fail-fast: false 
       matrix:
         recipe:
+          - framework_mini.yml
+          - framework_mini_nv.yml
+          - framework_headless.yml
+          - framework_headless_nv.yml
+          - framework_workstation.yml
+          - framework_workstation_nv.yml
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
