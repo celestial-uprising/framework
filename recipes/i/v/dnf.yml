@@ -5,7 +5,6 @@ repos:
     - atim/lazygit
     - che/nerd-fonts
     - kylegospo/amdctl
-    - ligenix/enterprise-qemu-wider
 install:
   packages:
     - amdctl
