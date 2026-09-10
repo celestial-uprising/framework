@@ -2,9 +2,6 @@ type: dnf
 repos:
   copr:
     - lizardbyte/beta
-    - yalter/niri-git
-    - avengemedia/dms-git
-    - solopasha/xwayland
     - yanniknusshold/proton-ge-custom
     - frostwork/steamtinkerlaunch
 install:
