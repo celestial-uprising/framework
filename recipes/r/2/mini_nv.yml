@@ -7,9 +7,4 @@ image-version: latest
 modules:
   - from-file: i/m/dnf.yml
   - from-file: i/m/flatpak_nv.yml
-  - type: systemd
-    user:
-      enabled:
-        - niri.service
-        - dms.service
   - type: signing
