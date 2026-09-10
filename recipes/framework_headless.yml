@@ -54,7 +54,7 @@ modules:
     src: /tmp/bin/uvx
     dest: /usr/bin/uvx
 
-  - from-file: include-headless/dnf.yml
-  - from-file: include-headless/scripts.yml
+  - from-file: include_headless/dnf.yml
+  - from-file: include_headless/scripts.yml
 
   - type: signing
