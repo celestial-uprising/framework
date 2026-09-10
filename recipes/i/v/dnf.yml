@@ -5,11 +5,12 @@ repos:
     - atim/lazygit
     - che/nerd-fonts
     - kylegospo/amdctl
+    - blued-gear/mesa-freeworld-metapackage
 install:
   packages:
+    - mesa-freeworld-metapackage
     - vulkan-loader
     - vulkan-tools 
-    - mesa-va-drivers-freeworld
     - libva-nvidia-driver
     - amdctl
     - cascadia-code-nf-fonts
