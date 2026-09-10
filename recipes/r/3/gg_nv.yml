@@ -6,5 +6,4 @@ base-image: ghcr.io/celestial-uprising/framework-mini-nv
 image-version: latest
 modules:
   - from-file: i/g/dnf.yml
-  - from-file: i/g/flatpak_nv.yml
   - type: signing
