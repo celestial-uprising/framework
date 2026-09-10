@@ -1,0 +1,12 @@
+type: default-flatpaks
+configurations:
+  - notify: true
+    scope: system
+    install: 
+      - md.obsidian.Obsidian
+      - io.github.olaproeis.Ferrite
+      - com.valvesoftware.SteamLink
+      - de.haeckerfelix.Shortwave
+      - net.codelogistics.webapps
+      - net.waterfox.waterfox
+  - scope: user

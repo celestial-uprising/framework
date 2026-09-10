@@ -1,9 +1,9 @@
 ---
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
-name: framework-mini
+name: framework-virt
 description: for humans- by lesbidoodles ; with hope for a better future
 base-image: ghcr.io/ublue-os/ucore
-image-version: testing
+image-version: testing-nv
 stages:
   - name: rust-build
     from: docker.io/library/fedora:latest
@@ -29,35 +29,26 @@ stages:
             CARGO_HOME=/tmp/cargo cargo install --root /tmp/build uv
             cp /tmp/build/bin/uv* /tmp/bin/
 modules:
-  - from-file: include_mini/files.yml
-
   - type: copy
     from: rust-build
     src: /tmp/bin/yazi
     dest: /usr/bin/yazi
-
   - type: copy
     from: rust-build
     src: /tmp/bin/ya
     dest: /usr/bin/ya
-
   - type: copy
     from: rust-build
     src: /tmp/bin/libflyline.so
     dest: /usr/lib/bash/libflyline.so
-
   - type: copy
     from: rust-build
     src: /tmp/bin/uv
     dest: /usr/bin/uv
-
   - type: copy
     from: rust-build
     src: /tmp/bin/uvx
     dest: /usr/bin/uvx
-
-  - from-file: include_mini/dnf.yml
-  - from-file: include_mini/flatpak.yml
-  - from-file: include_mini/scripts.yml
-
+  - from-file: include/v/dnf.yml
+  - from-file: include/v/scripts.yml
   - type: signing

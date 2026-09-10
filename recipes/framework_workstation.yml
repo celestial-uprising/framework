@@ -1,6 +1,6 @@
 ---
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
-name: framework-mini
+name: framework
 description: for humans- by lesbidoodles ; with hope for a better future
 base-image: ghcr.io/ublue-os/ucore
 image-version: testing
@@ -49,8 +49,7 @@ modules:
     from: rust-build
     src: /tmp/bin/uvx
     dest: /usr/bin/uvx
-  - from-file: include/m/dnf.yml
-  - from-file: include/m/flatpak.yml
-  - from-file: include/m/scripts.yml
-
+  - from-file: include/w/dnf.yml
+  - from-file: include/w/flatpak.yml
+  - from-file: include/w/scripts.yml
   - type: signing

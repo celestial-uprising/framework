@@ -3,9 +3,15 @@ repos:
   copr:
     - atim/starship
     - atim/lazygit
+    - che/nerd-fonts
+    - oleastre/font
+    - kylegospo/amdctl
 install:
   packages:
+    - amdctl
     - cascadia-code-nf-fonts
+    - rbjornera-victor-mono-fonts
+    - nerd-fonts
     - glibc-langpack-en
     - neovim
     - fzf
@@ -40,7 +46,6 @@ install:
 remove:
   packages:
     - nano
-    - alacritty
     - nano-default-editor
     - nfs-client-utils
     - nfs-common-utils

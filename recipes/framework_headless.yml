@@ -2,7 +2,7 @@
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
 name: framework-headless
 description: for humans- by lesbidoodles ; with hope for a better future
-base-image: ghcr.io/ublue-os/ucore-hci
+base-image: ghcr.io/ublue-os/ucore
 image-version: testing
 stages:
   - name: rust-build
@@ -54,7 +54,7 @@ modules:
     src: /tmp/bin/uvx
     dest: /usr/bin/uvx
 
-  - from-file: include_headless/dnf.yml
-  - from-file: include_headless/scripts.yml
+  - from-file: include/h/dnf.yml
+  - from-file: include/h/scripts.yml
 
   - type: signing

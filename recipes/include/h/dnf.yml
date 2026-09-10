@@ -1,0 +1,84 @@
+type: dnf
+repos:
+  copr:
+    - atim/starship
+    - atim/lazygit
+    - ligenix/enterprise-qemu-wider
+    - che/nerd-fonts
+    - oleastre/font
+    - kylegospo/amdctl
+install:
+  packages:
+    - amdctl
+    - cascadia-code-nf-fonts
+    - rbjornera-victor-mono-fonts
+    - nerd-fonts
+    - glibc-langpack-en
+    - qemu-system-x86
+    - qemu-system-aarch64
+    - edk2-aarch64
+    - qemu-system-riscv
+    - qemu-img
+    - qemu-audio-pipewire
+    - virglrenderer
+    - qemu-device-display-virtio-gpu-gl 
+    - qemu-ui-opengl
+    - qemu-audio-spice
+    - qemu-char-spice
+    - qemu-device-display-qxl
+    - spice-gtk
+    - virt-manager
+    - virt-install
+    - virt-viewer
+    - libvirt
+    - libvirt-daemon-qemu
+    - libvirt-client
+    - libvirt-client-qemu
+    - libvirt-daemon-driver-secret
+    - libvirt-daemon-driver-nodedev
+    - libvirt-daemon-driver-interface
+    - libvirt-daemon-driver-nwfilter
+    - libvirt-daemon-config-network
+    - libvirt-daemon-driver-network
+    - libvirt-daemon-driver-storage
+    - libvirt-daemon-driver-storage-zfs
+    - neovim
+    - fzf
+    - fd-find
+    - ripgrep
+    - zoxide
+    - bat
+    - eza
+    - lazygit
+    - jq
+    - luarocks
+    - tree-sitter-cli
+    - python3-neovim
+    - wl-clipboard
+    - starship
+    - btop
+    - rocm-smi-devel
+    - nvtop
+    - radeontop
+    - libdrm-devel
+    - s-tui
+    - tree
+    - vim
+    - git
+    - wget
+    - gdu
+    - ncdu
+    - diskus
+    - nmap
+    - traceroute
+    - whois
+remove:
+  packages:
+    - nano
+    - nano-default-editor
+    - nfs-client-utils
+    - nfs-common-utils
+    - azure-vm-utils
+    - cockpit
+    - cockpit-bridge
+    - cockpit-ws
