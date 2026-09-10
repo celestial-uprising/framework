@@ -57,6 +57,6 @@ remove:
     - cockpit-bridge
     - cockpit-ws
 replace:
-      - from-repo: rpmfusion-free-updates
+      - from-repo: rpmfusion-free-rawhide
         packages:
           - mesa-va-drivers-freeworld
