@@ -26,9 +26,9 @@ jobs:
       matrix:
         recipe:
           - framework_mini.yml
-          - framework_mini-nv.yml
+          - framework_mini_nv.yml
           - framework_headless.yml
-          - framework_headless-nv.yml
+          - framework_headless_nv.yml
     steps:
       - name: Build Framework Images
         uses: blue-build/github-action@v1.12
