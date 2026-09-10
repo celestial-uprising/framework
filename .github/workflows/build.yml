@@ -42,6 +42,10 @@ jobs:
     name: Building Stage Two Images [mini/nv + headless/nv] 
     runs-on: ubuntu-latest
     needs: stage_one
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
     strategy:
       fail-fast: false 
       matrix:
@@ -64,6 +68,10 @@ jobs:
     name: Building Stage Three Images [ws/nv + gg/nv] 
     runs-on: ubuntu-latest
     needs: stage_two
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
     strategy:
       fail-fast: false 
       matrix:
@@ -86,6 +94,10 @@ jobs:
     name: Building Stage Four Images [full/nv] 
     runs-on: ubuntu-latest
     needs: stage_three
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
     strategy:
       fail-fast: false 
       matrix:
