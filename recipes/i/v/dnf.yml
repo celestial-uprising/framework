@@ -5,10 +5,8 @@ repos:
     - atim/lazygit
     - che/nerd-fonts
     - kylegospo/amdctl
-    - blued-gear/mesa-freeworld-metapackage
 install:
   packages:
-    - mesa-freeworld-metapackage
     - vulkan-loader
     - vulkan-tools 
     - libva-nvidia-driver
@@ -58,3 +56,7 @@ remove:
     - cockpit
     - cockpit-bridge
     - cockpit-ws
+replace:
+      - from-repo: rpmfusion-free-updates
+        packages:
+          - mesa-va-drivers-freeworld
