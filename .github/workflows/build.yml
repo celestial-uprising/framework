@@ -25,9 +25,12 @@ jobs:
       fail-fast: false # stop GH from cancelling all matrix builds if one fails
       matrix:
         recipe:
-          - framework-mini.yml
+          - framework_mini.yml
+          - framework_mini-nv.yml
+          - framework_headless.yml
+          - framework_headless-nv.yml
     steps:
-      - name: Build Custom Images
+      - name: Build Framework Images
         uses: blue-build/github-action@v1.12
         with:
           recipe: ${{ matrix.recipe }}
