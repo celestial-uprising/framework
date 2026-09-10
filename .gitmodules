@@ -1,0 +1,18 @@
+[submodule "modules/flyline"]
+	path = modules/flyline
+	url = https://github.com/HalFrgrd/flyline.git
+[submodule "modules/herdr"]
+	path = modules/herdr
+	url = https://github.com/herdrdev/herdr.git
+[submodule "modules/yazi"]
+	path = modules/yazi
+	url = https://github.com/sxyazi/yazi.git
+[submodule "modules/amdtop"]
+	path = modules/amdtop
+	url = https://github.com/lhl/amdtop.git
+[submodule "modules/diskwatch"]
+	path = modules/diskwatch
+	url = https://github.com/matthart1983/diskwatch.git
+[submodule "modules/concord"]
+	path = modules/concord
+	url = https://github.com/chojs23/concord.git
