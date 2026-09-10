@@ -2,7 +2,7 @@ type: dnf
 repos:
   copr:
     - yalter/niri-git
-    - avengemedia/dms-git
+    - avengemedia/dms
     - solopasha/xwayland
     - sneexy/zen-browser
 install:
@@ -10,14 +10,12 @@ install:
     - niri
     - xwayland
     - wl-clipboard
-    - dms-git
-    - quickshell-git
+    - dms
+    - quickshell
     - matugen
     - material-symbols-fonts
     - dgop
     - danksearch
-    - dankcalendar
-    - dlocate
     - fuzzel
     - kitty
     - waybar
@@ -34,6 +32,3 @@ install:
     - obs-studio
     - ardour8
     - coppwr
-remove:
-  packages:
-    - alacritty

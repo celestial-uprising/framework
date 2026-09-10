@@ -3,21 +3,20 @@ repos:
   copr:
     - ulysg/xwayland-satellite
     - yalter/niri-git
-    - avengemedia/dms-git
+    - avengemedia/dms
     - sneexy/zen-browser
+    - ferdiu/moonlight
 install:
   packages:
-    - niri-git
+    - niri
     - xwayland-satellite
     - wl-clipboard
-    - dms-git
-    - quickshell-git
+    - dms
+    - quickshell
     - matugen
     - material-symbols-fonts
     - dgop
     - danksearch
-    - dankcalendar
-    - dlocate
     - fuzzel
     - kitty
     - waybar
