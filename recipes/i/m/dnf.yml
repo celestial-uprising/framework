@@ -1,15 +1,15 @@
 type: dnf
 repos:
   copr:
+    - ulysg/xwayland-satellite
     - yalter/niri-git
     - avengemedia/dms-git
-    - solopasha/xwayland
     - sda/gpu-screen-recorder
     - sneexy/zen-browser
 install:
   packages:
     - niri-git
-    - xwayland
+    - xwayland-satellite
     - wl-clipboard
     - dms-git
     - quickshell-git
