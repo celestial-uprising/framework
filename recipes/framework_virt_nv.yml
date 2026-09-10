@@ -3,7 +3,7 @@
 name: framework-virt
 description: for humans- by lesbidoodles ; with hope for a better future
 base-image: ghcr.io/ublue-os/ucore
-image-version: testing-nv
+image-version: testing-nvidia
 stages:
   - name: rust-build
     from: docker.io/library/fedora:latest
