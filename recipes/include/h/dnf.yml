@@ -5,13 +5,11 @@ repos:
     - atim/lazygit
     - ligenix/enterprise-qemu-wider
     - che/nerd-fonts
-    - oleastre/font
     - kylegospo/amdctl
 install:
   packages:
     - amdctl
     - cascadia-code-nf-fonts
-    - rbjornera-victor-mono-fonts
     - nerd-fonts
     - glibc-langpack-en
     - qemu-system-x86

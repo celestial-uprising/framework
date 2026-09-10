@@ -4,13 +4,11 @@ repos:
     - atim/starship
     - atim/lazygit
     - che/nerd-fonts
-    - oleastre/font
     - kylegospo/amdctl
 install:
   packages:
     - amdctl
     - cascadia-code-nf-fonts
-    - rbjornera-victor-mono-fonts
     - nerd-fonts
     - glibc-langpack-en
     - neovim

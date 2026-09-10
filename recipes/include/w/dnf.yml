@@ -5,7 +5,6 @@ repos:
     - atim/starship
     - yalter/niri-git
     - avengemedia/dms-git
-    - daniel-g-carrasco/wayland-scroll-factor
     - solopasha/xwayland
     - atim/lazygit
     - yanniknusshold/proton-ge-custom
@@ -14,11 +13,9 @@ repos:
     - ligenix/enterprise-qemu-wider
     - sneexy/zen-browser
     - che/nerd-fonts
-    - oleastre/font
 install:
   packages:
     - cascadia-code-nf-fonts
-    - rbjornera-victor-mono-fonts
     - nerd-fonts
     - niri
     - xwayland

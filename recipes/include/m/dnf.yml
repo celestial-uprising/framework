@@ -9,13 +9,11 @@ repos:
     - sda/gpu-screen-recorder
     - sneexy/zen-browser
     - che/nerd-fonts
-    - oleastre/font
     - kylegospo/amdctl
 install:
   packages:
     - amdctl
     - cascadia-code-nf-fonts
-    - rbjornera-victor-mono-fonts
     - nerd-fonts
     - niri-git
     - xwayland
