@@ -8,4 +8,9 @@ modules:
   - from-file: i/w/dnf.yml
   - from-file: i/w/flatpak.yml
   - from-file: i/w/scripts.yml
+  - type: systemd
+    user:
+      enabled:
+        - niri.service
+        - dms.service
   - type: signing

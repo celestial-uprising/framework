@@ -7,6 +7,10 @@ repos:
     - kylegospo/amdctl
 install:
   packages:
+    - vulkan-loader
+    - vulkan-tools 
+    - mesa-va-drivers-freeworld
+    - libva-nvidia-driver
     - amdctl
     - cascadia-code-nf-fonts
     - nerd-fonts

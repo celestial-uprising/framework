@@ -4,6 +4,7 @@ repos:
     - lizardbyte/beta
     - yanniknusshold/proton-ge-custom
     - frostwork/steamtinkerlaunch
+    - ferdiu/moonlight
 install:
   packages:
     - steam

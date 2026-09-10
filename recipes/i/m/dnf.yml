@@ -8,6 +8,8 @@ repos:
     - ferdiu/moonlight
 install:
   packages:
+    - xdg-desktop-portal-gnome
+    - xdg-desktop-portal-gtk
     - niri
     - xwayland-satellite
     - wl-clipboard
@@ -26,6 +28,3 @@ install:
     - virt-manager
     - virt-viewer
     - moonlight-qt
-remove:
-  packages:
-    - alacritty
