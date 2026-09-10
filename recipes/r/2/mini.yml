@@ -7,7 +7,6 @@ image-version: latest
 modules:
   - from-file: i/m/dnf.yml
   - from-file: i/m/flatpak.yml
-  - from-file: i/m/scripts.yml
   - type: systemd
     user:
       enabled:

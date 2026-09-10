@@ -51,4 +51,9 @@ modules:
     dest: /usr/bin/uvx
   - from-file: i/v/dnf.yml
   - from-file: i/v/scripts.yml
+  - type: systemd
+    user:
+      enabled:
+        - tailscaled..service
+        - sshd.service
   - type: signing
