@@ -1,0 +1,10 @@
+---
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
+name: framework-nv
+description: for humans- by lesbidoodles ; with hope for a better future
+base-image: ghcr.io/celestial-uprising/framework-mini-nv
+image-version: latest
+modules:
+  - from-file: i/g/dnf.yml
+  - from-file: i/g/flatpak_nv.yml
+  - type: signing

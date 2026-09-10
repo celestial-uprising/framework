@@ -1,0 +1,11 @@
+---
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
+name: framework-mini
+description: for humans- by lesbidoodles ; with hope for a better future
+base-image: ghcr.io/celestial-uprsing/framework-virt
+image-version: latest
+modules:
+  - from-file: i/m/dnf.yml
+  - from-file: i/m/flatpak.yml
+  - from-file: i/m/scripts.yml
+  - type: signing

@@ -5,12 +5,10 @@ configurations:
     install: 
       - md.obsidian.Obsidian
       - io.github.olaproeis.Ferrite
-      - com.valvesoftware.SteamLink
       - de.haeckerfelix.Shortwave
       - net.codelogistics.webapps
       - net.waterfox.waterfox
       - io.github.electronstudio.WeylusCommunityEdition
       - io.github.muse_sequencer.Muse
-      - de.z_ray.OptimusUI ### NV ONLY
       - com.snekstudio.Snekstudio ### TESTING AS RECPLACEMENT FOR XR_ANIMATOR --- 
   - scope: user

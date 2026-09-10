@@ -2,39 +2,18 @@ type: dnf
 repos:
   copr:
     - atim/starship
-    - yalter/niri-git
-    - avengemedia/dms-git
-    - solopasha/xwayland
     - atim/lazygit
-    - sda/gpu-screen-recorder
-    - sneexy/zen-browser
     - che/nerd-fonts
     - kylegospo/amdctl
+    - ligenix/enterprise-qemu-wider
 install:
   packages:
     - amdctl
     - cascadia-code-nf-fonts
     - nerd-fonts
-    - niri-git
-    - xwayland
-    - dms-git
-    - quickshell-git
-    - matugen
-    - material-symbols-fonts
-    - dgop
-    - danksearch
-    - dankcalendar
-    - dlocate
-    - fuzzel
-    - kitty
-    - waybar
     - glibc-langpack-en
-    - remmina
-    - flatpak
-    - virt-manager
-    - virt-viewer
-    - moonlight-qt
-    - gpu-screen-recorder
+    - libvirt-client
+    - libvirt-client-qemu
     - neovim
     - fzf
     - fd-find
@@ -47,7 +26,6 @@ install:
     - luarocks
     - tree-sitter-cli
     - python3-neovim
-    - wl-clipboard
     - starship
     - btop
     - rocm-smi-devel
@@ -55,6 +33,7 @@ install:
     - radeontop
     - libdrm-devel
     - s-tui
+    - tmux
     - tree
     - vim
     - git
@@ -68,7 +47,6 @@ install:
 remove:
   packages:
     - nano
-    - alacritty
     - nano-default-editor
     - nfs-client-utils
     - nfs-common-utils

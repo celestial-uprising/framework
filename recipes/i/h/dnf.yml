@@ -1,0 +1,29 @@
+type: dnf
+install:
+  packages:
+    - qemu-system-x86
+    - qemu-system-aarch64
+    - edk2-aarch64
+    - qemu-system-riscv
+    - qemu-img
+    - qemu-audio-pipewire
+    - virglrenderer
+    - qemu-device-display-virtio-gpu-gl 
+    - qemu-ui-opengl
+    - qemu-audio-spice
+    - qemu-char-spice
+    - qemu-device-display-qxl
+    - spice-gtk
+    - libguestfs-tools
+    - virt-install
+    - virt-top
+    - libvirt
+    - libvirt-daemon-qemu
+    - libvirt-daemon-driver-secret
+    - libvirt-daemon-driver-nodedev
+    - libvirt-daemon-driver-interface
+    - libvirt-daemon-driver-nwfilter
+    - libvirt-daemon-config-network
+    - libvirt-daemon-driver-network
+    - libvirt-daemon-driver-storage
+    - libvirt-daemon-driver-storage-zfs

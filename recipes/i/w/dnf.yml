@@ -1,0 +1,41 @@
+type: dnf
+repos:
+  copr:
+    - yalter/niri-git
+    - avengemedia/dms-git
+    - solopasha/xwayland
+    - sda/gpu-screen-recorder
+    - sneexy/zen-browser
+install:
+  packages:
+    - niri
+    - xwayland
+    - wl-clipboard
+    - dms-git
+    - quickshell-git
+    - matugen
+    - material-symbols-fonts
+    - dgop
+    - danksearch
+    - dankcalendar
+    - dlocate
+    - fuzzel
+    - kitty
+    - waybar
+    - remmina
+    - virt-manager
+    - virt-viewer
+    - zen-browser
+    - flatpak
+    - gimp
+    - kdenlive
+    - blender
+    - krita
+    - kicad
+    - obs-studio
+    - ardour8
+    - coppwr
+    - gpu-screen-recorder
+remove:
+  packages:
+    - alacritty

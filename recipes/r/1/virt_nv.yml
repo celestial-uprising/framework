@@ -1,9 +1,9 @@
 ---
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
-name: framework-mini
+name: framework-virt-nv
 description: for humans- by lesbidoodles ; with hope for a better future
 base-image: ghcr.io/ublue-os/ucore
-image-version: testing
+image-version: testing-nvidia
 stages:
   - name: rust-build
     from: docker.io/library/fedora:latest
@@ -49,8 +49,6 @@ modules:
     from: rust-build
     src: /tmp/bin/uvx
     dest: /usr/bin/uvx
-  - from-file: include/m/dnf.yml
-  - from-file: include/m/flatpak.yml
-  - from-file: include/m/scripts.yml
-
+  - from-file: i/v/dnf.yml
+  - from-file: i/v/scripts.yml
   - type: signing

@@ -1,0 +1,15 @@
+type: dnf
+repos:
+  copr:
+    - lizardbyte/beta
+    - yanniknusshold/proton-ge-custom
+    - frostwork/steamtinkerlaunch
+install:
+  packages:
+    - steam
+    - mangohud
+    - gamescope
+    - proton-ge-custom
+    - steamtinkerlaunch
+    - moonlight-qt
+    - sunshine

@@ -1,0 +1,11 @@
+---
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
+name: framework
+description: for humans- by lesbidoodles ; with hope for a better future
+base-image: ghcr.io/celestial-uprising/framework-headless
+image-version: latest
+modules:
+  - from-file: i/w/dnf.yml
+  - from-file: i/w/flatpak.yml
+  - from-file: i/w/scripts.yml
+  - type: signing

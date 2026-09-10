@@ -2,18 +2,18 @@ name: bluebuild
 on:
   schedule:
     - cron:
-        "00 06 * * *" # build at 06:00 UTC every day
+        "00 06 * * *"
   push:
     paths-ignore:
       - "**.md"
   pull_request:
-  workflow_dispatch: # allow manually triggering builds
+  workflow_dispatch:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
   cancel-in-progress: true
 jobs:
-  build-base:
-    name: Build Base Image
+  stage_one:
+    name: Build Base Images
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -23,10 +23,10 @@ jobs:
       fail-fast: true
       matrix:
         recipe:
-          - framework_virt.yml
-          - framework_virt_nv.yml
+          - r/1/virt.yml
+          - r/1/virt_nv.yml
     steps:
-      - name: Build Framework Virt Images
+      - name: Building Framework Base Images [virt/virt_nv]
         uses: blue-build/github-action@v1.12
         with:
           recipe: ${{ matrix.recipe }}
@@ -35,27 +35,69 @@ jobs:
           pr_event_number: ${{ github.event.number }}
           maximize_build_space: true
           prune: true
-  build-variants:
-    name: Build Downstream Variants
+  stage_two:
+    name: Building Stage Two Images [mini/nv + headless/nv] 
     runs-on: ubuntu-latest
-    needs: build-base
+    needs: stage_one
     strategy:
       fail-fast: false 
       matrix:
         recipe:
-          - framework_mini.yml
-          - framework_mini_nv.yml
-          - framework_headless.yml
-          - framework_headless_nv.yml
-          - framework_workstation.yml
-          - framework_workstation_nv.yml
+          - r/2/mini.yml
+          - r/2/mini_nv.yml
+          - r/2/headless.yml
+          - r/2/headless_nv.yml
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Build Variant Image
-        uses: blue-build/github-action@v1
+      - name: Building Stage Two Images [mini/nv + headless/nv] 
+        uses: blue-build/github-action@v1.12
         with:
-          recipe: ${{ matrix.recipe }} # Dynamically loads from the matrix list
+          recipe: ${{ matrix.recipe }
+          cosign_private_key: ${{ secrets.SIGNING_SECRET }}
+          registry_token: ${{ github.token }}
+          prune: true
+          maximize_build_space: false
+  stage_three:
+    name: Building Stage Three Images [ws/nv + gg/nv] 
+    runs-on: ubuntu-latest
+    needs: stage_two
+    strategy:
+      fail-fast: false 
+      matrix:
+        recipe:
+          - r/3/ws.yml
+          - r/3/ws_nv.yml
+          - r/3/gg.yml
+          - r/3/gg_nv.yml
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Building Stage Three Images [ws/nv + gg/nv] 
+        uses: blue-build/github-action@v1.12
+        with:
+          recipe: ${{ matrix.recipe }}
+          cosign_private_key: ${{ secrets.SIGNING_SECRET }}
+          registry_token: ${{ github.token }}
+          prune: true
+          maximize_build_space: false
+  stage_four:
+    name: Building Stage Four Images [full/nv] 
+    runs-on: ubuntu-latest
+    needs: stage_three
+    strategy:
+      fail-fast: false 
+      matrix:
+        recipe:
+          - r/4/full.yml
+          - r/4/full_nv.yml
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Building Stage Four Images [full/nv] 
+        uses: blue-build/github-action@v1.12
+        with:
+          recipe: ${{ matrix.recipe }}
           cosign_private_key: ${{ secrets.SIGNING_SECRET }}
           registry_token: ${{ github.token }}
           prune: true
