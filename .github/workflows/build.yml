@@ -6,6 +6,10 @@ on:
   push:
     paths-ignore:
       - "**.md"
+      - "**.jpg"
+      - "**.jpeg"
+      - "**.png"
+      - "**.webp"
   pull_request:
   workflow_dispatch:
 concurrency:
