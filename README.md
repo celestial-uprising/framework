@@ -2,16 +2,16 @@
 
 ## Framework
 
-Celestial Uprising Framework features a ublue-hci base, with several small reductions. Then, built into the immutable image itself: minimal, preconfigured niri desktop with a clean and useful defaults, matching waybar fuzzel, and opinionated-yet-minimal kitty. Modern tools (eza, ripgrep, btop, etc) are included out-of-the-box, as well as rustup for maintaining the latest toolchain, and neovim (as well as its dependencies, and those of lazyvim, and even vim itself).
+Celestial Uprising Framework features a ucore:latest base, with several small reductions. Then, built into the immutable image itself: bleeding-edge versions of Niri and DankMaterialShell; along with fuzzel, waybar, and kitty. Modern tools (yazi, flyline, eza, ripgrep, btop, etc) are included out-of-the-box, as well as RustUp and UV for maintaining the latest toolchains, and neovim (as well as its dependencies, and those of lazyvim).
 
 ### Celestial Uprising Framework is proudly built for everyone, by lesbidoodles and their coven of magical rabbits
 
 ## Roadmap for Framework
 
-**CF** will have three planned 'sub-versions' (as well as nvidia variants for each)
+**Framework** has 6 primary versions, and nVidia variants for each)
 
-- [Celestial Framework Mini] hyperminimal, desktop-ready variant; without qemu/kvm, libvirtd, or their accompanying tools (virt-manager flatpak and virsh are still installed)
 - [Celestial Framework] workstation-ready OOTB, and full-featured (for a minimalist with work to do)
+- [Celestial Framework Mini] hyperminimal, desktop-ready variant; without qemu/kvm, libvirtd, or their accompanying tools (virt-manager flatpak and virsh are still installed)
 - [Celestial Framework Headless] server-oriented, deployable, and reliable- for headless enviroments (or anything without a monitor attached...)
 
 ### Testing and development is performed on a small array of ryzen based machines with a variety of radeon and nvidia dgpus/igpus; by a coven of elusive rabbits with whom gaia has bestowed the privilege of magic
