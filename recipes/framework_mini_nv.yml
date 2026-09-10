@@ -29,7 +29,7 @@ stages:
             CARGO_HOME=/tmp/cargo cargo install --root /tmp/build uv
             cp /tmp/build/bin/uv* /tmp/bin/
 modules:
-  - from-file: include/files.yml
+  - from-file: include_mini/files.yml
 
   - type: copy
     from: rust-build
@@ -56,8 +56,8 @@ modules:
     src: /tmp/bin/uvx
     dest: /usr/bin/uvx
 
-  - from-file: include/dnf.yml
-  - from-file: include/flatpak.yml
-  - from-file: include/scripts.yml
+  - from-file: include_mini/dnf.yml
+  - from-file: include_mini/flatpak.yml
+  - from-file: include_mini/scripts.yml
 
   - type: signing
