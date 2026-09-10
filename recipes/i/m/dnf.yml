@@ -4,7 +4,6 @@ repos:
     - ulysg/xwayland-satellite
     - yalter/niri-git
     - avengemedia/dms-git
-    - sda/gpu-screen-recorder
     - sneexy/zen-browser
 install:
   packages:
@@ -28,7 +27,6 @@ install:
     - virt-manager
     - virt-viewer
     - moonlight-qt
-    - gpu-screen-recorder
 remove:
   packages:
     - alacritty

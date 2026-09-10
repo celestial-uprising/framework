@@ -4,7 +4,6 @@ repos:
     - yalter/niri-git
     - avengemedia/dms-git
     - solopasha/xwayland
-    - sda/gpu-screen-recorder
     - sneexy/zen-browser
 install:
   packages:
@@ -35,7 +34,6 @@ install:
     - obs-studio
     - ardour8
     - coppwr
-    - gpu-screen-recorder
 remove:
   packages:
     - alacritty
