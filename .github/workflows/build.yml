@@ -56,7 +56,7 @@ jobs:
           - r/2/headless_nv.yml
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Building Stage Two Images [mini/nv + headless/nv] 
         uses: blue-build/github-action@v1.12
         with:
@@ -82,7 +82,7 @@ jobs:
           - r/3/gg_nv.yml
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Building Stage Three Images [ws/nv + gg/nv] 
         uses: blue-build/github-action@v1.12
         with:
@@ -106,7 +106,7 @@ jobs:
           - r/4/full_nv.yml
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Building Stage Four Images [full/nv] 
         uses: blue-build/github-action@v1.12
         with:
