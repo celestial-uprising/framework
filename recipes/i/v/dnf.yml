@@ -7,6 +7,8 @@ repos:
     - kylegospo/amdctl
 install:
   packages:
+    - mesa-dri-drivers
+    - mesa-vulkan-drivers
     - vulkan-loader
     - vulkan-tools 
     - libva-nvidia-driver
@@ -56,7 +58,3 @@ remove:
     - cockpit
     - cockpit-bridge
     - cockpit-ws
-replace:
-      - from-repo: rpmfusion-free
-        packages:
-          - mesa-va-drivers-freeworld
