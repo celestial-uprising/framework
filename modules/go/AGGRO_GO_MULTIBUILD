@@ -8,11 +8,12 @@ set -euo pipefail
 # Inject your specific AOCC profile scripts here if they aren't globally inherited
 # source /opt/amd/aocc-compiler-current/setenv_aocc.sh
 
-REPO_FILE="/home/shepherd/.src/framework/modules/REPOS.md"
+REPO_FILE="/home/shepherd/.src/framework/modules/go/GO_REPOS.md"
 BUILD_DIR="/home/shepherd/.src/framework/modules/go/repos"
 OUTPUT_DIR="/home/shepherd/.src/framework/modules/go/bins"
 
 AOCC_FLAGS=(
+    "-Qunused-arguments"
     "-march=native"
     "-mtune=znver3"
     "-Ofast"
