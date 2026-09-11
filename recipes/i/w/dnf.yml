@@ -4,11 +4,13 @@ repos:
     - ulysg/xwayland-satellite
     - yalter/niri-git
     - avengemedia/dms
+    - avengemedia/danklinux
     - sneexy/zen-browser
 install:
   packages:
     - xdg-desktop-portal-gnome
     - niri
+    - dms-greeter
     - xwayland-satellite
     - dms
     - quickshell
