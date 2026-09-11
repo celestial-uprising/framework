@@ -2,12 +2,10 @@ type: dnf
 repos:
   copr:
     - lizardbyte/beta
-    - frostwork/steamtinkerlaunch
 install:
   packages:
     - obs-studio
     - steam
     - mangohud
     - gamescope
-    - steamtinkerlaunch
     - sunshine
