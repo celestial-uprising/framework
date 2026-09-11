@@ -11,5 +11,4 @@ configurations:
       - io.github.electronstudio.WeylusCommunityEdition
       - io.github.muse_sequencer.Muse
       - de.z_ray.OptimusUI ### NV ONLY
-      - com.snekstudio.Snekstudio ### TESTING AS RECPLACEMENT FOR XR_ANIMATOR --- 
   - scope: user

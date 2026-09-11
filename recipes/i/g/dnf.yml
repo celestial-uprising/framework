@@ -2,7 +2,6 @@ type: dnf
 repos:
   copr:
     - lizardbyte/beta
-    - yanniknusshold/proton-ge-custom
     - frostwork/steamtinkerlaunch
 install:
   packages:
@@ -10,6 +9,5 @@ install:
     - steam
     - mangohud
     - gamescope
-    - proton-ge-custom
     - steamtinkerlaunch
     - sunshine
