@@ -78,8 +78,6 @@ jobs:
         recipe:
           - r/3/ws.yml
           - r/3/ws_nv.yml
-          - r/3/gg.yml
-          - r/3/gg_nv.yml
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
