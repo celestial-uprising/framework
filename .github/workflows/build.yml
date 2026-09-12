@@ -36,23 +36,8 @@ jobs:
           lfs: true
       - name: Inject AGGRO Compiled Binaries and AOCC Compiler Installer
         run: |
-          # 1. Debug: Let's see exactly where your RPM file is hidden
-          echo "=== Finding all RPM files in the workspace ==="
-          find . -name "*.rpm"
-          
-          # 2. Re-create directories cleanly
           mkdir -p config/bins
-          mkdir -p config/rpms
-          
-          # 3. Copy files safely (using find so paths don't break)
           cp -r config/BINS_INJECT/* config/bins/ 2>/dev/null || true
-          
-          # This will find your 145MB RPM wherever it is and copy it to the right spot
-          find . -maxdepth 2 -name "*.rpm" -not -path "*/rpms/*" -exec cp {} config/rpms/ \;
-
-          # 4. Debug: Verify the file actually landed in the destination folder
-          echo "=== Content of config/rpms/ ==="
-          ls -lh config/rpms/
       - name: Building Framework Base Images [virt/virt_nv]
         uses: blue-build/github-action@v1.12
         with:
