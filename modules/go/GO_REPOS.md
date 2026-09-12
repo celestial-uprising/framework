@@ -1,7 +1,7 @@
 # GIT REPOS
+
 ## GOLANG
 https://github.com/charmbracelet/glow.git
-https://github.com/sorokin-vladimir/tele.git
 https://github.com/charmbracelet/vhs.git
 https://github.com/bjarneo/cliamp.git
 https://github.com/gfazioli/octoscope.git
@@ -60,3 +60,5 @@ https://github.com/B33pBeeps/redthread.git
 https://github.com/Mayowa-Ojo/chmod-cli.git
 https://github.com/gcla/termshark.git
 
+## PULL
+https://github.com/sorokin-vladimir/tele.git

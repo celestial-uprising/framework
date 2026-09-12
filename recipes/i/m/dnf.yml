@@ -3,8 +3,6 @@ repos:
   copr:
     - ulysg/xwayland-satellite
     - yalter/niri-git
-    - avengemedia/dms
-    - avengemedia/danklinux
     - sneexy/zen-browser
     - ferdiu/moonlight
 install:
@@ -14,13 +12,6 @@ install:
     - niri
     - xwayland-satellite
     - wl-clipboard
-    - dms
-    - dms-greeter
-    - quickshell
-    - matugen
-    - material-symbols-fonts
-    - dgop
-    - danksearch
     - fuzzel
     - kitty
     - waybar
