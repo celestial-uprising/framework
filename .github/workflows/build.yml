@@ -38,6 +38,7 @@ jobs:
         run: |
           mkdir -p config/bins
           cp -r /home/runner/work/framework/framework/config/BINS_INJECT/* config/bins/
+          cp -r /home/runner/work/framework/framework/config/*.rpm config/rpms/
       - name: Building Framework Base Images [virt/virt_nv]
         uses: blue-build/github-action@v1.12
         with:
