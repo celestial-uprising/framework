@@ -7,5 +7,4 @@ image-version: testing
 modules:
   - from-file: i/v/dnf.yml
   - from-file: i/v/scripts.yml
-  - from-file: i/i/INSTALL_BINS
   - type: signing

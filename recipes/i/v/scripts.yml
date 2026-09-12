@@ -25,3 +25,15 @@ snippets:
     echo 'export STARSHIP_CONFIG=/etc/starship.toml' > /etc/profile.d/starship-env.sh
     echo 'eval "$(starship init bash)"' > /etc/profile.d/starship.sh
     starship preset jetpack -o /etc/starship.toml
+
+    TARGET_DIR="/usr/bin"
+    mkdir -p "$TARGET_DIR"
+
+    for file in /tmp/config/bins/*.zst; do
+      if [ -f "$file" ]; then
+        echo "Decompressing $file..."
+        zstd -d "$file" -c >"$TARGET_DIR/$(basename "${file%.zst}")"
+      fi
+    done
+
+    chmod +x $TARGET_DIR/*
