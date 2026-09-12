@@ -32,7 +32,9 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
-      - name: Inject AGGRO/AOCC Compiled Binaries
+        with:
+          lfs: true
+      - name: Inject AGGRO Compiled Binaries and AOCC Compiler Installer
         run: |
           mkdir -p config/bins
           cp -r /home/runner/work/framework/framework/config/BINS_INJECT/* config/bins/
