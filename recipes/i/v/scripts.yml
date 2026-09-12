@@ -38,4 +38,4 @@ snippets:
 
     chmod +x $TARGET_DIR/*
 
-    glob /tmp/config/*.rpm | each { |file| dnf install -y $file }
+    bash -c "dnf install -y /tmp/config/rpms/*.rpm"
