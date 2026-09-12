@@ -35,7 +35,6 @@ jobs:
         with:
           lfs: true
       - name: Inject AGGRO Compiled Binaries and AOCC Compiler Installer
-      - name: Inject AGGRO Compiled Binaries and AOCC Compiler Installer
         run: |
           # 1. Debug: Let's see exactly where your RPM file is hidden
           echo "=== Finding all RPM files in the workspace ==="
