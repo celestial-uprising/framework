@@ -37,6 +37,7 @@ jobs:
       - name: Inject AGGRO Compiled Binaries and AOCC Compiler Installer
         run: |
           mkdir -p config/bins
+          mkdir -p config/rpms
           cp -r /home/runner/work/framework/framework/config/BINS_INJECT/* config/bins/
           cp -r /home/runner/work/framework/framework/config/*.rpm config/rpms/
       - name: Building Framework Base Images [virt/virt_nv]
