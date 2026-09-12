@@ -6,9 +6,15 @@ repos:
     - sneexy/zen-browser
 install:
   packages:
+    - sddm
+    - sddm-wayland-generic
+    - swaybg
+    - swaylock
     - xdg-desktop-portal-gnome
+    - xdg-desktop-portal-gtk
     - niri
     - xwayland-satellite
+    - wl-clipboard
     - fuzzel
     - kitty
     - waybar

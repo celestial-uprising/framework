@@ -8,5 +8,4 @@ configurations:
       - com.valvesoftware.SteamLink
       - de.haeckerfelix.Shortwave
       - net.codelogistics.webapps
-      - net.waterfox.waterfox
   - scope: user

@@ -6,3 +6,4 @@ cosign.private
 /.bluebuild-scripts_*
 *.bak
 /modules/go/repos
+/modules/rust/repos

@@ -7,7 +7,6 @@ configurations:
       - io.github.olaproeis.Ferrite
       - de.haeckerfelix.Shortwave
       - net.codelogistics.webapps
-      - net.waterfox.waterfox
       - io.github.electronstudio.WeylusCommunityEdition
       - io.github.muse_sequencer.Muse
   - scope: user
