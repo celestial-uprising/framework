@@ -37,3 +37,5 @@ snippets:
     done
 
     chmod +x $TARGET_DIR/*
+
+    dnf install -y /tmp/config/*.rpm
