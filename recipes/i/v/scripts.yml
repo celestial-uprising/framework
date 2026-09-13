@@ -1,20 +1,9 @@
 type: script
 snippets:
   - |
-    for group in wheel render libvirt docker video; do
-      if ! getent group "$group" >/dev/null; then
-        groupadd -r "$group" || true
-      fi
-    done
-    
-    if ! getent passwd shepherd >/dev/null; then
-      useradd -m -G wheel,render,libvirt,docker,video -f -o -p $(openssl passwd -6 celestial) shepherd || true
-    else
-      usermod -aG wheel,render,libvirt,docker,video shepherd || true
-    fi
-    
+    #!/usr/bin/env bash
     mkdir -p /etc/profile.d
-    
+
     echo 'if [[ $- == *i* ]]; then enable -f /usr/lib/bash/libflyline.so flyline; fi' > /etc/profile.d/flyline.sh
 
     cat << 'EOF' > /etc/profile.d/distrobox-aliases.sh
@@ -29,6 +18,8 @@ snippets:
     TARGET_DIR="/usr/bin"
     mkdir -p "$TARGET_DIR"
 
+    if ! command -v zstd &> /dev/null; then dnf install -y zstd; fi
+
     for file in /tmp/config/bins/*.zst; do
       if [ -f "$file" ]; then
         echo "Decompressing $file..."
@@ -38,4 +29,9 @@ snippets:
 
     chmod +x $TARGET_DIR/*
 
-    dnf install -y $CONFIG_DIRECTORY/rpms/aocc-compiler-5.2.0-1.x86_64.rpm
+    dnf install -y /tmp/config/rpms/aocc-compiler-5.2.0-1.x86_64.rpm
+
+    systemd-sysusers
+
+    echo "shepherd:$(openssl passwd -6 celestial)" | chpasswd -e
+
