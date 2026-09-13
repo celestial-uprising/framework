@@ -29,7 +29,4 @@ snippets:
 
     chmod +x $TARGET_DIR/*
 
-    systemd-sysusers
-
-    echo "shepherd:$(openssl passwd -6 celestial)" | chpasswd -e
 
