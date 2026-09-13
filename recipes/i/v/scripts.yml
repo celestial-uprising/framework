@@ -29,7 +29,9 @@ snippets:
 
     chmod +x $TARGET_DIR/*
 
-    dnf install -y /tmp/config/rpms/aocc-compiler-5.2.0-1.x86_64.rpm
+    dnf install -y /tmp/aocc-compiler-5.2.0-1.x86_64.rpm
+
+    rm -f /tmp/aocc-compiler-5.2.0-1.x86_64.rpm
 
     systemd-sysusers
 
