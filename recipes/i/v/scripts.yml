@@ -4,8 +4,6 @@ snippets:
     #!/usr/bin/env bash
     mkdir -p /etc/profile.d
 
-    echo 'if [[ $- == *i* ]]; then enable -f /usr/lib/bash/libflyline.so flyline; fi' > /etc/profile.d/flyline.sh
-
     cat << 'EOF' > /etc/profile.d/distrobox-aliases.sh
     alias db="distrobox enter"
     alias dbc="distrobox create"
@@ -14,19 +12,3 @@ snippets:
     echo 'export STARSHIP_CONFIG=/etc/starship.toml' > /etc/profile.d/starship-env.sh
     echo 'eval "$(starship init bash)"' > /etc/profile.d/starship.sh
     starship preset jetpack -o /etc/starship.toml
-
-    TARGET_DIR="/usr/bin"
-    mkdir -p "$TARGET_DIR"
-
-    if ! command -v zstd &> /dev/null; then dnf install -y zstd; fi
-
-    for file in /tmp/config/bins/*.zst; do
-      if [ -f "$file" ]; then
-        echo "Decompressing $file..."
-        zstd -d "$file" -c >"$TARGET_DIR/$(basename "${file%.zst}")"
-      fi
-    done
-
-    chmod +x $TARGET_DIR/*
-
-
