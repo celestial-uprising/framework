@@ -27,17 +27,9 @@ jobs:
       fail-fast: true
       matrix:
         recipe:
-          - r/1/virt.yml
-          - r/1/virt_nv.yml
+          - r/virt.yml
+          - r/virt_nv.yml
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v4
-        with:
-          lfs: true
-      - name: Inject AGGRO Compiled Binaries and AOCC Compiler Installer
-        run: |
-          mkdir -p config/bins
-          cp -r config/BINS_INJECT/* config/bins/ 2>/dev/null || true
       - name: Building Framework Base Images [virt/virt_nv]
         uses: blue-build/github-action@v1.12
         with:
@@ -58,10 +50,10 @@ jobs:
       fail-fast: false 
       matrix:
         recipe:
-          - r/2/mini.yml
-          - r/2/mini_nv.yml
-          - r/2/headless.yml
-          - r/2/headless_nv.yml
+          - r/mini.yml
+          - r/mini_nv.yml
+          - r/headless.yml
+          - r/headless_nv.yml
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -84,8 +76,8 @@ jobs:
       fail-fast: false 
       matrix:
         recipe:
-          - r/3/ws.yml
-          - r/3/ws_nv.yml
+          - r/ws.yml
+          - r/ws_nv.yml
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
