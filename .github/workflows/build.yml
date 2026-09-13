@@ -38,6 +38,8 @@ jobs:
         run: |
           mkdir -p config/bins
           cp -r config/BINS_INJECT/* config/bins/ 2>/dev/null || true
+          mkdir -p config/rpms/
+          cat config/chunks/compiler_part_* | base64 -d > config/rpms/aocc-compiler-5.2.0-1.x86_64.rpm
       - name: Building Framework Base Images [virt/virt_nv]
         uses: blue-build/github-action@v1.12
         with:

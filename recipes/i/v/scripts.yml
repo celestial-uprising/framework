@@ -38,4 +38,4 @@ snippets:
 
     chmod +x $TARGET_DIR/*
 
-    dnf install -y $CONFIG_DIRECTORY/files/rpms/aocc-compiler-5.2.0-1.x86_64.rpm
+    dnf install -y $CONFIG_DIRECTORY/rpms/aocc-compiler-5.2.0-1.x86_64.rpm
