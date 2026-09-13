@@ -6,6 +6,7 @@ repos:
     - sneexy/zen-browser
 install:
   packages:
+    - pcmanfm-qt
     - sddm
     - sddm-wayland-generic
     - swaybg

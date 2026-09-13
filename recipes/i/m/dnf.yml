@@ -7,6 +7,7 @@ repos:
     - ferdiu/moonlight
 install:
   packages:
+    - pcmanfm-qt
     - sddm
     - sddm-wayland-generic
     - swaybg
