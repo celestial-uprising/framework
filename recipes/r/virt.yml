@@ -10,8 +10,6 @@ modules:
       NAME: "Celestial Uprising"
       PRETTY_NAME: "Celestial Uprising 44.20260829.2.3 (framework)"
       VERSION_CODENAME: "framework"
-      RELEASE_TYPE: alpha
-      ID: "CelestialUprising"
       ID_LIKE: fedora
       HOME_URL: "https://github.com/celestial-uprising/framework/"
       DOCUMENTATION_URL: "https://docs.fedoraproject.org/en-US/fedora-coreos/"
