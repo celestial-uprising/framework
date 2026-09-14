@@ -1,7 +1,6 @@
 type: dnf
 repos:
   copr:
-    - atim/lazygit
     - che/nerd-fonts
     - kylegospo/amdctl
 install:
@@ -24,7 +23,6 @@ install:
     - zoxide
     - bat
     - eza
-    - lazygit
     - luarocks
     - tree-sitter-cli
     - python3-neovim
