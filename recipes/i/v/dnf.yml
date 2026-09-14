@@ -1,7 +1,6 @@
 type: dnf
 repos:
   copr:
-    - atim/starship
     - atim/lazygit
     - che/nerd-fonts
     - kylegospo/amdctl
@@ -26,18 +25,15 @@ install:
     - bat
     - eza
     - lazygit
-    - jq
     - luarocks
     - tree-sitter-cli
     - python3-neovim
-    - starship
     - btop
     - rocm-smi-devel
     - nvtop
     - radeontop
     - libdrm-devel
     - s-tui
-    - tmux
     - tree
     - vim
     - git
