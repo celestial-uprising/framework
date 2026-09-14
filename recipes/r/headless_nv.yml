@@ -5,5 +5,8 @@ description: for humans- by lesbidoodles ; with hope for a better future
 base-image: ghcr.io/celestial-uprising/framework-virt-nv
 image-version: latest
 modules:
+  - type: os-release
+    properties:
+      VARIANT: "headless-nv"
   - from-file: i/h/dnf.yml
   - type: signing
