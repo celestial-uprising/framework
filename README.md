@@ -2,7 +2,7 @@
 
 ## Framework
 
-Celestial Uprising Framework features a ucore:latest base, with several small reductions. Then, built into the immutable image itself: bleeding-edge versions of Niri and DankMaterialShell; along with fuzzel, waybar, and kitty. Modern tools (yazi, flyline, eza, ripgrep, btop, etc) are included out-of-the-box, as well as RustUp and UV for maintaining the latest toolchains, and neovim (as well as its dependencies, and those of lazyvim).
+Celestial Uprising Framework features a ucore:latest base, with several small reductions. Then, built into the immutable image itself: a blissfully-minimal Niri setup, along with fuzzel, waybar, and kitty-- all configured OOTB for instant development . Modern tools (yazi, flyline, eza, ripgrep, btop, etc) are included out-of-the-box, as well as RustUp and UV for maintaining the latest toolchains, and neovim (as well as its dependencies, and those of lazyvim). Notably, AMD's AOCC Compiler, its libraries, and dependencies are installed!!!
 
 ### Celestial Uprising Framework is proudly built for everyone, by lesbidoodles and their coven of magical rabbits
 
