@@ -1,8 +1,7 @@
 name: bluebuild
 on:
   schedule:
-    - cron:
-        "00 06 * * *"
+    - cron: "00 06 * * *"
   push:
     paths-ignore:
       - "**.md"
@@ -27,10 +26,10 @@ jobs:
       fail-fast: true
       matrix:
         recipe:
-          - r/virt.yml
-          - r/virt_nv.yml
+          - headless.yml
+          - chrome.yml
     steps:
-      - name: Building Framework Base Images [virt/virt_nv]
+      - name: Building Stage_1 Images
         uses: blue-build/github-action@v1.12
         with:
           recipe: ${{ matrix.recipe }}
@@ -39,7 +38,7 @@ jobs:
           pr_event_number: ${{ github.event.number }}
           maximize_build_space: true
   stage_two:
-    name: Building Stage Two Images [mini/nv + headless/nv] 
+    name: Building Stage_2 Images
     runs-on: ubuntu-latest
     needs: stage_one
     permissions:
@@ -47,41 +46,14 @@ jobs:
       packages: write
       id-token: write
     strategy:
-      fail-fast: false 
+      fail-fast: false
       matrix:
         recipe:
-          - r/mini.yml
-          - r/mini_nv.yml
-          - r/headless.yml
-          - r/headless_nv.yml
+          - workstation.yml
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
-      - name: Building Stage Two Images [mini/nv + headless/nv] 
-        uses: blue-build/github-action@v1.12
-        with:
-          recipe: ${{ matrix.recipe }}
-          cosign_private_key: ${{ secrets.SIGNING_SECRET }}
-          registry_token: ${{ github.token }}
-          maximize_build_space: false
-  stage_three:
-    name: Building Stage Three Images [ws/nv + gg/nv] 
-    runs-on: ubuntu-latest
-    needs: stage_two
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-    strategy:
-      fail-fast: false 
-      matrix:
-        recipe:
-          - r/ws.yml
-          - r/ws_nv.yml
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v7
-      - name: Building Stage Three Images [ws/nv + gg/nv] 
+      - name: Building Stage Two Images [mini/nv + headless/nv]
         uses: blue-build/github-action@v1.12
         with:
           recipe: ${{ matrix.recipe }}
