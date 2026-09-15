@@ -27,7 +27,7 @@ jobs:
       matrix:
         recipe:
           - headless.yml
-          - chrome.yml
+          - chromebook.yml
     steps:
       - name: Building Stage_1 Images
         uses: blue-build/github-action@v1.12
