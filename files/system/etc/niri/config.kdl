@@ -114,7 +114,7 @@ layout {
 }
 
 spawn-at-startup "waybar"
-spawn-at-startup "swaybg" "-m" "fill" "-i" "/home/shepherd/.media/images/ai-gen/z887yw.jpg"
+spawn-at-startup "swaybg" "-m" "fill" "-i" "/etc/default/background"
 hotkey-overlay {
      skip-at-startup
 }

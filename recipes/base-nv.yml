@@ -69,6 +69,7 @@ modules:
         - nmap
         - traceroute
         - whois
+        - rustup
     remove:
       packages:
         - nano
