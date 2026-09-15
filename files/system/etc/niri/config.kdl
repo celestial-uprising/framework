@@ -57,12 +57,12 @@ input {
 // https://niri-wm.github.io/niri/Configuration:-Outputs
 // Remember to uncomment the node by removing "/-"!
 //output "eDP-1" {
-    // off
-  //  mode "1366x768@60.059"
-  //  scale 0.75
-  //  transform "normal"
-  //  position x=1280 y=0
-}
+//    off
+//    mode "1366x768@60.059"
+//    scale 0.75
+//    transform "normal"
+//    position x=1280 y=0
+//}
 
 layout {
     gaps 0
