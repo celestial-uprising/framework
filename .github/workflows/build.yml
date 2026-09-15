@@ -16,20 +16,22 @@ concurrency:
   cancel-in-progress: true
 jobs:
   stage_one:
-    name: Build Base Images
+    name: Build Stage 1 Images
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
       id-token: write
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         recipe:
           - headless.yml
-          - chromebook.yml
+          - headless-nv.yml
+          - mini.yml
+          - mini-nv.yml
     steps:
-      - name: Building Stage_1 Images
+      - name: Building Stage 1 Images
         uses: blue-build/github-action@v1.12
         with:
           recipe: ${{ matrix.recipe }}
@@ -38,7 +40,7 @@ jobs:
           pr_event_number: ${{ github.event.number }}
           maximize_build_space: true
   stage_two:
-    name: Building Stage_2 Images
+    name: Building Stage 2 Images
     runs-on: ubuntu-latest
     needs: stage_one
     permissions:
@@ -50,10 +52,11 @@ jobs:
       matrix:
         recipe:
           - workstation.yml
+          - workstation-nv.yml
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
-      - name: Building Stage Two Images [mini/nv + headless/nv]
+      - name: Building Stage 2 Images
         uses: blue-build/github-action@v1.12
         with:
           recipe: ${{ matrix.recipe }}

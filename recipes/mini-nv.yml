@@ -1,13 +1,13 @@
 ---
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
-name: framework-chrome
+name: framework-mini-nv
 description: for humans- by lesbidoodles ; with hope for a better future
-base-image: ghcr.io/celestial-uprising/framework-base
+base-image: ghcr.io/celestial-uprising/framework-base-nv
 image-version: latest
 modules:
   - type: os-release
     properties:
-      VARIANT: "chrome"
+      VARIANT: "mini-nv"
   - type: files
     files:
       - source: system

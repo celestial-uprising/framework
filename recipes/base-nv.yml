@@ -1,9 +1,9 @@
 ---
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
-name: framework-base
+name: framework-base-nv
 description: for all- by lesbidoodles ; with hope for a better future
 base-image: ghcr.io/ublue-os/ucore
-image-version: testing
+image-version: testing-nvidia
 modules:
   - type: os-release
     properties:
@@ -15,7 +15,7 @@ modules:
       DOCUMENTATION_URL: "https://docs.fedoraproject.org/en-US/fedora-coreos/"
       SUPPORT_URL: "https://github.com/coreos/fedora-coreos-tracker/"
       BUG_REPORT_URL: "https://github.com/celestial-uprising/framework/"
-      VARIANT: "base"
+      VARIANT: "base-nv"
   - type: files
     files:
       - source: rpms/aocc-compiler-5.2.0-1.x86_64.rpm
