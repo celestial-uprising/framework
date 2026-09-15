@@ -5,5 +5,4 @@ cosign.private
 *.iso-CHECKSUM
 /.bluebuild-scripts_*
 *.bak
-/modules/go/repos
-/modules/rust/repos
+/files/rpm/*

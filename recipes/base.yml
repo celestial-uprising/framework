@@ -1,7 +1,7 @@
 ---
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
 name: framework-base
-description: for humans- by lesbidoodles ; with hope for a better future
+description: for all- by lesbidoodles ; with hope for a better future
 base-image: ghcr.io/ublue-os/ucore
 image-version: testing-nvidia
 modules:
@@ -16,15 +16,20 @@ modules:
       SUPPORT_URL: "https://github.com/coreos/fedora-coreos-tracker/"
       BUG_REPORT_URL: "https://github.com/celestial-uprising/framework/"
       VARIANT: "base"
+  - type: files
+    files:
+      - source: rpms/aocc-compiler-5.2.0-1.x86_64.rpm
+        destination: /tmp/aocc-compiler.rpm
   - type: dnf
     repos:
       copr:
         - atim/lazygit
         - atim/starship
-        - che/nerd-fonts
         - kylegospo/amdctl
     install:
       packages:
+        - libquadmath
+        - libquadmath-devel
         - lazygit
         - starship
         - power-profiles-daemon
@@ -36,7 +41,6 @@ modules:
         - libva-nvidia-driver
         - amdctl
         - cascadia-code-nf-fonts
-        - nerd-fonts
         - glibc-langpack-en
         - libvirt-client
         - libvirt-client-qemu
@@ -79,11 +83,27 @@ modules:
     snippets:
       - |
         #!/usr/bin/env bash
-        mkdir -p /etc/profile.d
 
+        echo "Installing AOCC Compiler..."
+        rpm -ivh --nodigest --nosignature /tmp/aocc-compiler.rpm
+        rm -f /tmp/aocc-compiler.rpm
+
+        echo "Creating BASH aliases..."
+        mkdir -p /etc/profile.d
         cat << 'EOF' > /etc/profile.d/distrobox-aliases.sh
         alias db="distrobox enter"
         alias dbc="distrobox create"
+        alias l="ls -A"
+        alias ll="ls -lAsH"
+        alias pls="podman ps"
+        alias plsa="podman ps -a"
+        alias prm="podman rm"
+        alias prmi="podman rmi"
+        alias pstop="podman stop"
+        alias prun="podman run"
+        alias bb="bluebuild"
+        alias bbb="bluebuild build --build-driver podman"
+        alias bbbb="bluebuild build --build-driver podman $HOME/.src/framework/recipes/base.yml"
         EOF
   - type: fonts
     fonts:
