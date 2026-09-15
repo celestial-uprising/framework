@@ -8,16 +8,15 @@ Celestial Uprising Framework features a ucore:latest base, with several small re
 
 ## Roadmap for Framework
 
-**Framework** has 6 primary versions, and nVidia variants for each)
+**Framework** has 3 versions 
+	[+  nvidia variants] 
 
-- [Celestial Framework] workstation-ready OOTB, and full-featured (for a minimalist with work to do)
-- [Celestial Framework Mini] hyperminimal, desktop-ready variant; without qemu/kvm, libvirtd, or their accompanying tools (virt-manager flatpak and virsh are still installed)
-- [Celestial Framework Headless] server-oriented, deployable, and reliable- for headless enviroments (or anything without a monitor attached...)
+- *Framework*  --  workstation-ready OOTB, and full-featured (for a minimalist with work to do)
+- *Framework-Mini*  --  hyperminimal, desktop-ready variant; without qemu/kvm, libvirtd, or their accompanying tools (virt-manager flatpak and virsh are still installed)
+- *Framework-Headless*  --  server-oriented, deployable, and reliable- for headless enviroments (or anything without a monitor attached...)
 
-### Testing and development is performed on a small array of ryzen based machines with a variety of radeon and nvidia dgpus/igpus; by a coven of elusive rabbits with whom gaia has bestowed the privilege of magic
-
-#### Dog-fooding
-
+### Dog-fooding
+Testing and development is performed on a small array of ryzen based machines with a variety of radeon and nvidia dgpus/igpus; by a coven of elusive rabbits with whom gaia has bestowed the privilege of magic
 ## Installation
 
 To rebase an existing atomic Fedora installation to the latest build:
@@ -71,5 +70,5 @@ If build on Fedora Atomic, you can generate an offline ISO with the instructions
 These images are signed with [Sigstore](https://www.sigstore.dev/)'s [cosign](https://github.com/sigstore/cosign). You can verify the signature by downloading the `cosign.pub` file from this repo and running the following command:
 
 ```bash
-cosign verify --key cosign.pub ghcr.io/celestial-uprising/cfw
+cosign verify --key cosign.pub ghcr.io/celestial-uprising/framework
 ```
