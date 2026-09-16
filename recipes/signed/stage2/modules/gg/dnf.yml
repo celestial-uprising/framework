@@ -1,7 +1,6 @@
 type: dnf
 repos:
-  nonfree:
-    - rpmfusion
+  nonfree: rpmfusion
 install:
   packages:
     - steam
