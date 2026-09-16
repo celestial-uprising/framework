@@ -1,8 +1,8 @@
 type: files
 files:
-  - source: files/99-cpu-governor.rules
+  - source: 99-cpu-governor.rules
     destination: /etc/udev/rules.d/99-cpu-governor.rules
-  - source: files/99-workstation-perf.conf
+  - source: 99-workstation-perf.conf
     destination: /etc/sysctl.d/99-workstation-perf.conf
-  - source: files/60-weylus.rules
+  - source: 60-weylus.rules
     destination: /etc/sysctl.d/60-weylus.rules
