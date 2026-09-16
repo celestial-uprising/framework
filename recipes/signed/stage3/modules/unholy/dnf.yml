@@ -4,20 +4,14 @@ repos:
     - daniarla/Weylus
 install:
   packages:
-    - weylus
-    - obs-studio
-    - obs-studio-plugin-vaapi
-    - v4l2loopback
-    - piper
+    - Weylus
     - krita
     - inkscape
     - gimp
     - kdenlive
     - blender
-    - obs-studio
     - ardour9
     - audacity
-    - pipewire-jack-audio-connection-kit
     - kicad
     - kicad-packages3d
     - kicad-doc
@@ -29,5 +23,4 @@ install:
     - scribus
     - google-noto-sans-fonts
     - google-noto-serif-fonts
-    - FreeCAD
     - librecad
