@@ -1,0 +1,126 @@
+/* ==============================================================================
+   WAYBAR LAYOUT STYLE RESTRUCTURING TEMPLATE (GTK CSS Layout rules)
+   ============================================================================== */
+
+/* Reset global structural parameters across the bar core */
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrainsMono Nerd Font", "Helvetica", Arial, sans-serif;
+    font-size: 13px;
+    min-height: 0;
+}
+
+/* The primary outer container wrapping the entire layout window */
+window#waybar {
+    background-color: rgba(30, 30, 46, 0.9); /* Transparent Catppuccin Mocha */
+    color: #cdd6f4;
+    transition: background-color 0.5s;
+}
+
+/* Hide the bar window wrapper completely when full-screen applications are running */
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+/* Targets individual utility modules globally */
+.modules-left, .modules-center, .modules-right {
+    background-color: transparent;
+    padding: 2px;
+}
+
+/* ==============================================================================
+   MODULE INTERNALS AND CLASS EXTENSIONS
+   ============================================================================== */
+
+/* Native Niri Workspace Pill Buttons */
+#workspaces button {
+    padding: 0 5px;
+    background-color: transparent;
+    color: #6c7086;
+    border-bottom: 3px solid transparent;
+}
+
+#workspaces button.focused {
+    color: #ca9ee6;
+    border-bottom: 3px solid #ca9ee6;
+}
+
+#workspaces button.urgent {
+    background-color: #e64553;
+    color: #ffffff;
+}
+
+/* Individual Module Pill Elements */
+#clock,
+#battery,
+#cpu,
+#memory,
+#network,
+#pulseaudio,
+#mpd,
+#idle_inhibitor,
+#tray {
+    padding: 0 10px;
+    color: #cdd6f4;
+    background-color: #313244;
+    margin: 4px 2px;
+    border-radius: 6px;
+}
+
+/* Specialized MPD Activity Modifiers */
+#mpd.playing {
+    background-color: #a6e3a1;
+    color: #11111b;
+}
+
+#mpd.paused {
+    background-color: #f38ba8;
+    color: #11111b;
+}
+
+#mpd.disconnected {
+    background-color: #f9e2af;
+    color: #11111b;
+}
+
+/* Specialized Battery Alert Scaling */
+#battery.charging, #battery.plugged {
+    background-color: #a6e3a1;
+    color: #11111b;
+}
+
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: #000000;
+    }
+}
+
+#battery.critical:not(.charging) {
+    background-color: #f38ba8;
+    color: #ffffff;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+/* Network and Audio Mute states */
+#network.disconnected,
+#pulseaudio.muted {
+    background-color: #f38ba8;
+    color: #11111b;
+}
+
+/* Internal System Tray padding adjustments */
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: #f38ba8;
+}
+

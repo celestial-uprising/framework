@@ -1,0 +1,31 @@
+# ==============================================================================
+# GLOBAL HERDR CONFIGURATION REFERENCE TEMPLATE
+# ==============================================================================
+
+[server]
+# Socket communication path hook
+socket_path = "~/.local/state/herdr/server.sock"
+auto_start = true
+
+[ui]
+# Select from built-in themes (e.g., catppuccin, dracula, nord, default)
+theme = "catppuccin"
+show_sidebar = true          # Shows your running agents list state metrics
+sidebar_position = "left"    # choices: "left", "right"
+mouse_support = true        # Allows dragging/clicking panes natively
+
+[agents]
+# Enable notification toast behavior indicators when an agent drops to "Blocked"
+notifications_enabled = true
+audible_bell = false
+
+[keybindings]
+# Global multiplexer escape prefix sequence (Default is Ctrl+b)
+prefix = "C-b"
+
+# Define custom hotkeys mapped over the prefix sequence
+"C-b h" = "split-horizontal"
+"C-b v" = "split-vertical"
+"C-b q" = "detach"            # Safely leave agents processing in background
+"C-b x" = "kill-pane"
+

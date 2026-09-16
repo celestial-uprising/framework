@@ -1,0 +1,6 @@
+type: files
+files:
+  - source: rpms/aocc-compiler-5.2.0-1.x86_64.rpm
+    destination: /tmp/aocc-compiler.rpm
+  - source: system
+    destination: /

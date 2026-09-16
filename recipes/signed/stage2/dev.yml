@@ -1,0 +1,12 @@
+---
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
+name: dev
+description: for all- by lesbidoodles ; with hope for a better future
+base-image: ghcr.io/celestial-uprising/mini
+image-version: latest
+modules:
+  - from-file: signed/stage2/modules/dev/os-release.yml
+  - from-file: signed/stage2/modules/dev/files.yml
+  - from-file: signed/stage2/modules/dev/dnf.yml
+  - from-file: signed/stage2/modules/dev/kargs.yml
+  - type: signing

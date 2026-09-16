@@ -1,0 +1,6 @@
+arguments:
+  - msr.allow_writes=on
+  - amdgpu.ppfeaturemask=0xffffffff
+  - split_lock_detect=off
+  - transparent_hugepage=madvise
+  - zfs.zfs_arc_max=17179869184

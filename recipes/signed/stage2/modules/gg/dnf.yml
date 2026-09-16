@@ -1,0 +1,11 @@
+install:
+  packages:
+    - steam
+    - steam-devices
+    - mangohud
+    - gamescope
+    - gamemode
+    - obs-studio
+    - obs-studio-plugin-vaapi
+    - v4l2loopback
+    - piper

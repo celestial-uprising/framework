@@ -1,0 +1,13 @@
+config:
+  - source: files/niri-config.kdl
+    destination: /etc/niri/config.kdl
+  - source: files/waybar-config-nv.jsonc
+    destination: /etc/xdg/waybar/config.jsonc
+  - source: files/waybar-style-nv.css
+    destination: /etc/xdg/waybar/style.css
+  - source: files/fuzzel-fuzzel.ini
+    destination: /etc/xdg/fuzzel/fuzzel.ini
+  - source: files/kitty-kitty.conf
+    destination: /etc/xdg/kitty.conf
+  - source: files/gpu-switch.sh
+    destination: /usr/bin/gpu-switch.sh

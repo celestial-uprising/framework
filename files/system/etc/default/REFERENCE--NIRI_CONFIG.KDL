@@ -1,0 +1,246 @@
+// ==============================================================================
+// NIRI COMPOSITOR REFERENCE TEMPLATE (KDL Format)
+// Documentation: https://github.com/YaLTeR/niri/wiki
+// ==============================================================================
+
+// --- GLOBAL SETTINGS ---
+// Controls whether error notifications block your workflow on broken syntax loads
+config-notification { disable-failed; }
+
+// Define custom environment variables inside the compositor scope
+environment {
+    QT_QPA_PLATFORM "wayland"
+    ELECTRON_OZONE_PLATFORM_HINT "wayland"
+    CLUTTER_BACKEND "wayland"
+}
+
+// System paths for global screen cap features
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+// Un-comment to completely hide the hotkey cheat sheet popup on login phase
+// hotkey-overlay { skip-at-startup; }
+
+
+// ==============================================================================
+// 1. INPUT DEVICES & INTERACTION CONFIG
+// ==============================================================================
+input {
+    // Enable auto-back-and-forth between current and previous workspaces
+    workspace-auto-back-and-forth
+
+    keyboard {
+        xkb {
+            layout "us"
+            // options "grp:win_space_toggle,caps:super" // Swap CapsLock to Super
+        }
+        repeat-delay 600
+        repeat-rate 25
+        track-layout "global" // choices: "global", "per-window"
+    }
+
+    touchpad {
+        // off
+        tap
+        dwt      // Disable-While-Typing flag
+        dwtp     // Disable-While-Trackpointing flag
+        natural-scroll
+        scroll-method "two-finger" // choices: "two-finger", "edge"
+        click-method "clickfinger" // choices: "clickfinger", "button-areas"
+    }
+
+    mouse {
+        // off
+        // natural-scroll
+        // accel-speed 0.2
+        // accel-profile "flat" // choices: "adaptive", "flat"
+    }
+
+    trackpoint {
+        // natural-scroll
+    }
+
+    // --- FOCUS RULES ---
+    // Controls how mouse tracking interacts with window focus boundaries
+    focus-follows-mouse max-scroll-amount="0%" // "0%" locks focus changes to static elements
+    
+    // Key used to hold and drag windows interactively (floating or workspace moving)
+    mod-key "Super" 
+}
+
+
+// ==============================================================================
+// 2. MONITOR & OUTPUT DEFINITIONS
+// ==============================================================================
+// Match your exact output names via 'niri msg outputs' execution outputs
+output "eDP-1" {
+    // Format: "<width>x<height>@<refresh_rate>"
+    mode "1920x1080@144.000" 
+    scale 1.0
+    transform "normal" // choices: "normal", "90", "180", "270", "flipped-90", etc.
+    position x=0 y=0
+}
+
+// Example secondary external screen config block
+/-output "HDMI-A-1" {
+    mode "3840x2160@60.000"
+    scale 1.5
+    position x=1920 y=0
+}
+
+
+// ==============================================================================
+// 3. LAYOUT, GAPS & WINDOW BORDERS
+// ==============================================================================
+layout {
+    // Gap sizes declared directly in logical pixel values
+    gaps 12
+
+    // Dictates viewport behavior when switching column focus profiles
+    // choices: "never", "always", "on-overflow"
+    center-focused-column "never" 
+
+    // Incremental widths targeted by "switch-preset-window-width" cycles
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.50000
+        proportion 0.66667
+    }
+
+    // Default sizing layout schema applied to fresh software instances
+    default-column-width { proportion 0.5; }
+
+    // --- VISUAL RING (FOCUS INDICATOR) ---
+    focus-ring {
+        // off
+        width 2
+        active-color "#a6e3a1"   // Catppuccin Mint Green
+        inactive-color "#45475a" // Deep Grey Muted
+    }
+
+    // --- OUTER WINDOW BORDERS ---
+    border {
+        off
+        width 1
+        active-color "#b4befe"
+        inactive-color "#313244"
+    }
+
+    // Forces clients to drop client-side shadows/bars in favor of Niri rules
+    prefer-no-csd
+
+    struts {
+        // Reserves space on the screens margins for standalone panels like Waybar
+        left 0
+        right 0
+        top 0
+        bottom 0
+    }
+}
+
+
+// ==============================================================================
+// 4. ANIMATION CURVES (SPRING & PHYSICS DRIVEN)
+// ==============================================================================
+animations {
+    // To completely mute movement processing loops across layouts:
+    // off
+
+    // Spring variables follow: stiffness, damping, and optional mass
+    window-open {
+        spring stiffness=1000 damping=50 mass=1.0
+    }
+    
+    window-close {
+        spring stiffness=1000 damping=50 mass=1.0
+    }
+
+    horizontal-view-movement {
+        spring stiffness=800 damping=40
+    }
+
+    workspace-switch {
+        spring stiffness=600 damping=38
+    }
+}
+
+
+// ==============================================================================
+// 5. TAILORED WINDOW TARGET RULES (MATCH FILTERS)
+// ==============================================================================
+// Catch custom instances to enforce sizing parameters automatically
+window-rule {
+    match title="floating_rmpc"
+    match app-id="floating_rmpc"
+    
+    open-floating true
+    default-floating-position x=50 y=50 relative-to="parent-monitor"
+    default-floating-dimensions width=800 height=500
+}
+
+window-rule {
+    match app-id="^org\\.gnome\\."
+    match app-id="^kitty$"
+    
+    geometry-corner-radius 12
+    clip-to-geometry true
+}
+
+
+// ==============================================================================
+// 6. HOTKEY DICTIONARY & CORE WORKSPACE COMMANDS
+// ==============================================================================
+binds {
+    // --- System Actions ---
+    Mod+Shift+E { quit; }
+    Mod+Shift+R { spawn "niri" "msg" "reload"; } // Safe live reload hook
+
+    // --- Application Shortcuts ---
+    Mod+Return { spawn "kitty"; }
+    Mod+D      { spawn "fuzzel"; }
+    Mod+E      { spawn "kitty" "-e" "yazi"; }
+
+    // --- Audio Client Pop-out ---
+    Mod+M      { spawn "kitty" "--class" "floating_rmpc" "-e" "rmpc"; }
+
+    // --- Multimedia Control Scripts (Using mpc) ---
+    XF86AudioPlay  { spawn "mpc" "toggle"; }
+    XF86AudioNext  { spawn "mpc" "next"; }
+    XF86AudioPrev  { spawn "mpc" "prev"; }
+
+    // --- Navigation Layout Interactivity ---
+    Mod+H     { focus-column-left; }
+    Mod+L     { focus-column-right; }
+    Mod+J     { focus-window-down; }
+    Mod+K     { focus-window-up; }
+
+    Mod+Shift+H { move-column-left; }
+    Mod+Shift+L { move-column-right; }
+    Mod+Shift+J { move-window-down; }
+    Mod+Shift+K { move-window-up; }
+
+    // --- Workspace Navigation ---
+    Mod+Page_Down { focus-workspace-down; }
+    Mod+Page_Up   { focus-workspace-up; }
+    Mod+Shift+Page_Down { move-window-to-workspace-down; }
+    Mod+Shift+Page_Up   { move-window-to-workspace-up; }
+
+    // Number Row Workspace bindings (1-9)
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+Shift+1 { move-window-to-workspace 1; }
+    Mod+Shift+2 { move-window-to-workspace 2; }
+    Mod+Shift+3 { move-window-to-workspace 3; }
+
+    // --- Sizing Adjustments ---
+    Mod+R       { switch-preset-column-width; }
+    Mod+F       { maximize-column; }
+    Mod+Shift+F { fullscreen-window; }
+    Mod+C       { center-column; }
+
+    Mod+Minus   { set-column-width "-10%"; }
+    Mod+Equal   { set-column-width "+10%"; }
+    Mod+Shift+Minus { set-window-height "-10%"; }
+    Mod+Shift+Equal { set-window-height "+10%"; }
+}
+

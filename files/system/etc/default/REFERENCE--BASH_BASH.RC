@@ -1,0 +1,93 @@
+# ==============================================================================
+# INTERACTIVE BASH REFERENCE TEMPLATE
+# ==============================================================================
+
+# Abort early if the current session is non-interactive (e.g., automated scripts running)
+[[ $- != *i* ]] && return
+
+# --- IMMUTABLE / ATOMIC BLOCKS ---
+# Append custom user-level local binary paths safely to your shell context
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
+# --- CORE SHELL OPTIONS (shopt) ---
+shopt -s autocd      # Type a folder name directly to 'cd' into it automatically
+shopt -s cdspell     # Correct minor spelling errors or typos in directory paths
+shopt -s checkwinsize # Dynamically update terminal row/col variables after window resizes
+shopt -s cmdhist     # Enforce multi-line commands to save as a single entry block
+shopt -s histappend  # Append commands to your history file instantly rather than overwriting it
+shopt -s globstar    # Allow complex recursive file matching patterns (e.g., ls **/*.js)
+
+# --- SANE HISTORY OVERRIDES ---
+# Massive settings to prevent command histories from dropping out during image rebuilds
+HISTSIZE=50000
+HISTFILESIZE=100000
+HISTCONTROL=ignoreboth:erasedups # Prevent duplicate lines or commands starting with a space
+HISTIGNORE="ls:cd:exit:pwd:clear:history" # Ignore clean-up utility clutter commands
+
+# Flush command storage loops immediately after every execution tick
+PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+
+# --- TERMINAL COLOR MECHANICS ---
+# Enforce generic color profile support hooks across foundational utilities
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+    alias diff='diff --color=auto'
+fi
+
+# --- THE PROMPT CONFIGURATION (PS1) ---
+# Clean, minimalist, Git-aware prompt string block with structural visual anchors
+if [ "$color_prompt" = yes ] || [ -n "$SSH_CONNECTION" ] || [ "$TERM" = "xterm-kitty" ]; then
+    # Format: [HH:MM] username@hostname:current_dir $
+    PS1="\[\e[1;35m\][\t] \[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\] \$ "
+else
+    PS1="[\t] \u@\h:\w \$ "
+fi
+
+# --- DICTIONARY ALIASES ---
+# Core Safety Overrides
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+# Modern Core Utility Alternates & Shorthand Navigation
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+# Target Application Shortcuts we built in your recipe
+alias y='yazi'
+alias player='rmpc'
+alias music='rmpc'
+alias check-audio='systemctl --user status mpd.service'
+
+# Atomic Specific Deployment Shorthands
+alias os-update='rpm-ostree upgrade'
+alias os-status='rpm-ostree status'
+alias flat-update='flatpak update'
+
+# --- KITTY TERMINAL INTEGRATIONS ---
+# If running inside kitty, optimize terminal text scaling sequences natively
+if [ "$TERM" = "xterm-kitty" ]; then
+    # Intercept raw 'ssh' commands to use kitty's smart terminal escape sequences
+    alias ssh="kitty +kitten ssh"
+fi
+
+# --- AUTO-COMPLETION HANDLERS ---
+# Enable the rich DNF/bash package tracking logic maps if provisioned natively
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+

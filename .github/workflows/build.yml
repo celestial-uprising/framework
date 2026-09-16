@@ -26,12 +26,13 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - headless.yml
-          - headless-nv.yml
-          - mini.yml
-          - mini-nv.yml
+          - signed/stage1/headless.yml
+          - signed/stage1/headless-nv.yml
+          - signed/stage1/mini.yml
+          - signed/stage1/mini-nv.yml
+          - signed/stage1/virt.yml
     steps:
-      - name: Building Stage 1 Images
+      - name: Building HEADLESS/VIRT/MINI Images
         uses: blue-build/github-action@v1.12
         with:
           recipe: ${{ matrix.recipe }}
@@ -51,12 +52,39 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - workstation.yml
-          - workstation-nv.yml
+          - signed/stage2/dev.yml
+          - signed/stage2/dev-nv.yml
+          - signed/stage2/gg.yml
+          - signed/stage2/gg-nv.yml
+          - signed/stage2/touch.yml
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
-      - name: Building Stage 2 Images
+      - name: Building DEV/GG/TOUCH Images
+        uses: blue-build/github-action@v1.12
+        with:
+          recipe: ${{ matrix.recipe }}
+          cosign_private_key: ${{ secrets.SIGNING_SECRET }}
+          registry_token: ${{ github.token }}
+          maximize_build_space: false
+  stage_three:
+    name: Building Stage 3 Images
+    runs-on: ubuntu-latest
+    needs: stage_two
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    strategy:
+      fail-fast: true
+      matrix:
+        recipe:
+          - signed/stage3/unholy.yml
+          - signed/stage3/unholy-nv.yml
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+      - name: Building UNHOLY Images
         uses: blue-build/github-action@v1.12
         with:
           recipe: ${{ matrix.recipe }}

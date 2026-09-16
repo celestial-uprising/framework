@@ -1,0 +1,11 @@
+install:
+  packages:
+    - krita
+    - inkscape
+    - gimp
+    - mypaint
+    - mypaint-brushes
+    - opentoonz
+    - scribus
+    - google-noto-sans-fonts
+    - google-noto-serif-fonts

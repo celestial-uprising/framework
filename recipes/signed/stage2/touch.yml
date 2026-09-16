@@ -1,0 +1,11 @@
+---
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
+name: touch
+description: for all- by lesbidoodles ; with hope for a better future
+base-image: ghcr.io/celestial-uprising/mini
+image-version: latest
+modules:
+  - from-file: signed/stage2/modules/touch/os-release.yml
+  - from-file: signed/stage2/modules/touch/dnf.yml
+  - from-file: signed/stage2/modules/touch/kargs.yml
+  - type: signing

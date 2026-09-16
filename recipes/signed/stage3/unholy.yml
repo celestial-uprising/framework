@@ -1,0 +1,12 @@
+---
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
+name: unholy
+description: for all- by lesbidoodles ; with hope for a better future
+base-image: ghcr.io/celestial-uprising/gaming
+image-version: latest
+modules:
+  - from-file: signed/stage3/modules/unholy/os-release.yml
+  - from-file: signed/stage3/modules/unholy/files.yml
+  - from-file: signed/stage3/modules/unholy/dnf.yml
+  - from-file: signed/stage3/modules/unholy/kargs.yml
+  - type: signing

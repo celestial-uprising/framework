@@ -1,0 +1,28 @@
+# ==============================================================================
+# YAZI KEYMAPS REFERENCE CONFIGURATION
+# Location: ~/.config/yazi/keymap.toml
+# ==============================================================================
+
+[manager]
+prepend_keymap = [
+	# Navigation Mapping
+	{ on = [ "q" ], run = "quit", desc = "Exit Yazi" },
+	{ on = [ "k" ], run = "arrow -1", desc = "Move cursor up" },
+	{ on = [ "j" ], run = "arrow 1", desc = "Move cursor down" },
+	{ on = [ "h" ], run = "leave", desc = "Go to parent directory" },
+	{ on = [ "l" ], run = "enter", desc = "Enter directory or open file" },
+
+	# Selection Actions
+	{ on = [ "<Space>" ], run = "toggle --state=none", desc = "Toggle selection" },
+	{ on = [ "v" ],       run = "visual_mode", desc = "Enter visual mode" },
+
+	# Interactive Open Actions
+	{ on = [ "O" ], run = "open --interactive", desc = "Open with custom launcher selector" },
+
+	# File System Actions
+	{ on = [ "c", "c" ], run = "copy", desc = "Copy selected files" },
+	{ on = [ "x" ],       run = "cut", desc = "Cut selected files" },
+	{ on = [ "p" ],       run = "paste", desc = "Paste copied/cut files" },
+	{ on = [ "d", "d" ], run = "remove --permanently", desc = "Permanently delete files" },
+	{ on = [ "r" ],       run = "rename --cursor=before_ext", desc = "Rename file" }
+]

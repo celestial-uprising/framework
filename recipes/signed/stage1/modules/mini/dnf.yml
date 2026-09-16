@@ -1,0 +1,34 @@
+repos:
+  copr:
+    - ulysg/xwayland-satellite
+    - yalter/niri-git
+    - sneexy/zen-browser
+    - ferdiu/moonlight
+    - skoved/rmpc
+install:
+  packages:
+    - thunar
+    - ly
+    - mpv
+    - ffmpeg
+    - ffmpegthumbnailer
+    - mpd
+    - mpc
+    - rmpc
+    - imgv
+    - swaybg
+    - swaylock
+    - xdg-desktop-portal-gnome
+    - xdg-desktop-portal-gtk
+    - niri
+    - xwayland-satellite
+    - wl-clipboard
+    - fuzzel
+    - kitty
+    - waybar
+    - zen-browser
+    - remmina
+    - flatpak
+    - virt-manager
+    - virt-viewer
+    - moonlight-qt

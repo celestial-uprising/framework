@@ -1,0 +1,34 @@
+# ==============================================================================
+# YAZI VISUAL DESIGN THEME CONFIGURATION
+# Location: ~/.config/yazi/theme.toml
+# ==============================================================================
+
+[manager]
+# Layout Color Palette Rules (Catppuccin Mocha Accents)
+border_style = { fg = "#7f849c" }
+
+[status]
+separator_open  = ""
+separator_close = ""
+separator_style = { bg = "#313244", fg = "#313244" }
+
+# Mode Badges Custom Styles
+mode_normal = { bg = "#89b4fa", fg = "#11111b", bold = true }
+mode_select = { bg = "#a6e3a1", fg = "#11111b", bold = true }
+mode_unset  = { bg = "#f38ba8", fg = "#11111b", bold = true }
+
+[filetype]
+rules = [
+	# Media Visual Mapping Indicators
+	{ mime = "image/*", fg = "#fab387" },
+	{ mime = "audio/*", fg = "#eba0ac" },
+	{ mime = "video/*", fg = "#f9e2af" },
+	
+	# Archive Identifiers
+	{ mime = "application/zip", fg = "#f5c2e7" },
+	{ mime = "application/x-tar", fg = "#f5c2e7" },
+	
+	# Fallbacks
+	{ name = "*", fg = "#cdd6f4" },
+	{ is = "dir", fg = "#89b4fa" }
+]

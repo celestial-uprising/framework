@@ -1,0 +1,61 @@
+# ==============================================================================
+# YAZI GENERAL BEHAVIOR CONFIGURATION
+# Location: ~/.config/yazi/yazi.toml
+# ==============================================================================
+
+[manager]
+ratio          = [1, 4, 3]
+sort_by        = "name"
+sort_sensitive = false
+sort_reverse   = false
+sort_dir_first = true
+linemode       = "none"
+show_hidden    = false
+show_symlink   = true
+scrolloff      = 5
+mouse_events   = [ "click", "scroll" ]
+
+[preview]
+tab_size        = 2
+max_width       = 600
+max_height      = 900
+cache_dir       = ""
+image_filter    = "triangle"
+image_quality   = 75
+
+[opener]
+view_image = [
+	{ run = 'imv "$@"', orphan = true, desc = "View image with imv" }
+]
+queue_audio = [
+	{ run = 'mpc add "$@"', desc = "Queue music into MPD" }
+]
+play_audio = [
+	{ run = 'mpc clear && mpc add "$@" && mpc play', desc = "Play instantly in MPD" }
+]
+edit = [
+	{ run = '${EDITOR:-nano} "$@"', block = true, desc = "Edit File" }
+]
+open = [
+	{ run = 'xdg-open "$@"', desc = "Open via System Association" }
+]
+
+[open]
+prepend_rules = [
+	{ mime = "image/*", use = "view_image" },
+	{ name = "*.heic",  use = "view_image" },
+	{ mime = "audio/*", use = [ "play_audio", "queue_audio" ] },
+	{ name = "*.mp3",   use = [ "play_audio", "queue_audio" ] },
+	{ name = "*.flac",  use = [ "play_audio", "queue_audio" ] },
+	{ mime = "text/*",  use = "edit" },
+	{ name = "*.json",  use = "edit" },
+	{ name = "*.toml",  use = "edit" },
+	{ mime = "*",       use = "open" }
+]
+
+[input]
+cursor_blink = false
+
+[select]
+open_title  = "Open with:"
+open_origin = "hovered"

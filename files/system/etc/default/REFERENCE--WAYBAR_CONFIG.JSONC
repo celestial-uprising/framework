@@ -1,0 +1,156 @@
+{
+    // ==============================================================================
+    // WAYBAR CONFIGURATION REFERENCE TEMPLATE
+    // Documentation: https://github.com
+    // ==============================================================================
+
+    // --- GLOBAL BAR LAYOUT ---
+    "layer": "top",          // Choices: "top", "bottom". Top prevents windows from covering it.
+    "position": "top",       // Choices: "top", "bottom", "left", "right"
+    "height": 32,            // Pixel height (remove to let CSS padding auto-size it)
+    "width": null,           // Pixel width (null or omit for 100% full stretch)
+    "spacing": 4,            // Gaps between individual modules in pixels
+    "margin-top": 0,         // Outer gap offsets
+    "margin-bottom": 0,
+    "margin-left": 0,
+    "margin-right": 0,
+    "exclusive": true,       // Forces compositor to reserve space (doesn't overlap windows)
+    "passthrough": false,    // Pass click events through to windows underneath
+    "fixed-center": true,    // Enforce strict physical centering of the middle block
+
+    // --- MODULE ORIENTATION ARRAYS ---
+    "modules-left": [
+        "niri/workspaces",
+        "niri/window"
+    ],
+    "modules-center": [
+        "mpd"
+    ],
+    "modules-right": [
+        "idle_inhibitor",
+        "pulseaudio",
+        "network",
+        "cpu",
+        "memory",
+        "battery",
+        "clock",
+        "tray"
+    ],
+
+    // ==============================================================================
+    // MODULE SPECIFIC SCHEMAS
+    // ==============================================================================
+
+    // Niri Workspaces (Requires a recent Waybar build with native Niri support)
+    "niri/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "default": "",
+            "active": ""
+        }
+    },
+
+    // Active Window Title
+    "niri/window": {
+        "format": "{}",
+        "max-length": 50,
+        "separate-outputs": true
+    },
+
+    // Music Player Daemon (MPD) Block
+    "mpd": {
+        "format": "{stateIcon} {title} - {artist} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ",
+        "format-disconnected": "⚠ Disconnected",
+        "format-stopped": " Stopped",
+        "unknown-tag": "Unknown",
+        "interval": 2,
+        "on-click": "mpc toggle",
+        "on-click-right": "kitty --class floating_rmpc -e rmpc",
+        "on-scroll-up": "mpc next",
+        "on-scroll-down": "mpc prev",
+        "state-icons": {
+            "paused": "",
+            "playing": ""
+        },
+        "tooltip-format": "MPD: {filename} [{repeatIcon}{randomIcon}{singleIcon}][{stateIcon}]"
+    },
+
+    // System Tray (Notification Icons)
+    "tray": {
+        "icon-size": 16,
+        "spacing": 10
+    },
+
+    // Clock & Date (Utilizes standard strftime tokens)
+    "clock": {
+        "timezone": "America/New_York",
+        "format": "{:%I:%M %p - %Y-%m-%d}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": "{:%H:%M:%S}" // Flips display token format when clicked
+    },
+
+    // CPU Metrics
+    "cpu": {
+        "interval": 5,
+        "format": " {usage}%",
+        "tooltip": true
+    },
+
+    // Memory Metrics
+    "memory": {
+        "interval": 5,
+        "format": " {}%"
+    },
+
+    // Battery Metrics (For Laptops)
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["", "", "", "", ""]
+    },
+
+    // Network Connectivity States
+    "network": {
+        "format-wifi": " {essid} ({signalStrength}%)",
+        "format-ethernet": " {ipaddr}/{cidr}",
+        "tooltip-format": " {ifname} via {gwaddr}",
+        "format-disconnected": "⚠ Disconnected",
+        "on-click": "kitty -e nmtui" // Opens NetworkManager text layout when clicked
+    },
+
+    // Audio / Volume Management (PipeWire / PulseAudio backend standard)
+    "pulseaudio": {
+        "scroll-step": 5, // Percent increase/decrease per scroll tick
+        "format": "{icon} {volume}% {format_source}",
+        "format-muted": " {format_source}",
+        "format-source": " {volume}%",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+
+    // Coffee / Sleep Prevention Mode Toggle
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    }
+}
+
