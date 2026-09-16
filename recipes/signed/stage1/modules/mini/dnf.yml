@@ -16,7 +16,7 @@ install:
     - mpd
     - mpc
     - rmpc
-    - imgv
+    - imv
     - swaybg
     - swaylock
     - xdg-desktop-portal-gnome
