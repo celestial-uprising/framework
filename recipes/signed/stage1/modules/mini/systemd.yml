@@ -1,0 +1,8 @@
+type: systemd
+system:
+  enable:
+    - ly.service
+  default-target: graphical.target
+user:
+  enable:
+    - mpd.service

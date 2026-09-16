@@ -10,3 +10,5 @@ files:
     destination: /etc/xdg/fuzzel/fuzzel.ini
   - source: kitty-kitty.conf
     destination: /etc/xdg/kitty.conf
+  - source: mpd-user.conf
+    destination: /usr/lib/tmpfiles.d/mpd-user.conf

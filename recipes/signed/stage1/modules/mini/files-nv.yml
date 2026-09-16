@@ -12,3 +12,5 @@ files:
     destination: /etc/xdg/kitty.conf
   - source: gpu-switch.sh
     destination: /usr/bin/gpu-switch.sh
+  - source: mpd-user.conf
+    destination: /usr/lib/tmpfiles.d/mpd-user.conf
