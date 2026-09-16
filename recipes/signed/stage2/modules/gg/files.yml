@@ -1,5 +1,5 @@
 type: files
-config:
+files:
   - source: 99-cpu-governor.rules
     destination: /etc/udev/rules.d/99-cpu-governor.rules
   - source: 99-workstation-perf.conf
