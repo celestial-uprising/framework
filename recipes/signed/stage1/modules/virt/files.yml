@@ -1,3 +1,4 @@
+type: files
 config:
   - source: files/dracut-virtio.conf
     destination: /etc/dracut.conf.d/virtio.conf

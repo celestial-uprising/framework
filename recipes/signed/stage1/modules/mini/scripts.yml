@@ -1,3 +1,4 @@
+type: script
 snippets:
   - |
     #!/usr/bin/env bash

@@ -1,3 +1,4 @@
+type: dnf
 repos:
   copr:
     - daniarla/Weylus

@@ -1,3 +1,4 @@
+type: default-flatpaks
 configurations:
   - notify: true
     scope: system

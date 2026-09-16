@@ -1,3 +1,4 @@
+type: dnf
 install:
   packages:
     - qemu-guest-agent

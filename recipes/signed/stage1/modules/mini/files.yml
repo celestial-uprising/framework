@@ -1,3 +1,4 @@
+type: files
 config:
   - source: files/niri-config.kdl
     destination: /etc/niri/config.kdl
