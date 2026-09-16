@@ -1,5 +1,5 @@
 type: files
-config:
+files:
   - source: files/niri-config.kdl
     destination: /etc/niri/config.kdl
   - source: files/waybar-config-nv.jsonc

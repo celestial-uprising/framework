@@ -1,5 +1,5 @@
 type: files
-config:
+files:
   - source: files/dracut-virtio.conf
     destination: /etc/dracut.conf.d/virtio.conf
   - source: files/99-cpu-governor.rules
