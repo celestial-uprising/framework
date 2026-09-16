@@ -1,4 +1,7 @@
 type: dnf
+repos:
+  nonfree:
+    - rpmfusion
 install:
   packages:
     - steam
@@ -8,5 +11,4 @@ install:
     - gamemode
     - obs-studio
     - obs-studio-plugin-vaapi
-    - v4l2loopback
-    - piper
+    - akmod-v4l2loopback

@@ -33,3 +33,4 @@ install:
     - virt-manager
     - virt-viewer
     - moonlight-qt
+    - piper
