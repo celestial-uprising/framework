@@ -1,4 +1,4 @@
 type: kargs
-args:
+kargs:
   - msr.allow_writes=on
   - amdgpu.ppfeaturemask=0xffffffff
