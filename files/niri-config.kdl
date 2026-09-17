@@ -1,7 +1,4 @@
-// "/-" comments out the following node.
 // https://niri-wm.github.io/niri/Configuration:-Introduction
-// https://niri-wm.github.io/niri/Configuration:-Outputs
-
 input {
     keyboard {
         xkb {
@@ -17,8 +14,7 @@ input {
     mouse {
     }
     focus-follows-mouse max-scroll-amount="0%"
-}
-
+  }
 layout {
     gaps 0
     preset-column-widths {
@@ -36,39 +32,30 @@ layout {
     border {
         off
     }
-
+  }
 spawn-at-startup "waybar"
 spawn-at-startup "swaybg" "-m" "fill" "-i" "/etc/default/background"
-
 hotkey-overlay {
      skip-at-startup
-}
-
+  }
 prefer-no-csd
-
 screenshot-path "~/media/screenshots/screenshot_from_%Y-%m-%d %H-%M-%S.png"
-
 animations {
      off
-}
-
+  }
 /-window-rule {
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     open-floating true
-}
-
+  }
 window-rule {
     geometry-corner-radius 12
     clip-to-geometry true
-}
+  }
 window-rule {
     match title="floating_rmpc"
     match app-id="floating_rmpc"
     open-floating true
-    default-floating-position x=50 y=50 relative-to="parent-monitor"
-    default-floating-dimensions width=800 height=500
-}
-
+  }
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
     Mod+Return hotkey-overlay-title="Spawn Herdr" { spawn "kitty" "--title" "Herdr Workspace" "-e" "herdr"; }
@@ -212,3 +199,4 @@ binds {
     Mod+Equal { set-column-width "+10%"; }
     Mod+Shift+Minus { set-window-height "-10%"; }
     Mod+Shift+Equal { set-window-height "+10%"; }
+  }
