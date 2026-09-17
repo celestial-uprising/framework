@@ -10,3 +10,4 @@ modules:
   - from-file: unsigned/modules/dnf.yml
   - from-file: unsigned/modules/scripts.yml
   - from-file: unsigned/modules/fonts.yml
+  - from-file: unsigned/modules/kargs.yml

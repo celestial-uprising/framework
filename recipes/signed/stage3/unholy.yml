@@ -9,5 +9,4 @@ modules:
   - from-file: signed/stage3/modules/unholy/files.yml
   - from-file: signed/stage3/modules/unholy/dnf.yml
   - from-file: signed/stage3/modules/unholy/default-flatpaks.yml
-  - from-file: signed/stage3/modules/unholy/kargs.yml
   - type: signing

@@ -8,5 +8,5 @@ modules:
   - from-file: signed/stage1/modules/headless/os-release-nv.yml
   - from-file: signed/stage1/modules/headless/files.yml
   - from-file: signed/stage1/modules/headless/dnf.yml
-  - from-file: signed/stage1/modules/headless/kargs.yml
+  - from-file: signed/stage1/modules/headless/kargs-nv.yml
   - type: signing

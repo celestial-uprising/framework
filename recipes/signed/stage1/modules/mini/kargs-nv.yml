@@ -2,6 +2,6 @@ type: kargs
 kargs:
   - msr.allow_writes=on
   - amdgpu.ppfeaturemask=0xffffffff
-  - pcie_aspm=off
+  - NVIDIA.NVreg_PreserveVideoMemoryAllocations=1
   - amdgpu.sg_display=0
   - nvme_core.default_ps_max_latency=0

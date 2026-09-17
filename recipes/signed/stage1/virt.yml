@@ -8,4 +8,5 @@ modules:
   - from-file: signed/stage1/modules/virt/os-release.yml
   - from-file: signed/stage1/modules/virt/files.yml
   - from-file: signed/stage1/modules/virt/dnf.yml
+  - from-file: signed/stage1/modules/virt/kargs.yml
   - type: signing

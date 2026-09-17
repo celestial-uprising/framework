@@ -1,0 +1,5 @@
+type: kargs
+kargs:
+  - console=tty0
+  - console=ttyS0,115200n8
+  - scsi_mod.use_blk_mq=1
