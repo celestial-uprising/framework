@@ -34,3 +34,19 @@ install:
     - virt-viewer
     - moonlight-qt
     - piper
+    - gtkmm3.0-devel
+    - jsoncpp-devel
+    - libsigc++20-devel
+    - fmt-devel
+    - wayland-devel
+    - date-devel
+    - spdlog-devel
+    - libxkbcommon-devel
+    - gtk3-devel
+    - upower-devel
+    - pulseaudio-libs-devel
+    - libnl3-devel
+    - libappindicator-gtk3-devel
+    - libdbusmenu-gtk3-devel
+    - libmpdclient-devel sndio-devel
+    - libevdev-devel

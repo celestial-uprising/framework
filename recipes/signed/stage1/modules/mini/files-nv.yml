@@ -9,7 +9,7 @@ files:
   - source: fuzzel-fuzzel.ini
     destination: /etc/xdg/fuzzel/fuzzel.ini
   - source: kitty-kitty.conf
-    destination: /etc/xdg/kitty.conf
+    destination: /etc/xdg/kitty/kitty.conf
   - source: gpu-switch.sh
     destination: /usr/bin/gpu-switch.sh
   - source: mpd-user.conf
