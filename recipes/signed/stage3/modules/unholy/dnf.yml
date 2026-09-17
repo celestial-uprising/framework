@@ -1,10 +1,6 @@
 type: dnf
-repos:
-  copr:
-    - daniarla/Weylus
 install:
   packages:
-    - Weylus
     - krita
     - inkscape
     - gimp

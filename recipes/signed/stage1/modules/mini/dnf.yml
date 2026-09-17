@@ -48,5 +48,4 @@ install:
     - libappindicator-gtk3-devel
     - libdbusmenu-gtk3-devel
     - libmpdclient-devel
-    - sndio-devel
     - libevdev-devel
