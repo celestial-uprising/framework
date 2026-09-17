@@ -23,7 +23,6 @@ install:
     - xdg-desktop-portal-gtk
     - niri
     - xwayland-satellite
-    - wl-clipboard
     - fuzzel
     - kitty
     - waybar
@@ -48,5 +47,6 @@ install:
     - libnl3-devel
     - libappindicator-gtk3-devel
     - libdbusmenu-gtk3-devel
-    - libmpdclient-devel sndio-devel
+    - libmpdclient-devel
+    - sndio-devel
     - libevdev-devel
