@@ -7,5 +7,4 @@ image-version: latest
 modules:
   - from-file: signed/stage2/modules/touch/os-release.yml
   - from-file: signed/stage2/modules/touch/dnf.yml
-  - from-file: signed/stage2/modules/touch/kargs.yml
   - type: signing
