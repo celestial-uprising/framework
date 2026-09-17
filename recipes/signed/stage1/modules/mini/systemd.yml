@@ -1,7 +1,9 @@
 type: systemd
 system:
   enable:
-    - ly.service
+    - ly@tty2.service
+  disabled:
+    - getty@tty2.service
   default-target: graphical.target
 user:
   enable:

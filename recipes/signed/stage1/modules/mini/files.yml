@@ -12,3 +12,5 @@ files:
     destination: /etc/xdg/kitty/kitty.conf
   - source: mpd-user.conf
     destination: /usr/lib/tmpfiles.d/mpd-user.conf
+  - source: ly-config.lua
+    destination: /etc/ly/config.lua

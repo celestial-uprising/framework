@@ -5,13 +5,7 @@ snippets:
 
     set -oue pipefail
 
-    ln -sf /usr/lib/systemd/system/ly.service /etc/systemd/system/display-manager.service
-
     chcon system_u:object_r:xdm_exec_t:s0 /usr/bin/ly
-
-    systemctl set-default graphical.target
-
-    systemctl --global enable mpd.service
 
     mkdir -p /usr/lib/tmpfiles.d
     cat <<EOF > /usr/lib/tmpfiles.d/mpd-user.conf

@@ -6,8 +6,11 @@ repos:
     - sneexy/zen-browser
     - ferdiu/moonlight
     - skoved/rmpc
+    - greg-at-redhat/glowm
 install:
   packages:
+    - glowm
+    - chromium-headless
     - thunar
     - ly
     - mpv
