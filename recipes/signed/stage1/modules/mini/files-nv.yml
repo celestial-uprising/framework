@@ -14,7 +14,5 @@ files:
     destination: /usr/bin/gpu-switch.sh
   - source: mpd-user.conf
     destination: /usr/lib/tmpfiles.d/mpd-user.conf
-  - source: ly-config.lua
-    destination: /etc/ly/config.lua
-  - source: pam.d-ly
-    destination: /etc/pam.d/ly
+  - source: ly-config.ini
+    destination: /etc/ly/config.ini
