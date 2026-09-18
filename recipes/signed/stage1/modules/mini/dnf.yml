@@ -39,6 +39,4 @@ install:
     - brightnessctl
     - power-profiles-ctl
     - wireplumber
-    - lm_sensors
     - network-manager-applet
-    - blueman
