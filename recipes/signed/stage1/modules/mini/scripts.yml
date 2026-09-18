@@ -11,7 +11,7 @@ snippets:
     d       %h/.config/mpd/playlists 0755 %U  %G   -   -
     EOF
 
-    cat << 'EOF' > /etc/etc/profile.d/niri-launch.sh
+    cat << 'EOF' > /etc/profile.d/niri-launch.sh
     if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
       exec niri-session
     fi
