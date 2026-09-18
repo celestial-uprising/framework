@@ -32,8 +32,8 @@ jobs:
           - signed/stage1/mini-nv.yml
           - signed/stage1/virt.yml
     steps:
-      - name: Building HEADLESS/VIRT/MINI Images
-        uses: blue-build/github-action@v1.12
+      - name: Building Stage 1 Images
+        uses: blue-build/github-action@v1.13
         with:
           recipe: ${{ matrix.recipe }}
           cosign_private_key: ${{ secrets.SIGNING_SECRET }}
@@ -58,10 +58,8 @@ jobs:
           - signed/stage2/gg-nv.yml
           - signed/stage2/touch.yml
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v7
-      - name: Building DEV/GG/TOUCH Images
-        uses: blue-build/github-action@v1.12
+      - name: Building 2 Images
+        uses: blue-build/github-action@v1.13
         with:
           recipe: ${{ matrix.recipe }}
           cosign_private_key: ${{ secrets.SIGNING_SECRET }}
@@ -76,16 +74,14 @@ jobs:
       packages: write
       id-token: write
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         recipe:
           - signed/stage3/unholy.yml
           - signed/stage3/unholy-nv.yml
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v7
-      - name: Building UNHOLY Images
-        uses: blue-build/github-action@v1.12
+      - name: Building Stage 3 Images
+        uses: blue-build/github-action@v1.13
         with:
           recipe: ${{ matrix.recipe }}
           cosign_private_key: ${{ secrets.SIGNING_SECRET }}
