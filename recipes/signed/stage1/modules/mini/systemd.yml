@@ -1,9 +1,4 @@
 type: systemd
-system:
-  enabled:
-    - ly@tty2.service
-  disabled:
-    - getty@tty2.service
 user:
   enabled:
     - mpd.service
