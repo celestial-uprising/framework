@@ -16,3 +16,5 @@ files:
     destination: /usr/lib/tmpfiles.d/mpd-user.conf
   - source: ly-config.ini
     destination: /etc/ly/config.ini
+  - source: niri-launch.sh
+    destination: /etc/profile.d/niri-launch.sh

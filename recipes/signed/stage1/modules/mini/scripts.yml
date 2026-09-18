@@ -10,10 +10,3 @@ snippets:
     d       %h/.config/mpd          0755 %U  %G   -   -
     d       %h/.config/mpd/playlists 0755 %U  %G   -   -
     EOF
-
-    mkdir -p /etc/profile.d
-    cat << 'EOF' > /etc/profile.d/niri-launch.sh
-    if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
-    exec niri-session
-    fi
-    EOF
