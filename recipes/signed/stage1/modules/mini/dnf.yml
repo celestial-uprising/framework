@@ -37,6 +37,5 @@ install:
     - piper
     - playerctl
     - brightnessctl
-    - power-profiles-ctl
     - wireplumber
     - network-manager-applet
