@@ -5,12 +5,14 @@ snippets:
 
     set -oue pipefail
 
-    ln -sf /usr/lib/systemd/system/graphical.target /etc/systemd/system/default.target
-
-    chcon system_u:object_r:xdm_exec_t:s0 /usr/bin/ly
-
     mkdir -p /usr/lib/tmpfiles.d
     cat <<EOF > /usr/lib/tmpfiles.d/mpd-user.conf
     d       %h/.config/mpd          0755 %U  %G   -   -
     d       %h/.config/mpd/playlists 0755 %U  %G   -   -
+    EOF
+
+    cat << 'EOF' > /etc/etc/profile.d/niri-launch.sh
+    if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
+      exec niri-session
+    fi
     EOF
