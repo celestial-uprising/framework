@@ -9,8 +9,6 @@ install:
   packages:
     - libva-nvidia-driver
     - python3-envycontrol
-    - libquadmath
-    - libquadmath-devel
     - lazygit
     - starship
     - power-profiles-daemon

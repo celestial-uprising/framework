@@ -3,30 +3,6 @@ snippets:
   - |
     #!/usr/bin/env bash
 
-    echo "Installing AOCC Compiler..."
-    rpm -ivh --nodigest --nosignature /tmp/aocc-compiler.rpm
-    rm -f /tmp/aocc-compiler.rpm
-
-    echo "Creating BASH aliases..."
-    mkdir -p /etc/profile.d
-    cat << 'EOF' > /etc/profile.d/distrobox-aliases.sh
-    alias db="distrobox enter"
-    alias dbc="distrobox create"
-    alias l="ls -A"
-    alias ll="ls -lAsH"
-    alias pls="podman ps"
-    alias plsa="podman ps -a"
-    alias prm="podman rm"
-    alias prmi="podman rmi"
-    alias pstop="podman stop"
-    alias prun="podman run"
-    alias bb="bluebuild"
-    alias bbb="bluebuild build --build-driver podman"
-    alias bbbb="bluebuild build --build-driver podman $HOME/.src/framework/recipes/base.yml"
-    export CU="$HOME/.src/framework"
-    export AG="$HOME/.src/aggrollama"
-    EOF
-
     echo "Configuring universal default user..."
     if ! getent passwd core > /dev/null 2>&1; then
         useradd -m -G wheel -s /bin/bash core

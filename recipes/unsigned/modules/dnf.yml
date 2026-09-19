@@ -6,8 +6,6 @@ repos:
     - kylegospo/amdctl
 install:
   packages:
-    - libquadmath
-    - libquadmath-devel
     - lazygit
     - starship
     - power-profiles-daemon
