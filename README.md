@@ -2,34 +2,40 @@
 
 ## Framework
 
-Celestial Uprising Framework features a ucore:latest base, with several small reductions. Then, built into the immutable image itself: a blissfully-minimal Niri setup, along with fuzzel, waybar, and kitty-- all configured OOTB for instant development . Modern tools (yazi, flyline, eza, ripgrep, btop, etc) are included out-of-the-box, as well as RustUp and UV for maintaining the latest toolchains, and neovim (as well as its dependencies, and those of lazyvim). Notably, AMD's AOCC Compiler, its libraries, and dependencies are installed!!!
+Celestial Uprising's Framework brings the steadfast base of ucore:testing. Tidied up, and finished with a blissfully-minimal niri/fuzzel/waybar/kitty environment-- all configured OOTB for instant development.
 
-### Celestial Uprising Framework is proudly built for everyone, by lesbidoodles and their coven of magical rabbits
+### Celestial Uprising Framework is proudly built for all, by lesbidoodles and their coven of magical rabbits
 
 ## Roadmap for Framework
 
-**Framework** has 3 versions 
-	[+  nvidia variants] 
+**Framework** has 12 versions, including nvidia variants:
 
-- *Framework*  --  workstation-ready OOTB, and full-featured (for a minimalist with work to do)
+- *virt*  -- secure container OS for cloud or local vm usage; specialized for qemu/kvm/libvirt virtual enviroments
+- *headless / headless-nv*  --
+- *mini / mini-nv*  --
+- *touch*  --
+- *dev / dev-nv*  --
+- *gg / gg-nv*  --
+- *unholy / unholy-nv*  --  workstation-ready OOTB, and full-featured (for a minimalist with work to do)
+- *dev / dev-nv*  --  workstation-ready OOTB, and full-featured (for a minimalist with work to do)
+- *dev / dev-nv*  --  workstation-ready OOTB, and full-featured (for a minimalist with work to do)
 - *Framework-Mini*  --  hyperminimal, desktop-ready variant; without qemu/kvm, libvirtd, or their accompanying tools (virt-manager flatpak and virsh are still installed)
 - *Framework-Headless*  --  server-oriented, deployable, and reliable- for headless enviroments (or anything without a monitor attached...)
 
 ### Dog-fooding
 Testing and development is performed on a small array of ryzen based machines with a variety of radeon and nvidia dgpus/igpus; by a coven of elusive rabbits with whom gaia has bestowed the privilege of magic
+
 ## Installation
 
-To rebase an existing atomic Fedora installation to the latest build:
+To rebase an existing **atomic**/**ucore**/**ublue** installation to the latest build:
 
 - First rebase to the unsigned image, to get the proper signing keys and policies installed:
 
   ```
-  rpm-ostree rebase ostree-unverified-registry:ghcr.io/celestial-uprising/framework:latest
+  rpm-ostree rebase ostree-unverified-registry:ghcr.io/celestial-uprising/${IMAGE_NAME}:latest
   ```
 
 - Reboot to complete the rebase:
-
-=======
 
 ```
 systemctl reboot
@@ -38,19 +44,7 @@ systemctl reboot
 - Then rebase to the signed image, like so:
 
   ```
-  rpm-ostree rebase ostree-image-signed:docker://ghcr.io/celestial-uprising/framework:latest
-  ```
-
-- Reboot again to complete the installation
-
-  ```
-  systemctl reboot
-  ```
-
-- Then rebase to the signed image, like so:
-
-  ```
-  rpm-ostree rebase ostree-image-signed:docker://ghcr.io/celestial-uprising/framework:latest
+  rpm-ostree rebase ostree-image-signed:docker://ghcr.io/celestial-uprising/${IMAGE_NAME}:latest
   ```
 
 - Reboot again to complete the installation
