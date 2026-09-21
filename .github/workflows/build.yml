@@ -15,8 +15,8 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
   cancel-in-progress: true
 jobs:
-  stage_one:
-    name: Build Stage 1 Images
+  rapid_build:
+    name: Build Mini Image Only
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -26,13 +26,9 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - signed/stage1/headless.yml
-          - signed/stage1/headless-nv.yml
           - signed/stage1/mini.yml
-          - signed/stage1/mini-nv.yml
-          - signed/stage1/virt.yml
     steps:
-      - name: Building Stage 1 Images
+      - name: Building Mini Image for Testing
         uses: blue-build/github-action@v1.13
         with:
           recipe: ${{ matrix.recipe }}
@@ -40,50 +36,3 @@ jobs:
           registry_token: ${{ github.token }}
           pr_event_number: ${{ github.event.number }}
           maximize_build_space: true
-  stage_two:
-    name: Building Stage 2 Images
-    runs-on: ubuntu-latest
-    needs: stage_one
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-    strategy:
-      fail-fast: false
-      matrix:
-        recipe:
-          - signed/stage2/dev.yml
-          - signed/stage2/dev-nv.yml
-          - signed/stage2/gg.yml
-          - signed/stage2/gg-nv.yml
-          - signed/stage2/touch.yml
-    steps:
-      - name: Building 2 Images
-        uses: blue-build/github-action@v1.13
-        with:
-          recipe: ${{ matrix.recipe }}
-          cosign_private_key: ${{ secrets.SIGNING_SECRET }}
-          registry_token: ${{ github.token }}
-          maximize_build_space: false
-  stage_three:
-    name: Building Stage 3 Images
-    runs-on: ubuntu-latest
-    needs: stage_two
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-    strategy:
-      fail-fast: false
-      matrix:
-        recipe:
-          - signed/stage3/unholy.yml
-          - signed/stage3/unholy-nv.yml
-    steps:
-      - name: Building Stage 3 Images
-        uses: blue-build/github-action@v1.13
-        with:
-          recipe: ${{ matrix.recipe }}
-          cosign_private_key: ${{ secrets.SIGNING_SECRET }}
-          registry_token: ${{ github.token }}
-          maximize_build_space: false

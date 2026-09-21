@@ -12,6 +12,11 @@ repos:
     - kylegospo/amdctl
 install:
   packages:
+    - kf6-qqc2-desktop-style
+    - kf6-kirigami-addons
+    - kirigami-app-components
+    - kf6-kio-gui
+    - kf6-kiconthemes
     - kf6-kirigami
     - qt6-qtdeclarative
     - qt6-qt5compat
