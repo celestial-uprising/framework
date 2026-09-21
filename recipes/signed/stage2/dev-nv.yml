@@ -5,6 +5,7 @@ description: for all- by lesbidoodles ; with hope for a better future
 base-image: ghcr.io/celestial-uprising/mini-nv
 image-version: latest
 modules:
+  - from-file: signed/stage2/modules/dev/akmods.yml
   - from-file: signed/stage2/modules/dev/os-release-nv.yml
   - from-file: signed/stage2/modules/dev/files.yml
   - from-file: signed/stage2/modules/dev/dnf.yml

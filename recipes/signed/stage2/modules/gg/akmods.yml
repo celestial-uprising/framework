@@ -1,0 +1,9 @@
+type: akmods
+install:
+  - ryzen-smu
+  - zenergy
+  - kvmfr
+  - v4l2loopback
+  - openrazer
+  - xone
+  - xpadneo

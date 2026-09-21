@@ -1,0 +1,5 @@
+type: akmods
+install:
+  - ryzen-smu
+  - zenergy
+  - kvmfr

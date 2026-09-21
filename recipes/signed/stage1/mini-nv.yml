@@ -5,6 +5,7 @@ description: for all- by lesbidoodles ; with hope for a better future
 base-image: ghcr.io/ublue-os/ucore
 image-version: testing-nvidia
 modules:
+  - from-file: signed/stage1/modules/mini/akmods.yml
   - from-file: signed/stage1/modules/mini/os-release-nv.yml
   - from-file: signed/stage1/modules/mini/files-nv.yml
   - from-file: signed/stage1/modules/mini/dnf-nv.yml
