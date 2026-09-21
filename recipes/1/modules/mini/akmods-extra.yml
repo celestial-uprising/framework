@@ -2,7 +2,8 @@
 ---
 modules:
   - type: akmods
-    base: coreos-stable
+    base: coreos-testing
+    chroot-path: extra
     install:
       - ryzen-smu
       - zenergy
