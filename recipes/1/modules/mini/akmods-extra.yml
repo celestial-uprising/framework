@@ -2,7 +2,7 @@
 ---
 modules:
   - type: akmods
-    base: coreos-testing
+    base: coreos-stable
     install:
       - ryzen-smu
       - zenergy
