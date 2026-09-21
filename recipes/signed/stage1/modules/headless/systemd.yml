@@ -1,4 +1,0 @@
-type: systemd
-user:
-  enabled:
-    - tailscaled.service
