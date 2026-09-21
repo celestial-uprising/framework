@@ -1,6 +1,9 @@
-type: akmods
-kernel: coreos-testing
-install:
-  - v4l2loopback
-  - xone
-  - xpadneo
+# yaml-language-server: $schema=https://schema.blue-build.org/module-list-v1.json
+---
+modules:
+  - type: akmods
+    base: coreos-testing
+    install:
+      - v4l2loopback
+      - xone
+      - xpadneo

@@ -1,6 +1,8 @@
-type: akmods
-base: extra
-kernel: coreos-testing
-install:
-  - kvmfr
-  - openrazer
+# yaml-language-server: $schema=https://schema.blue-build.org/module-list-v1.json
+---
+modules:
+  - type: akmods
+    base: coreos-testing
+    install:
+      - kvmfr
+      - openrazer
