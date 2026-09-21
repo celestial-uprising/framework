@@ -1,0 +1,14 @@
+---
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
+name: headless-nv
+description: for all- by lesbidoodles ; with hope for a better future
+base-image: ghcr.io/ublue-os/ucore
+image-version: testing-nvidia
+modules:
+  - from-file: 1/modules/headless/akmods-extra.yml
+  - from-file: 1/modules/headless/os-release-nv.yml
+  - from-file: 1/modules/headless/files.yml
+  - from-file: 1/modules/headless/dnf-nv.yml
+  - from-file: 1/modules/headless/kargs.yml
+  - from-file: 1/modules/headless/scripts.yml
+  - type: signing

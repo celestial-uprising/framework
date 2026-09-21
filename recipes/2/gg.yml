@@ -1,0 +1,14 @@
+---
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
+name: gg
+description: for all- by lesbidoodles ; with hope for a better future
+base-image: ghcr.io/celestial-uprising/mini
+image-version: latest
+modules:
+  - from-file: 2/modules/gg/akmods.yml
+  - from-file: 2/modules/gg/akmods-extra.yml
+  - from-file: 2/modules/gg/os-release.yml
+  - from-file: 2/modules/gg/files.yml
+  - from-file: 2/modules/gg/dnf.yml
+  - from-file: 2/modules/gg/kargs.yml
+  - type: signing

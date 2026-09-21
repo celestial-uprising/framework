@@ -1,4 +1,5 @@
 type: akmods
 base: extra
+kernel: coreos-testing
 install:
   - kvmfr

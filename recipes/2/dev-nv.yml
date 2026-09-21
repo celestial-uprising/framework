@@ -1,0 +1,13 @@
+---
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
+name: dev-nv
+description: for all- by lesbidoodles ; with hope for a better future
+base-image: ghcr.io/celestial-uprising/mini-nv
+image-version: latest
+modules:
+  - from-file: 2/modules/dev/akmods-extra.yml
+  - from-file: 2/modules/dev/os-release-nv.yml
+  - from-file: 2/modules/dev/files.yml
+  - from-file: 2/modules/dev/dnf.yml
+  - from-file: 2/modules/dev/kargs.yml
+  - type: signing

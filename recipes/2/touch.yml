@@ -5,6 +5,6 @@ description: for all- by lesbidoodles ; with hope for a better future
 base-image: ghcr.io/celestial-uprising/mini
 image-version: latest
 modules:
-  - from-file: signed/stage2/modules/touch/os-release.yml
-  - from-file: signed/stage2/modules/touch/dnf.yml
+  - from-file: 2/modules/touch/os-release.yml
+  - from-file: 2/modules/touch/dnf.yml
   - type: signing

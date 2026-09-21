@@ -26,11 +26,11 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - signed/stage1/headless.yml
-          - signed/stage1/headless-nv.yml
-          - signed/stage1/mini.yml
-          - signed/stage1/mini-nv.yml
-          - signed/stage1/virt.yml
+          - 1/headless.yml
+          - 1/headless-nv.yml
+          - 1/mini.yml
+          - 1/mini-nv.yml
+          - 1/virt.yml
     steps:
       - name: Building Stage 1 Images
         uses: blue-build/github-action@v1.13
@@ -52,11 +52,11 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - signed/stage2/dev.yml
-          - signed/stage2/dev-nv.yml
-          - signed/stage2/gg.yml
-          - signed/stage2/gg-nv.yml
-          - signed/stage2/touch.yml
+          - 2/dev.yml
+          - 2/dev-nv.yml
+          - 2/gg.yml
+          - 2/gg-nv.yml
+          - 2/touch.yml
     steps:
       - name: Building 2 Images
         uses: blue-build/github-action@v1.13
@@ -77,8 +77,8 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - signed/stage3/unholy.yml
-          - signed/stage3/unholy-nv.yml
+          - 3/unholy.yml
+          - 3/unholy-nv.yml
     steps:
       - name: Building Stage 3 Images
         uses: blue-build/github-action@v1.13

@@ -1,0 +1,13 @@
+---
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
+name: virt
+description: for all- by lesbidoodles ; with hope for a better future
+base-image: ghcr.io/ublue-os/ucore
+image-version: testing
+modules:
+  - from-file: 1/modules/virt/os-release.yml
+  - from-file: 1/modules/virt/files.yml
+  - from-file: 1/modules/virt/dnf.yml
+  - from-file: 1/modules/virt/kargs.yml
+  - from-file: 1/modules/virt/scripts.yml
+  - type: signing

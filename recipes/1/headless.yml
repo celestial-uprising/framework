@@ -1,0 +1,14 @@
+---
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
+name: headless
+description: for all- by lesbidoodles ; with hope for a better future
+base-image: ghcr.io/ublue-os/ucore
+image-version: testing
+modules:
+  - from-file: 1/modules/headless/akmods-extra.yml
+  - from-file: 1/modules/headless/os-release.yml
+  - from-file: 1/modules/headless/files.yml
+  - from-file: 1/modules/headless/dnf.yml
+  - from-file: 1/modules/headless/kargs.yml
+  - from-file: 1/modules/headless/scripts.yml
+  - type: signing

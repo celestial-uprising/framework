@@ -1,5 +1,6 @@
 type: akmods
 base: extra
+kernel: coreos-testing
 install:
   - ryzen-smu
   - zenergy

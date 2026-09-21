@@ -1,9 +1,6 @@
 type: akmods
-install:
-  - v4l2loopback
-  - xone
-  - xpadneo
 base: extra
+kernel: coreos-testing
 install:
   - kvmfr
   - openrazer
