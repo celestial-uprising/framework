@@ -1,4 +1,5 @@
 type: akmods
+base: extra
 install:
   - ryzen-smu
   - zenergy
