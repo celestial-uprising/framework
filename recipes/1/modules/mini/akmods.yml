@@ -3,7 +3,7 @@
 modules:
   - type: containerfile
     snippets:
-      - COPY --from=ghcr.io/ublue-os/akmods-extra:coreos-testing / /tmp/akmods-common
+      - COPY --from=ghcr.io/ublue-os/akmods-extra / /tmp/akmods-common
       - RUN dnf install -y /tmp/akmods-common/rpms/ublue-os/ublue-os-akmods*.rpm
       - RUN dnf install -y /tmp/akmods-common/rpms/kmods/kmod-ryzen-smu*.rpm
       - RUN dnf install -y /tmp/akmods-common/rpms/kmods/kmod-zenergy*.rpm
