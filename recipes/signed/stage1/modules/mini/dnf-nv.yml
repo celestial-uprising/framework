@@ -14,7 +14,7 @@ repos:
 install:
   packages:
     - kf6-qqc2-desktop-style
-    - kf6-kirigami-templates
+    - kf6-kirigami-addons
     - kirigami-app-components
     - kf6-kio-gui
     - kf6-kiconthemes
