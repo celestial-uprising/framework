@@ -3,14 +3,8 @@
 modules:
   - type: containerfile
     snippets:
-      # 1. Break the COPY instruction into its own independent directive layer
       - COPY --from=ghcr.io/ublue-os/akmods:coreos-testing / /tmp/akmods-common
-      
-      # 2. Run the dnf package extractions safely inside standard shell blocks
-      - |
-        dnf install -y /tmp/akmods-common/rpms/ublue-os/ublue-os-akmods*.rpm
-        dnf install -y /tmp/akmods-common/rpms/kmods/kmod-ryzen-smu*.rpm
-        dnf install -y /tmp/akmods-common/rpms/kmods/kmod-zenergy*.rpm
-        
-      # 3. Clean up the scratch area to keep the layer small
-      - rm -rf /tmp/akmods-common
+      - RUN dnf install -y /tmp/akmods-common/rpms/ublue-os/ublue-os-akmods*.rpm
+      - RUN dnf install -y /tmp/akmods-common/rpms/kmods/kmod-ryzen-smu*.rpm
+      - RUN dnf install -y /tmp/akmods-common/rpms/kmods/kmod-zenergy*.rpm
+      - RUN rm -rf /tmp/akmods-common
