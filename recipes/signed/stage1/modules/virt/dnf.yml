@@ -1,6 +1,33 @@
 type: dnf
+repos:
+  copr:
+    - atim/lazygit
+    - atim/starship
 install:
   packages:
+    - lazygit
+    - starship
+    - glibc-langpack-en
+    - neovim
+    - fzf
+    - fd-find
+    - ripgrep
+    - zoxide
+    - bat
+    - eza
+    - luarocks
+    - tree-sitter-cli
+    - python3-neovim
+    - btop
+    - tree
+    - vim
+    - git
+    - wget
+    - gdu
+    - nmap
+    - traceroute
+    - whois
+    - rustup
     - qemu-guest-agent
     - spice-vdagent
 remove:
@@ -11,18 +38,11 @@ remove:
     - bluez
     - lm_sensors
     - smartmontools
-    - rocm-smi-devel
-    - nvtop
-    - radeontop
-    - libdrm-devel
-    - s-tui
-    - libvirt-client
-    - libvirt-client-qemu
-    - mesa-dri-drivers
-    - mesa-vulkan-drivers
-    - vulkan-loader
-    - vulkan-tools
-    - libva-nvidia-driver
-    - amdctl
-    - power-profiles-daemon
-    - cascadia-code-nf-fonts
+    - nano
+    - nano-default-editor
+    - nfs-client-utils
+    - nfs-common-utils
+    - azure-vm-utils
+    - cockpit
+    - cockpit-bridge
+    - cockpit-ws

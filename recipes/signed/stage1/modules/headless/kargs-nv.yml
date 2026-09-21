@@ -1,7 +1,0 @@
-type: kargs
-kargs:
-  - msr.allow_writes=on
-  - amdgpu.ppfeaturemask=0xffffffff
-  - pcie_aspm=off
-  - nvme_core.default_ps_max_latency=0
-  - zfs.zfs_arc_max=17179869184

@@ -1,6 +1,0 @@
-type: files
-files:
-  - source: distrobox-aliases.sh
-    destination: /etc/profile.d/distrobox-aliases.sh
-  - source: system
-    destination: /

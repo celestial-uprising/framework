@@ -1,5 +1,14 @@
 type: kargs
 kargs:
+  - amd_iommu=on
+  - iommu=pt
+  - kvm_amd.nested=1
+  - amd_pstate=active
+  - split_lock_detect=off
+  - transparent_hugepage=always
+  - kvm.ignore_msrs=1
+  - net.ifnames=0
+  - tcp_congestion_control=bbr
   - console=tty0
   - console=ttyS0,115200n8
   - scsi_mod.use_blk_mq=1

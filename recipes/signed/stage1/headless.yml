@@ -2,11 +2,13 @@
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
 name: headless
 description: for all- by lesbidoodles ; with hope for a better future
-base-image: ghcr.io/celestial-uprising/base
-image-version: latest
+base-image: ghcr.io/ublue-os/ucore
+image-version: testing
 modules:
   - from-file: signed/stage1/modules/headless/os-release.yml
   - from-file: signed/stage1/modules/headless/files.yml
   - from-file: signed/stage1/modules/headless/dnf.yml
   - from-file: signed/stage1/modules/headless/kargs.yml
+  - from-file: signed/stage1/modules/headless/scripts.yml
+  - from-file: signed/stage1/modules/headless/systemd.yml
   - type: signing

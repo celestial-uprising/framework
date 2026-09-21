@@ -12,7 +12,9 @@ files:
     destination: /etc/xdg/kitty/kitty.conf
   - source: mpd-user.conf
     destination: /usr/lib/tmpfiles.d/mpd-user.conf
-  - source: ly-config.ini
-    destination: /etc/ly/config.ini
   - source: niri-launch.sh
     destination: /etc/profile.d/niri-launch.sh
+  - source: distrobox-aliases.sh
+    destination: /etc/profile.d/distrobox-aliases.sh
+  - source: system
+    destination: /

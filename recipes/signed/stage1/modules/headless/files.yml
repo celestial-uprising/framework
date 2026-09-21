@@ -4,3 +4,7 @@ files:
     destination: /etc/udev/rules.d/99-cpu-governor.rules
   - source: 99-workstation-perf.conf
     destination: /etc/sysctl.d/99-workstation-perf.conf
+  - source: distrobox-aliases.sh
+    destination: /etc/profile.d/distrobox-aliases.sh
+  - source: system
+    destination: /

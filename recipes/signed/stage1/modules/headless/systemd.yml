@@ -1,5 +1,4 @@
 type: systemd
 user:
   enabled:
-    - mpd.service
     - tailscaled.service

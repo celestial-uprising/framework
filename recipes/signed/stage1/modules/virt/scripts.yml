@@ -1,0 +1,35 @@
+type: script
+snippets:
+  - |
+    #!/usr/bin/env bash
+
+    set -oue pipefail
+
+    echo "Creating BASH aliases..."
+    mkdir -p /etc/profile.d
+    cat << 'EOF' > /etc/profile.d/distrobox-aliases.sh
+    alias db="distrobox enter"
+    alias dbc="distrobox create"
+    alias l="ls -A"
+    alias ll="ls -lAsH"
+    alias pls="podman ps"
+    alias plsa="podman ps -a"
+    alias prm="podman rm"
+    alias prmi="podman rmi"
+    alias pstop="podman stop"
+    alias prun="podman run"
+    alias bb="bluebuild"
+    alias bbb="bluebuild build --build-driver podman"
+    export CU="$HOME/.src/framework"
+    export AG="$HOME/.src/aggrollama"
+    EOF
+
+    echo "Configuring universal default user..."
+    if ! getent passwd core > /dev/null 2>&1; then
+        useradd -m -G wheel -s /bin/bash core
+    fi
+
+    echo 'core:$6$.A7a8GHIpZOnY7oJ$bhTkuXCP7vdGPoAK8jSaxSeFY5W.v9ek1PjAh6zJCdgke/yOSXdUYXMRV98QR5pZdaJYDPRPPkyuwK9EDr4p4.' | chpasswd -e
+
+    mkdir -p /etc/sudoers.d
+    echo '%wheel ALL=(ALL) ALL' > /etc/sudoers.d/wheel
