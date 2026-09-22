@@ -1,7 +1,6 @@
 type: dnf
 repos:
   copr:
-    - ublue-os/akmods
     - ulysg/xwayland-satellite
     - yalter/niri-git
     - sneexy/zen-browser
@@ -13,7 +12,6 @@ repos:
     - kylegospo/amdctl
 install:
   packages:
-    - akmod-ryzen-smu
     - kf6-qqc2-desktop-style
     - kf6-kirigami-addons
     - kirigami-app-components
