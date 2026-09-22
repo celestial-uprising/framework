@@ -14,7 +14,6 @@ repos:
 install:
   packages:
     - akmod-ryzen-smu
-    - akmod-zenergy
     - kf6-qqc2-desktop-style
     - kf6-kirigami-addons
     - kirigami-app-components
