@@ -1,0 +1,5 @@
+type: dnf
+remove:
+  packages:
+    - sddm
+    - sddm-wayland-sway

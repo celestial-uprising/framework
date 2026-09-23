@@ -1,0 +1,99 @@
+name: magrathea
+description: ublue images for wayland compositors
+base-image: ghcr.io/celestial-uprising/random
+image-version: latest
+
+modules: 
+    - type: dnf
+      install:
+        install-weak-deps: false
+        packages:
+          - sddm
+          - sddm-themes
+          - qt5-qtgraphicaleffects
+          - qt5-qtquickcontrols2
+          - qt5-qtsvg
+          - kwallet
+          - pam-kwallet
+          - headsetcontrol
+          - mediainfo
+          - xfce-polkit 
+          - xdg-user-dirs
+          - dbus-tools
+          - dbus-daemon
+          - pavucontrol
+          - playerctl
+          - qt5-qtwayland
+          - qt6-qtwayland
+          - vulkan-validation-layers
+          - vulkan-tools
+          - alsa-firmware
+          - pamixer
+          - network-manager-applet
+          - bluez-tools
+          - blueman
+          - thunar
+          - thunar-archive-plugin 
+          - thunar-volman
+          - xarchiver
+          - imv
+          - gvfs-mtp
+          - gvfs-gphoto2
+          - gvfs-smb
+          - gvfs-nfs
+          - gvfs-fuse
+          - gvfs-archive
+          - android-tools
+          - slurp
+          - grim
+          - wlr-randr
+          - wlsunset
+          - brightnessctl
+          - kanshi
+          - dunst
+          - paper-icon-theme
+          - ffmpegthumbnailer
+
+    - type: rpm-ostree
+      install:
+        - niri
+        - waybar
+        - xdg-desktop-portal-wlr
+        - xdg-desktop-portal-gtk
+        - alacritty
+        - fuzzel
+        - swaylock
+        - swayidle
+        - swaybg
+
+    - type: script
+      scripts:
+        - setsddmtheming.sh
+        - installandroidudev.sh
+        - setniriwaybarmodules.sh
+        - fixxdgdesktopportalservice.sh
+        - removeunusedrepos.sh
+        - regenerateinitramfs.sh
+
+    - type: files
+      files:
+        - source: system/niri
+          destination: /
+        - source: system/usr
+          destination: /usr
+        - source: system/etc
+          destination: /etc
+        - source: systemd
+          destination: /etc/systemd
+
+    - type: gschema-overrides
+      include:
+        - zz1-wayblue-theming.gschema.override
+
+    - type: systemd
+      system:
+        enabled:
+          - sddm-boot.service
+      user:
+        enabled:
+          - wayblue-update-verification.service

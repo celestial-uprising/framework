@@ -1,0 +1,195 @@
+# yaml-language-server: \$schema=https://blue-build.org
+name: random
+description: ublue images for wayland compositors
+base-image: quay.io/fedora-ostree-desktops/base-atomic
+image-version: 44
+
+stages:
+  - name: rust
+    from: docker.io/library/rust:latest
+    modules:
+      # 1. Properly pull your file into the isolated build stage
+      - type: copy
+        src: files/cargo-list.md
+        dest: /tmp/cargo-list.md
+
+      # 2. Pure shell module executed by /bin/sh
+      - type: script
+        snippets:
+          - mkdir -p /tmp/bin
+          - |
+            apt-get update && apt-get install -y libdrm-dev pkg-config
+
+            MD_FILE="/tmp/cargo-list.md"
+            
+            if [ ! -f "$MD_FILE" ]; then
+              echo "Error: $MD_FILE not found!"
+              exit 1
+            fi
+
+            echo "Parsing $MD_FILE and running installations..."
+            
+            # Read each line sequentially, filtering out lines that don't have 'cargo install'
+            while read -r line || [ -n "$line" ]; do
+              # Ensure the line actually contains the install command
+              case "$line" in
+                *"cargo install"*)
+                  echo "----------------------------------------"
+                  echo "Executing: $line --root /tmp"
+                  echo "----------------------------------------"
+                  
+                  # Run the install command, redirecting the binary to /tmp/bin
+                  $line --root /tmp
+                  ;;
+              esac
+            done < "$MD_FILE"
+
+modules: 
+    - type: containerfile
+      snippets:
+        - COPY --from=ghcr.io/ublue-os/akmods:main-44 /rpms /tmp/rpms
+        - COPY --from=ghcr.io/ublue-os/akmods:main-44 /kernel-rpms /tmp/rpms/kernel
+        - RUN find /tmp/rpms
+        - RUN rpm -q ublue-os-akmods-addons || dnf install -y /tmp/rpms/ublue-os/ublue-os-akmods-addons*.rpm
+
+    - type: dnf
+      repos:
+        copr:
+          - atim/bottom
+          - atim/gping
+          - atim/lazygit
+          - atim/starship
+          - kylegospo/amdctl
+          - greg-at-redhat/glowm
+        files:
+          - https://copr.fedorainfracloud.org/coprs/ublue-os/packages/repo/fedora-%OS_VERSION%/ublue-os-packages-fedora-%OS_VERSION%.repo
+      install:
+        install-weak-deps: false
+        packages:
+          - bottom
+          - gping
+          - gitui
+          - libvirt-client
+          - libvirt-client-qemu
+          - tree
+          - chromium-headless
+          - glowm
+          - lazygit
+          - starship
+          - amdctl
+          - cascadia-code-nf-fonts
+          - neovim
+          - fd-find
+          - ripgrep
+          - zoxide
+          - bat
+          - eza
+          - luarocks
+          - tree-sitter-cli
+          - python3-neovim
+          - btop
+          - nvtop
+          - radeontop
+          - libdrm-devel
+          - rocm-smi-devel
+          - s-tui
+          - gdu
+          - wget
+          - git
+          - diskus
+          - nmap
+          - traceroute
+          - whois
+          - rustup
+          - just
+          - powerstat
+          - ublue-os-udev-rules
+          - ublue-os-update-services
+          - ublue-os-signing
+          - ublue-os-luks
+          - ublue-os-just
+          - fzf
+          - tuned-ppd
+          - vulkan-validation-layers
+          - vulkan-tools
+          - ddcutil
+          - openssl
+          - vim
+          - just
+          - distrobox
+          - firewall-config
+          - repo: fedora-multimedia
+            packages:
+              - mesa-va-drivers
+      replace:
+        - from-repo: fedora
+          packages:
+            - old: OpenCL-ICD-Loader
+              new: ocl-icd
+        - from-repo: fedora-multimedia
+          skip-unavailable: true
+          packages:
+            - libva
+            - mesa-dri-drivers
+            - gstreamer1-plugin-libav
+            - mesa-filesystem
+            - mesa-libEGL
+            - mesa-libGL
+            - mesa-libgbm
+            - mesa-vulkan-drivers
+            - libva-intel-media-driver
+            - intel-gmmlib
+            - intel-mediasdk
+            - old: ffmpeg-free
+              new: ffmpeg
+            - old: fdk-aac-free
+              new: libfdk-aac
+            - old: gstreamer1-plugins-ugly-free
+              new: gstreamer1-plugins-ugly
+            - old: libavcodec-free
+              new: libavcodec
+            - old: libavdevice-free
+              new: libavdevice
+            - old: libavfilter-free
+              new: libavfilter
+            - old: libavformat-free
+              new: libavformat
+            - old: libavutil-free
+              new: libavutil
+            - old: libpostproc-free
+              new: libpostproc
+            - old: libswresample-free
+              new: libswresample
+            - old: libswscale-free
+              new: libswscale
+
+    - type: copy
+      from: rust
+      src: /tmp/bin/
+      dest: /usr/bin/
+    
+    - type: script
+      scripts:
+        - installsignedkernel.sh
+        - ensureautoupdates.sh
+        - addimageinfo.sh
+        - installrpmfusion.sh
+        - removeunusedrepos.sh
+        - addbrewjustimport.sh
+        - removeunusedrepos.sh
+        - regenerateinitramfs.sh
+        - ensurenegativopresence.sh
+
+    - type: files
+      files:
+        - source: system/usr
+          destination: /usr
+        - source: system/etc
+          destination: /etc
+        - source: systemd
+          destination: /etc/systemd
+
+    - type: systemd
+      user:
+        enabled:
+          - wayblue-update-verification.service

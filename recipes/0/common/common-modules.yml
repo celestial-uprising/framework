@@ -1,0 +1,146 @@
+modules:
+    - type: containerfile
+      snippets:
+        - COPY --from=ghcr.io/ublue-os/akmods:main-44 /rpms /tmp/rpms
+        - COPY --from=ghcr.io/ublue-os/akmods:main-44 /kernel-rpms /tmp/rpms/kernel
+        - RUN find /tmp/rpms
+        - RUN rpm -q ublue-os-akmods-addons || dnf install -y /tmp/rpms/ublue-os/ublue-os-akmods-addons*.rpm
+    - type: script
+      scripts:
+        - installsignedkernel.sh
+
+    - type: dnf
+      install:
+        install-weak-deps: false
+        packages:
+          - just
+          - powerstat
+
+    - type: dnf
+      repos:
+        files:
+          - https://copr.fedorainfracloud.org/coprs/ublue-os/packages/repo/fedora-%OS_VERSION%/ublue-os-packages-fedora-%OS_VERSION%.repo
+      install:
+        install-weak-deps: false
+        packages:
+          - ublue-os-udev-rules
+          - ublue-os-update-services
+          - ublue-os-signing
+          - ublue-os-luks
+          - ublue-os-just
+
+    - type: script
+      scripts:
+        - installandroidudev.sh
+        - ensureautoupdates.sh
+        - addimageinfo.sh
+
+    - type: dnf
+      install:
+        install-weak-deps: false
+        packages:
+        # launcher
+
+        # environment
+          - fzf
+          - tuned-ppd
+          - xorg-x11-server-Xwayland
+          - headsetcontrol
+          - mediainfo
+          - polkit
+          - xfce-polkit 
+          - xdg-user-dirs
+          - dbus-tools
+          - dbus-daemon
+          - wl-clipboard
+          - pavucontrol
+          - playerctl
+          - qt5-qtwayland
+          - qt6-qtwayland
+          - vulkan-validation-layers
+          - vulkan-tools
+          - google-noto-emoji-fonts
+          - ddcutil
+          - openssl
+          - vim
+          - just
+          - alsa-firmware
+          - distrobox
+          
+        # sound
+          - wireplumber
+          - pipewire
+          - pamixer
+          - pulseaudio-utils
+
+        # networking
+          - network-manager-applet
+          - bluez
+          - bluez-tools
+          - blueman
+          - firewall-config
+
+        # file manager
+          - thunar
+          - thunar-archive-plugin 
+          - thunar-volman
+          - xarchiver
+          - imv
+          - gvfs-mtp
+          - gvfs-gphoto2
+          - gvfs-smb
+          - gvfs-nfs
+          - gvfs-fuse
+          - gvfs-archive
+          - android-tools
+
+        # screenshot
+          - slurp
+          - grim
+
+        # display
+          - wlr-randr
+          - wlsunset
+          - brightnessctl
+          - kanshi
+
+        # notifications
+          - dunst
+
+        # theme and GUI
+          - paper-icon-theme
+      replace:
+        - from-repo: fedora
+          packages:
+            - old: OpenCL-ICD-Loader
+              new: ocl-icd
+
+    - from-file: common/proprietary-modules.yml
+
+    - type: script
+      scripts:
+        - installrpmfusion.sh
+        - removeunusedrepos.sh
+
+    - type: files
+      files:
+        - source: system/usr
+          destination: /usr
+        - source: system/etc
+          destination: /etc
+
+    - type: gschema-overrides
+      include:
+        - zz1-wayblue-theming.gschema.override
+
+    - type: script
+      scripts:
+        - addbrewjustimport.sh
+
+    - type: systemd
+      user:
+        enabled:
+          - wayblue-update-verification.service
+
+    - type: wayblue-signing
+      source: local

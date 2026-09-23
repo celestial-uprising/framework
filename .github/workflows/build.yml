@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   rapid_build:
-    name: Build Mini Image Only
+    name: Build Magrathea Image Only
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -26,9 +26,9 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - 1/mini.yml
+          - 1/magrathea.yml
     steps:
-      - name: Building Mini Image for Testing
+      - name: Building Image for Testing
         uses: blue-build/github-action@v1.13
         with:
           recipe: ${{ matrix.recipe }}
