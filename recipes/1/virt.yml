@@ -1,0 +1,48 @@
+name: base
+description: ublue images for wayland compositors
+base-image: ghcr.io/celestial-uprising/random
+image-version: latest
+
+modules:
+    - type: os-release
+      properties:
+        VARIANT: "base"
+    - type: kargs
+      kargs:
+        - amd_iommu=on
+        - iommu=pt
+        - kvm_amd.nested=1
+        - split_lock_detect=off
+        - transparent_hugepage=always
+        - kvm.ignore_msrs=1
+        - net.ifnames=0
+        - tcp_congestion_control=bbr
+        - msr.allow_writes=on
+    - type: fonts
+      fonts:
+        nerd-fonts:
+          - VictorMono
+    - type: dnf
+      install:
+        install-weak-deps: false
+        packages:
+          - tailscale
+          - ffmpeg
+          - gitui
+      remove:
+        packages:
+          - firefox
+
+    - type: script
+      scripts:
+        - removeunusedrepos.sh
+        - regenerateinitramfs.sh
+
+    - type: files
+      files:
+        - source: system/usr
+          destination: /usr
+        - source: system/etc
+          destination: /etc
+        - source: systemd
+          destination: /etc/systemd

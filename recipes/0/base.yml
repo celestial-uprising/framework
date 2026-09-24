@@ -1,0 +1,99 @@
+# yaml-language-server: \$schema=https://blue-build.org
+name: base
+description: ublue images for wayland compositors
+base-image: ghcr.io/celestial-uprising/rusty
+image-version: latest
+
+modules: 
+    - type: os-release
+      properties:
+        VARIANT: "base"
+    - type: containerfile
+      snippets:
+        - COPY --from=ghcr.io/ublue-os/akmods:main-44 /rpms /tmp/rpms
+        - COPY --from=ghcr.io/ublue-os/akmods:main-44 /kernel-rpms /tmp/rpms/kernel
+        - RUN find /tmp/rpms
+        - RUN rpm -q ublue-os-akmods-addons || dnf install -y /tmp/rpms/ublue-os/ublue-os-akmods-addons*.rpm
+
+    - type: dnf
+      repos:
+        copr:
+          - lihaohong/yazi
+          - atim/bottom
+          - atim/gping
+          - atim/lazygit
+          - atim/starship
+          - kylegospo/amdctl
+          - greg-at-redhat/glowm
+        files:
+          - https://copr.fedorainfracloud.org/coprs/ublue-os/packages/repo/fedora-%OS_VERSION%/ublue-os-packages-fedora-%OS_VERSION%.repo
+      install:
+        install-weak-deps: false
+        packages:
+          - tailscale
+          - yazi
+          - bottom
+          - gping
+          - gitui
+          - libvirt-client
+          - libvirt-client-qemu
+          - tree
+          - chromium-headless
+          - glowm
+          - lazygit
+          - starship
+          - amdctl
+          - cascadia-code-nf-fonts
+          - neovim
+          - fd-find
+          - ripgrep
+          - zoxide
+          - bat
+          - eza
+          - luarocks
+          - tree-sitter-cli
+          - python3-neovim
+          - btop
+          - gdu
+          - wget
+          - git
+          - diskus
+          - nmap
+          - traceroute
+          - whois
+          - rustup
+          - powerstat
+          - fzf
+          - ddcutil
+          - openssl
+          - distrobox
+
+    - type: script
+      scripts:
+        - installsignedkernel.sh
+        - ensureautoupdates.sh
+        - addimageinfo.sh
+        - installrpmfusion.sh
+        - removeunusedrepos.sh
+        - addbrewjustimport.sh
+        - removeunusedrepos.sh
+        - regenerateinitramfs.sh
+        - ensurenegativopresence.sh
+
+    - type: files
+      files:
+        - source: system/usr
+          destination: /usr
+        - source: system/etc
+          destination: /etc
+        - source: systemd
+          destination: /etc/systemd
+        - source: flyline.sh
+          destination: /etc/profile.d/flyline.sh
+        - source: distrobox-aliases.sh
+          destination: /etc/profile.d/distrobox-aliases.sh
+
+    - type: systemd
+      user:
+        enabled:
+          - wayblue-update-verification.service

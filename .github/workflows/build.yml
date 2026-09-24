@@ -26,7 +26,7 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - 1/magrathea.yml
+          - 0/base.yml
     steps:
       - name: Building Image for Testing
         uses: blue-build/github-action@v1.13
