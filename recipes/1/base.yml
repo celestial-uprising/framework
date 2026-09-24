@@ -13,6 +13,13 @@ modules:
         VARIANT: "base"
 
 
+    - type: containerfile
+      snippets:
+        - COPY --from=ghcr.io/ublue-os/akmods:main-44 /rpms /tmp/rpms
+        - COPY --from=ghcr.io/ublue-os/akmods:main-44 /kernel-rpms /tmp/rpms/kernel
+        - RUN find /tmp/rpms
+
+
     - type: akmods
       install:
         - zfs
