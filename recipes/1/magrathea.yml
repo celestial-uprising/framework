@@ -131,6 +131,8 @@ modules:
 
     - type: files
       files:
+        - source: kitty-kitty.conf
+          destination: /etc/xdg/kitty/kitty.conf
         - source: system/niri
           destination: /
         - source: system/usr
