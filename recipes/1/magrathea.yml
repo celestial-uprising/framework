@@ -18,9 +18,8 @@ modules:
             - net.codelogistics.webapps
     - type: containerfile
       snippets:
-        - COPY --from=ghcr.io/ublue-os/akmods:main-44 / /tmp/akmods
+        - COPY --from=ghcr.io/ublue-os/akmods-extra:main-44 / /tmp/akmods
         - RUN find /tmp/akmods
-        - RUN rpm -q ublue-os-akmods-addons || dnf install -y /tmp/akmods/ublue-os/ublue-os-akmods-addons*.rpm
         - RUN dnf install /tmp/akmods/*/kmod-zenergy*.rpm
         - RUN dnf install /tmp/akmods/*/kmod-ryzen-smu*.rpm
     - type: kargs
