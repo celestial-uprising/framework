@@ -21,8 +21,8 @@ modules:
         - COPY --from=ghcr.io/ublue-os/akmods:main-44 / /tmp/akmods
         - RUN find /tmp/akmods
         - RUN rpm -q ublue-os-akmods-addons || dnf install -y /tmp/akmods/ublue-os/ublue-os-akmods-addons*.rpm
-        - RUN dnf install /tmp/rpms/kmods/kmod-zenergy*.rpm
-        - RUN dnf install /tmp/rpms/kmods/kmod-ryzen-smu*.rpm
+        - RUN dnf install /tmp/akmods/*/kmod-zenergy*.rpm
+        - RUN dnf install /tmp/akmods/*/kmod-ryzen-smu*.rpm
     - type: kargs
       kargs:
         - amd_iommu=on
@@ -126,6 +126,7 @@ modules:
           - brightnessctl
           - wireplumber
           - network-manager-applet
+          - gitui
       remove:
         packages:
           - firefox
