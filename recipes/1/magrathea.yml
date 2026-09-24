@@ -16,12 +16,6 @@ modules:
             - com.valvesoftware.SteamLink
             - de.haeckerfelix.Shortwave
             - net.codelogistics.webapps
-    - type: containerfile
-      snippets:
-        - COPY --from=ghcr.io/ublue-os/akmods-extra:main-44 / /tmp/akmods
-        - RUN find /tmp/akmods
-        - RUN dnf install /tmp/akmods/*/kmod-zenergy*.rpm
-        - RUN dnf install /tmp/akmods/*/kmod-ryzen-smu*.rpm
     - type: kargs
       kargs:
         - amd_iommu=on
