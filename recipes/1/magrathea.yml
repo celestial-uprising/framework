@@ -3,11 +3,60 @@ description: ublue images for wayland compositors
 base-image: ghcr.io/celestial-uprising/random
 image-version: latest
 
-modules: 
+modules:
+    - type: os-release
+      properties:
+        VARIANT: "magrathea"
+    - type: default-flatpaks
+      configurations:
+        - notify: true
+          scope: system
+          install:
+            - md.obsidian.Obsidian
+            - com.valvesoftware.SteamLink
+            - de.haeckerfelix.Shortwave
+            - net.codelogistics.webapps
+    - type: kargs
+      kargs:
+        - amd_iommu=on
+        - iommu=pt
+        - kvm_amd.nested=1
+        - amd_pstate=active
+        - split_lock_detect=off
+        - transparent_hugepage=always
+        - kvm.ignore_msrs=1
+        - net.ifnames=0
+        - tcp_congestion_control=bbr
+        - msr.allow_writes=on
+        - amdgpu.ppfeaturemask=0xffffffff
+        - pcie_aspm=off
+        - amdgpu.sg_display=0
+        - nvme_core.default_ps_max_latency=0
+    - type: fonts
+      fonts:
+        nerd-fonts:
+          - VictorMono
     - type: dnf
+      repos:
+        copr:
+          - ulysg/xwayland-satellite
+          - yalter/niri-git
+          - sneexy/zen-browser
+          - ferdiu/moonlight
+          - skoved/rmpc
       install:
         install-weak-deps: false
         packages:
+          - tailscale
+          - kf6-qqc2-desktop-style
+          - kf6-kirigami-addons
+          - kirigami-app-components
+          - kf6-kio-gui
+          - kf6-kiconthemes
+          - kf6-kirigami
+          - qt6-qtdeclarative
+          - qt6-qt5compat
+          - qt6-qtwayland
           - sddm
           - sddm-themes
           - qt5-qtgraphicaleffects
@@ -23,8 +72,6 @@ modules:
           - dbus-daemon
           - pavucontrol
           - playerctl
-          - qt5-qtwayland
-          - qt6-qtwayland
           - vulkan-validation-layers
           - vulkan-tools
           - alsa-firmware
@@ -34,16 +81,8 @@ modules:
           - blueman
           - thunar
           - thunar-archive-plugin 
-          - thunar-volman
           - xarchiver
           - imv
-          - gvfs-mtp
-          - gvfs-gphoto2
-          - gvfs-smb
-          - gvfs-nfs
-          - gvfs-fuse
-          - gvfs-archive
-          - android-tools
           - slurp
           - grim
           - wlr-randr
@@ -53,23 +92,38 @@ modules:
           - dunst
           - paper-icon-theme
           - ffmpegthumbnailer
-
-    - type: rpm-ostree
-      install:
-        - niri
-        - waybar
-        - xdg-desktop-portal-wlr
-        - xdg-desktop-portal-gtk
-        - alacritty
-        - fuzzel
-        - swaylock
-        - swayidle
-        - swaybg
+          - mpv
+          - ffmpeg
+          - ffmpegthumbnailer
+          - mpd
+          - mpc
+          - rmpc
+          - imv
+          - swaybg
+          - swaylock
+          - swayidle
+          - xdg-desktop-portal-gnome
+          - xdg-desktop-portal-gtk
+          - niri
+          - xwayland-satellite
+          - fuzzel
+          - kitty
+          - waybar
+          - zen-browser
+          - remmina
+          - flatpak
+          - virt-manager
+          - virt-viewer
+          - moonlight-qt
+          - piper
+          - playerctl
+          - brightnessctl
+          - wireplumber
+          - network-manager-applet
 
     - type: script
       scripts:
         - setsddmtheming.sh
-        - installandroidudev.sh
         - setniriwaybarmodules.sh
         - fixxdgdesktopportalservice.sh
         - removeunusedrepos.sh

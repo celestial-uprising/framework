@@ -45,6 +45,17 @@ stages:
             done < "$MD_FILE"
 
 modules: 
+    - type: os-release
+      properties:
+        NAME: "Celestial Uprising"
+        PRETTY_NAME: "Celestial Uprising 44"
+        VERSION_CODENAME: "magrathea"
+        ID_LIKE: fedora
+        HOME_URL: "https://github.com/celestial-uprising/framework/"
+        DOCUMENTATION_URL: "https://docs.fedoraproject.org/en-US/fedora-coreos/"
+        SUPPORT_URL: "https://github.com/coreos/fedora-coreos-tracker/"
+        BUG_REPORT_URL: "https://github.com/celestial-uprising/framework/"
+        VARIANT: "random"
     - type: containerfile
       snippets:
         - COPY --from=ghcr.io/ublue-os/akmods:main-44 /rpms /tmp/rpms
@@ -55,6 +66,7 @@ modules:
     - type: dnf
       repos:
         copr:
+          - lihaohong/yazi
           - atim/bottom
           - atim/gping
           - atim/lazygit
@@ -66,6 +78,7 @@ modules:
       install:
         install-weak-deps: false
         packages:
+          - yazi
           - bottom
           - gping
           - gitui
@@ -163,6 +176,16 @@ modules:
             - old: libswscale-free
               new: libswscale
 
+      remove:
+        packages:
+          - nano
+          - nano-default-editor
+          - nfs-client-utils
+          - nfs-common-utils
+          - azure-vm-utils
+          - cockpit
+          - cockpit-bridge
+          - cockpit-ws
     - type: copy
       from: rust
       src: /tmp/bin/
