@@ -1,19 +1,21 @@
 # yaml-language-server: \$schema=https://blue-build.org
 name: rusty
-description: ublue images for wayland compositors
+description: Celestial Uprising --- magrathea
 base-image: quay.io/fedora-ostree-desktops/base-atomic
 image-version: 44
 
+
 stages:
+
+
   - name: rust
     from: docker.io/library/rust:latest
     modules:
-      # 1. Properly pull your file into the isolated build stage
+
       - type: copy
         src: files/cargo-list.md
         dest: /tmp/cargo-list.md
 
-      # 2. Pure shell module executed by /bin/sh
       - type: script
         snippets:
           - mkdir -p /tmp/bin
@@ -44,23 +46,28 @@ stages:
               esac
             done < "$MD_FILE"
 
+
 modules: 
+
+
     - type: os-release
       properties:
         NAME: "Celestial Uprising"
-        PRETTY_NAME: "Celestial Uprising 44"
+        PRETTY_NAME: "Celestial Uprising a003"
         VERSION_CODENAME: "magrathea"
         ID_LIKE: fedora
         HOME_URL: "https://github.com/celestial-uprising/framework/"
-        DOCUMENTATION_URL: "https://docs.fedoraproject.org/en-US/fedora-coreos/"
-        SUPPORT_URL: "https://github.com/coreos/fedora-coreos-tracker/"
         BUG_REPORT_URL: "https://github.com/celestial-uprising/framework/"
         VARIANT: "rusty"
+        RELEASE_TYPE: "alpha"
+
 
     - type: dnf
+
       repos:
         files:
           - https://copr.fedorainfracloud.org/coprs/ublue-os/packages/repo/fedora-%OS_VERSION%/ublue-os-packages-fedora-%OS_VERSION%.repo
+
       install:
         install-weak-deps: false
         packages:
@@ -72,6 +79,7 @@ modules:
           - ublue-os-just
           - vim
           - firewall-config
+
       remove:
         packages:
           - libva
@@ -105,6 +113,7 @@ modules:
           - cockpit
           - cockpit-bridge
           - cockpit-ws
+
 
     - type: copy
       from: rust

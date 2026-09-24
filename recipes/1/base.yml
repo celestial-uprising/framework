@@ -4,18 +4,35 @@ description: ublue images for wayland compositors
 base-image: ghcr.io/celestial-uprising/rusty
 image-version: latest
 
+
 modules: 
+
+
     - type: os-release
       properties:
         VARIANT: "base"
-    - type: containerfile
-      snippets:
-        - COPY --from=ghcr.io/ublue-os/akmods:main-44 /rpms /tmp/rpms
-        - COPY --from=ghcr.io/ublue-os/akmods:main-44 /kernel-rpms /tmp/rpms/kernel
-        - RUN find /tmp/rpms
-        - RUN rpm -q ublue-os-akmods-addons || dnf install -y /tmp/rpms/ublue-os/ublue-os-akmods-addons*.rpm
+
+
+    - type: akmods
+      install:
+        - zfs
+
+
+    - type: kargs
+      kargs:
+        - amd_iommu=on
+        - iommu=pt
+        - kvm_amd.nested=1
+        - split_lock_detect=off
+        - transparent_hugepage=always
+        - kvm.ignore_msrs=1
+        - net.ifnames=0
+        - tcp_congestion_control=bbr
+        - msr.allow_writes=on
+
 
     - type: dnf
+
       repos:
         copr:
           - lihaohong/yazi
@@ -27,6 +44,7 @@ modules:
           - greg-at-redhat/glowm
         files:
           - https://copr.fedorainfracloud.org/coprs/ublue-os/packages/repo/fedora-%OS_VERSION%/ublue-os-packages-fedora-%OS_VERSION%.repo
+
       install:
         install-weak-deps: false
         packages:
@@ -68,6 +86,41 @@ modules:
           - openssl
           - distrobox
 
+      remove:
+        packages:
+          - libva
+          - mesa-dri-drivers
+          - gstreamer1-plugin-libav
+          - mesa-filesystem
+          - mesa-libEGL
+          - mesa-libGL
+          - mesa-libgbm
+          - mesa-vulkan-drivers
+          - libva-intel-media-driver
+          - intel-gmmlib
+          - intel-mediasdk
+          - ffmpeg-free
+          - fdk-aac-free
+          - gstreamer1-plugins-ugly-free
+          - libavcodec-free
+          - libavdevice-free
+          - libavfilter-free
+          - libavformat-free
+          - libavutil-free
+          - libpostproc-free
+          - libswresample-free
+          - libswscale-free
+          - firefox
+          - nano
+          - nano-default-editor
+          - nfs-client-utils
+          - nfs-common-utils
+          - azure-vm-utils
+          - cockpit
+          - cockpit-bridge
+          - cockpit-ws
+
+
     - type: script
       scripts:
         - installsignedkernel.sh
@@ -75,10 +128,9 @@ modules:
         - addimageinfo.sh
         - installrpmfusion.sh
         - removeunusedrepos.sh
-        - addbrewjustimport.sh
-        - removeunusedrepos.sh
         - regenerateinitramfs.sh
         - ensurenegativopresence.sh
+
 
     - type: files
       files:
@@ -93,7 +145,12 @@ modules:
         - source: distrobox-aliases.sh
           destination: /etc/profile.d/distrobox-aliases.sh
 
-    - type: systemd
-      user:
-        enabled:
-          - wayblue-update-verification.service
+
+    - type: fonts
+      fonts:
+        nerd-fonts:
+          - VictorMono
+
+
+    - type: wayblue-signing
+      source: local

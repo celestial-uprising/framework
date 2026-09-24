@@ -2,11 +2,13 @@
 {
     "layer": "top",
     "height": 30,
-    "spacing": 4,
+    "spacing": 3,
     "modules-left": [
         "clock"
     ],
     "modules-center": [
+	"niri/workspaces",
+	"niri/window"
     ],
     "modules-right": [
         "tray",

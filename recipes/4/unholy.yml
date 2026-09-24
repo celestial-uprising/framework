@@ -1,0 +1,66 @@
+name: unholy
+description: Celestial Uprising --- magrathea 
+base-image: ghcr.io/celestial-uprising/dev
+image-version: latest
+
+
+modules:
+
+
+    - type: os-release
+      properties:
+        VARIANT: "unholy"
+
+
+    - type: dnf
+      install:
+        install-weak-deps: false
+        packages:
+          - krita
+          - inkscape
+          - gimp
+          - kdenlive
+          - blender
+          - ardour9
+          - audacity
+          - kicad
+          - kicad-packages3d
+          - kicad-doc
+          - pulseview
+          - openscad
+          - mypaint
+          - mypaint-brushes
+          - opentoonz
+          - scribus
+          - google-noto-sans-fonts
+          - google-noto-serif-fonts
+          - librecad
+          - obs-studio
+          - obs-studio-plugin-vaapi
+          - steam
+          - steam-devices
+          - mangohud
+          - gamescope
+          - gamemode
+
+
+    - type: default-flatpaks
+      configurations:
+        - notify: true
+          scope: system
+          install:
+            - io.github.electronstudio.WeylusCommunityEdition
+
+
+    - type: files
+      files:
+        - source: 99-cpu-governor.rules
+          destination: /etc/udev/rules.d/99-cpu-governor.rules
+        - source: 99-workstation-perf.conf
+          destination: /etc/sysctl.d/99-workstation-perf.conf
+        - source: 60-weylus.rules
+          destination: /etc/sysctl.d/60-weylus.rules
+
+
+    - type: wayblue-signing
+      source: local

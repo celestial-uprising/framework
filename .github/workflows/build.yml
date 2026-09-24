@@ -15,8 +15,8 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
   cancel-in-progress: true
 jobs:
-  rapid_build:
-    name: Build Magrathea Image Only
+  stage_one:
+    name: Build Stage 1 Images
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -26,9 +26,9 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - 0/base.yml
+          - 1/base.yml
     steps:
-      - name: Building Image for Testing
+      - name: Building Stage 1 Images
         uses: blue-build/github-action@v1.13
         with:
           recipe: ${{ matrix.recipe }}
@@ -36,3 +36,69 @@ jobs:
           registry_token: ${{ github.token }}
           pr_event_number: ${{ github.event.number }}
           maximize_build_space: true
+  stage_two:
+    name: Building Stage 2 Images
+    runs-on: ubuntu-latest
+    needs: stage_one
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        recipe:
+          - 2/mini.yml
+          - 2/virt.yml
+    steps:
+      - name: Building Stage 2 Images
+        uses: blue-build/github-action@v1.13
+        with:
+          recipe: ${{ matrix.recipe }}
+          cosign_private_key: ${{ secrets.SIGNING_SECRET }}
+          registry_token: ${{ github.token }}
+          maximize_build_space: false
+  stage_three:
+    name: Building Stage 3 Images
+    runs-on: ubuntu-latest
+    needs: stage_two
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        recipe:
+          - 3/dev.yml
+          - 3/gg.yml
+          - 3/muse.yml
+    steps:
+      - name: Building Stage 3 Images
+        uses: blue-build/github-action@v1.13
+        with:
+          recipe: ${{ matrix.recipe }}
+          cosign_private_key: ${{ secrets.SIGNING_SECRET }}
+          registry_token: ${{ github.token }}
+          maximize_build_space: false
+  stage_four:
+    name: Building Stage 4 Images
+    runs-on: ubuntu-latest
+    needs: stage_three
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        recipe:
+          - 4/unholy.yml
+    steps:
+      - name: Building Stage 4 Images
+        uses: blue-build/github-action@v1.13
+        with:
+          recipe: ${{ matrix.recipe }}
+          cosign_private_key: ${{ secrets.SIGNING_SECRET }}
+          registry_token: ${{ github.token }}
+          maximize_build_space: false

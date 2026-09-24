@@ -1,0 +1,183 @@
+name: mini
+description: Celestial Uprising --- magrathea 
+base-image: ghcr.io/celestial-uprising/base
+image-version: latest
+
+
+modules:
+
+
+    - type: os-release
+      properties:
+        VARIANT: "mini"
+
+
+    - type: akmods
+      install:
+        - zenergy
+        - ryzen-smu
+
+
+    - type: kargs
+      kargs:
+        - amdgpu.ppfeaturemask=0xffffffff
+        - amdgpu.sg_display=0
+
+
+    - type: dnf
+
+      repos:
+        copr:
+          - ulysg/xwayland-satellite
+          - yalter/niri-git
+          - sneexy/zen-browser
+          - ferdiu/moonlight
+          - skoved/rmpc
+
+      install:
+        install-weak-deps: false
+        packages:
+          - google-noto-emoji-fonts
+          - tuned-ppd
+          - kf6-qqc2-desktop-style
+          - kf6-kirigami-addons
+          - kirigami-app-components
+          - kf6-kio-gui
+          - kf6-kiconthemes
+          - kf6-kirigami
+          - qt6-qtdeclarative
+          - qt6-qt5compat
+          - qt6-qtwayland
+          - sddm
+          - sddm-themes
+          - qt5-qtgraphicaleffects
+          - qt5-qtquickcontrols2
+          - qt5-qtsvg
+          - kwallet
+          - pam-kwallet
+          - headsetcontrol
+          - mediainfo
+          - xfce-polkit
+          - xdg-user-dirs
+          - dbus-tools
+          - dbus-daemon
+          - pavucontrol
+          - playerctl
+          - vulkan-validation-layers
+          - vulkan-tools
+          - alsa-firmware
+          - pamixer
+          - network-manager-applet
+          - bluez-tools
+          - blueman
+          - imv
+          - slurp
+          - grim
+          - wlr-randr
+          - wlsunset
+          - brightnessctl
+          - kanshi
+          - dunst
+          - mpv
+          - ffmpeg
+          - ffmpegthumbnailer
+          - mpd
+          - mpc
+          - rmpc
+          - imv
+          - swaybg
+          - swaylock
+          - swayidle
+          - xdg-desktop-portal-gnome
+          - xdg-desktop-portal-gtk
+          - niri
+          - xwayland-satellite
+          - fuzzel
+          - kitty
+          - waybar
+          - zen-browser
+          - remmina
+          - flatpak
+          - virt-manager
+          - moonlight-qt
+          - playerctl
+          - brightnessctl
+          - wireplumber
+          - network-manager-applet
+          - repo: fedora-multimedia
+            packages:
+              - mesa-va-drivers
+
+      replace:
+        - from-repo: fedora-multimedia
+          skip-unavailable: true
+          packages:
+            - libheif
+            - libva
+            - mesa-dri-drivers
+            - gstreamer1-plugin-libav
+            - mesa-filesystem
+            - mesa-libEGL
+            - mesa-libGL
+            - mesa-libgbm
+            - mesa-vulkan-drivers
+            - libva-intel-media-driver
+            - intel-gmmlib
+            - intel-mediasdk
+            - old: ffmpeg-free
+              new: ffmpeg
+            - old: fdk-aac-free
+              new: libfdk-aac
+            - old: gstreamer1-plugins-ugly-free
+              new: gstreamer1-plugins-ugly
+            - old: libavcodec-free
+              new: libavcodec
+            - old: libavdevice-free
+              new: libavdevice
+            - old: libavfilter-free
+              new: libavfilter
+            - old: libavformat-free
+              new: libavformat
+            - old: libavutil-free
+              new: libavutil
+            - old: libpostproc-free
+              new: libpostproc
+            - old: libswresample-free
+              new: libswresample
+            - old: libswscale-free
+              new: libswscale
+
+
+    - type: default-flatpaks
+      configurations:
+        - notify: true
+          scope: system
+          install:
+            - md.obsidian.Obsidian
+            - com.valvesoftware.SteamLink
+            - de.haeckerfelix.Shortwave
+            - net.codelogistics.webapps
+
+
+    - type: script
+      scripts:
+        - removeunusedrepos.sh
+        - regenerateinitramfs.sh
+
+
+    - type: files
+      files:
+        - source: kitty-kitty.conf
+          destination: /etc/xdg/kitty/kitty.conf
+        - source: system/niri
+          destination: /
+
+
+    - type: systemd
+      system:
+        enabled:
+          - sddm-boot.service
+
+
+    - type: wayblue-signing
+      source: local
