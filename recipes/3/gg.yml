@@ -1,35 +1,31 @@
 name: gg
-description: Celestial Uprising --- magrathea 
+description: Celestial Uprising's Immutable Operating System
 base-image: ghcr.io/celestial-uprising/mini
 image-version: latest
-
-
 modules:
-
-
     - type: os-release
       properties:
         VARIANT: "gg"
-
-
-    - type: akmods
-      install:
-        - v4l2loopback
-        - kvmfr
-
-
+    - type: containerfile
+      snippets:
+        - COPY --from=ghcr.io/ublue-os/akmods:main-44 /rpms /tmp/rpms
+        - COPY --from=ghcr.io/ublue-os/akmods:main-44 /kernel-rpms /tmp/rpms/kernel
+        - COPY --from=ghcr.io/ublue-os/akmods-extra:main-44 /rpms /tmp/rpms-extra
+        - RUN find /tmp/rpms
+        - RUN find /tmp/rpms-extra
+        - RUN rpm -q ublue-os-akmods-addons || dnf install -y /tmp/rpms/ublue-os/ublue-os-akmods-addons*.rpm
+        - RUN dnf install -y /tmp/rpms/kmods/kmod-openrazer*.rpm /tmp/rpms/kmods/kmod-v4l2loopback*.rpm /tmp/rpms/kmods/kmod-xone*.rpm /tmp/rpms/kmods/kmod-xpadneo*.rpm
     - type: kargs
       kargs:
         - zfs.zfs_arc_max=17179869184
         - pcie_aspm=off
-
-
     - type: dnf
       repos:
         nonfree: rpmfusion
       install:
         install-weak-deps: false
         packages:
+          - piper
           - obs-studio
           - obs-studio-plugin-vaapi
           - steam
@@ -37,15 +33,11 @@ modules:
           - mangohud
           - gamescope
           - gamemode
-
-
     - type: files
       files:
         - source: 99-cpu-governor.rules
           destination: /etc/udev/rules.d/99-cpu-governor.rules
         - source: 99-workstation-perf.conf
           destination: /etc/sysctl.d/99-workstation-perf.conf
-
-
     - type: wayblue-signing
       source: local

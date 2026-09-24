@@ -1,30 +1,21 @@
 # yaml-language-server: \$schema=https://blue-build.org
 name: base
-description: ublue images for wayland compositors
+description: Celestial Uprising's Immutable Operating System
 base-image: ghcr.io/celestial-uprising/rusty
 image-version: latest
-
-
 modules: 
-
-
     - type: os-release
       properties:
         VARIANT: "base"
-
-
     - type: containerfile
       snippets:
         - COPY --from=ghcr.io/ublue-os/akmods:main-44 /rpms /tmp/rpms
         - COPY --from=ghcr.io/ublue-os/akmods:main-44 /kernel-rpms /tmp/rpms/kernel
+        - COPY --from=ghcr.io/ublue-os/akmods-zfs:main-44 /rpms /tmp/rpms-zfs
         - RUN find /tmp/rpms
-
-
-    - type: akmods
-      install:
-        - zfs
-
-
+        - RUN find /tmp/rpms-zfs
+        - RUN rpm -q ublue-os-akmods-addons || dnf install -y /tmp/rpms/ublue-os/ublue-os-akmods-addons*.rpm
+        - RUN dnf install -y /tmp/rpms-zfs/kmods/kmod-zfs*.rpm /tmp/rpms-zfs/packages/zfs*.rpm
     - type: kargs
       kargs:
         - amd_iommu=on
@@ -36,10 +27,7 @@ modules:
         - net.ifnames=0
         - tcp_congestion_control=bbr
         - msr.allow_writes=on
-
-
     - type: dnf
-
       repos:
         copr:
           - lihaohong/yazi
@@ -51,7 +39,6 @@ modules:
           - greg-at-redhat/glowm
         files:
           - https://copr.fedorainfracloud.org/coprs/ublue-os/packages/repo/fedora-%OS_VERSION%/ublue-os-packages-fedora-%OS_VERSION%.repo
-
       install:
         install-weak-deps: false
         packages:
@@ -92,7 +79,6 @@ modules:
           - ddcutil
           - openssl
           - distrobox
-
       remove:
         packages:
           - libva
@@ -126,8 +112,6 @@ modules:
           - cockpit
           - cockpit-bridge
           - cockpit-ws
-
-
     - type: script
       scripts:
         - installsignedkernel.sh
@@ -137,8 +121,6 @@ modules:
         - removeunusedrepos.sh
         - regenerateinitramfs.sh
         - ensurenegativopresence.sh
-
-
     - type: files
       files:
         - source: system/usr
@@ -151,13 +133,9 @@ modules:
           destination: /etc/profile.d/flyline.sh
         - source: distrobox-aliases.sh
           destination: /etc/profile.d/distrobox-aliases.sh
-
-
     - type: fonts
       fonts:
         nerd-fonts:
           - VictorMono
-
-
     - type: wayblue-signing
       source: local

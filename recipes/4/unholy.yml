@@ -1,17 +1,18 @@
 name: unholy
-description: Celestial Uprising --- magrathea 
+description: Celestial Uprising's Immutable Operating System
 base-image: ghcr.io/celestial-uprising/dev
 image-version: latest
-
-
 modules:
-
-
     - type: os-release
       properties:
         VARIANT: "unholy"
-
-
+    - type: containerfile
+      snippets:
+        - COPY --from=ghcr.io/ublue-os/akmods:main-44 /rpms /tmp/rpms
+        - COPY --from=ghcr.io/ublue-os/akmods:main-44 /kernel-rpms /tmp/rpms/kernel
+        - RUN find /tmp/rpms
+        - RUN rpm -q ublue-os-akmods-addons || dnf install -y /tmp/rpms/ublue-os/ublue-os-akmods-addons*.rpm
+        - RUN dnf install -y /tmp/rpms/kmods/kmod-openrazer*.rpm /tmp/rpms/kmods/kmod-v4l2loopback*.rpm /tmp/rpms/kmods/kmod-xone*.rpm /tmp/rpms/kmods/kmod-xpadneo*.rpm
     - type: dnf
       install:
         install-weak-deps: false
@@ -42,16 +43,13 @@ modules:
           - mangohud
           - gamescope
           - gamemode
-
-
+          - piper
     - type: default-flatpaks
       configurations:
         - notify: true
           scope: system
           install:
             - io.github.electronstudio.WeylusCommunityEdition
-
-
     - type: files
       files:
         - source: 99-cpu-governor.rules
@@ -60,7 +58,5 @@ modules:
           destination: /etc/sysctl.d/99-workstation-perf.conf
         - source: 60-weylus.rules
           destination: /etc/sysctl.d/60-weylus.rules
-
-
     - type: wayblue-signing
       source: local

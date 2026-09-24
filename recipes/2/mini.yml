@@ -1,31 +1,25 @@
 name: mini
-description: Celestial Uprising --- magrathea 
+description: Celestial Uprising's Immutable Operating System
 base-image: ghcr.io/celestial-uprising/base
 image-version: latest
-
-
 modules:
-
-
     - type: os-release
       properties:
         VARIANT: "mini"
-
-
-    - type: akmods
-      install:
-        - zenergy
-        - ryzen-smu
-
-
+    - type: containerfile
+      snippets:
+        - COPY --from=ghcr.io/ublue-os/akmods:main-44 /rpms /tmp/rpms
+        - COPY --from=ghcr.io/ublue-os/akmods:main-44 /kernel-rpms /tmp/rpms/kernel
+        - COPY --from=ghcr.io/ublue-os/akmods-extra:main-44 /rpms /tmp/rpms-extra
+        - RUN find /tmp/rpms
+        - RUN find /tmp/rpms-extra
+        - RUN rpm -q ublue-os-akmods-addons || dnf install -y /tmp/rpms/ublue-os/ublue-os-akmods-addons*.rpm
+        - RUN dnf install -y /tmp/rpms-extra/kmods/kmod-zenergy*.rpm /tmp/rpms-extra/kmods/kmod-ryzen-smu*.rpm
     - type: kargs
       kargs:
         - amdgpu.ppfeaturemask=0xffffffff
         - amdgpu.sg_display=0
-
-
     - type: dnf
-
       repos:
         copr:
           - ulysg/xwayland-satellite
@@ -33,7 +27,6 @@ modules:
           - sneexy/zen-browser
           - ferdiu/moonlight
           - skoved/rmpc
-
       install:
         install-weak-deps: false
         packages:
@@ -107,7 +100,6 @@ modules:
           - repo: fedora-multimedia
             packages:
               - mesa-va-drivers
-
       replace:
         - from-repo: fedora-multimedia
           skip-unavailable: true
@@ -146,8 +138,6 @@ modules:
               new: libswresample
             - old: libswscale-free
               new: libswscale
-
-
     - type: default-flatpaks
       configurations:
         - notify: true
@@ -157,27 +147,15 @@ modules:
             - com.valvesoftware.SteamLink
             - de.haeckerfelix.Shortwave
             - net.codelogistics.webapps
-
-
-    - type: script
-      scripts:
-        - removeunusedrepos.sh
-        - regenerateinitramfs.sh
-
-
     - type: files
       files:
         - source: kitty-kitty.conf
           destination: /etc/xdg/kitty/kitty.conf
         - source: system/niri
           destination: /
-
-
     - type: systemd
       system:
         enabled:
           - sddm-boot.service
-
-
     - type: wayblue-signing
       source: local
