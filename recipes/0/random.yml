@@ -178,6 +178,7 @@ modules:
 
       remove:
         packages:
+          - firefox
           - nano
           - nano-default-editor
           - nfs-client-utils
