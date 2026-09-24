@@ -11,11 +11,8 @@ modules:
       snippets:
         - COPY --from=ghcr.io/ublue-os/akmods:main-44 /rpms /tmp/rpms
         - COPY --from=ghcr.io/ublue-os/akmods:main-44 /kernel-rpms /tmp/rpms/kernel
-        - COPY --from=ghcr.io/ublue-os/akmods-zfs:main-44 /rpms /tmp/rpms-zfs
         - RUN find /tmp/rpms
-        - RUN find /tmp/rpms-zfs
         - RUN rpm -q ublue-os-akmods-addons || dnf install -y /tmp/rpms/ublue-os/ublue-os-akmods-addons*.rpm
-        - RUN dnf install -y /tmp/rpms-zfs/kmods/kmod-zfs*.rpm /tmp/rpms-zfs/packages/zfs*.rpm
     - type: kargs
       kargs:
         - amd_iommu=on
