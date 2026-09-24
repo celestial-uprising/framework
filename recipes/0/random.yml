@@ -211,6 +211,10 @@ modules:
           destination: /etc
         - source: systemd
           destination: /etc/systemd
+        - source: flyline.sh
+          destination: /etc/profile.d/flyline.sh
+        - source: distrobox-aliases.sh
+          destination: /etc/profile.d/distrobox-aliases.sh
 
     - type: systemd
       user:
