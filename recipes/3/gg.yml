@@ -30,5 +30,8 @@ modules:
           destination: /etc/udev/rules.d/99-cpu-governor.rules
         - source: 99-workstation-perf.conf
           destination: /etc/sysctl.d/99-workstation-perf.conf
+    - type: script
+      scripts:
+        - regenerateinitramfs.sh
     - type: wayblue-signing
       source: local

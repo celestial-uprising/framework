@@ -97,15 +97,12 @@ modules:
             - com.valvesoftware.SteamLink
             - de.haeckerfelix.Shortwave
             - net.codelogistics.webapps
-    - type: files
-      files:
-        - source: kitty-kitty.conf
-          destination: /etc/xdg/kitty/kitty.conf
-        - source: system/niri
-          destination: /
     - type: systemd
       system:
         enabled:
-          - sddm-boot.service
+          - lemurs.service
+    - type: script
+      scripts:
+        - regenerateinitramfs.sh
     - type: wayblue-signing
       source: local

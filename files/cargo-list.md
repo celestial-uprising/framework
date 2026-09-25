@@ -1,3 +1,4 @@
+cargo install --git https://github.com/coastalwhite/lemurs.git
 cargo install --git https://github.com/rezigned/upmd.git
 cargo install abtop
 cargo install uv

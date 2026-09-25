@@ -85,24 +85,18 @@ modules:
           - cockpit
           - cockpit-bridge
           - cockpit-ws
-    - type: script
-      scripts:
-        - regenerateinitramfs.sh
     - type: files
       files:
         - source: system/usr
           destination: /usr
         - source: system/etc
           destination: /etc
-        - source: systemd
-          destination: /etc/systemd
-        - source: flyline.sh
-          destination: /etc/profile.d/flyline.sh
-        - source: distrobox-aliases.sh
-          destination: /etc/profile.d/distrobox-aliases.sh
     - type: fonts
       fonts:
         nerd-fonts:
           - VictorMono
+    - type: script
+      scripts:
+        - regenerateinitramfs.sh
     - type: wayblue-signing
       source: local

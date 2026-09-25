@@ -53,5 +53,8 @@ modules:
           destination: /etc/sysctl.d/99-workstation-perf.conf
         - source: 60-weylus.rules
           destination: /etc/sysctl.d/60-weylus.rules
+    - type: script
+      scripts:
+        - regenerateinitramfs.sh
     - type: wayblue-signing
       source: local
