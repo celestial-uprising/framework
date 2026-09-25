@@ -87,7 +87,6 @@ modules:
           - cockpit-ws
     - type: script
       scripts:
-        - removeunusedrepos.sh
         - regenerateinitramfs.sh
     - type: files
       files:

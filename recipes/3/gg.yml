@@ -11,6 +11,8 @@ modules:
         - zfs.zfs_arc_max=17179869184
         - pcie_aspm=off
     - type: dnf
+      repos:
+        nonfree: rpmfusion
       install:
         install-weak-deps: false
         packages:
