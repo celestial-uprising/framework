@@ -1,0 +1,63 @@
+# yaml-language-server: \$schema=https://blue-build.org
+name: rusty-ucore
+description: Celestial Uprising's Immutable Operating System
+base-image: ghcr.io/ublue-os/ucore
+image-version: testing
+stages:
+  - name: rust
+    from: docker.io/library/rust:latest
+    modules:
+      - type: copy
+        src: files/cargo-list.md
+        dest: /tmp/cargo-list.md
+      - type: script
+        snippets:
+          - mkdir -p /tmp/bin
+          - |
+            apt-get update && apt-get install -y libdrm-dev pkg-config
+            MD_FILE="/tmp/cargo-list.md"
+            if [ ! -f "$MD_FILE" ]; then
+              echo "Error: $MD_FILE not found!"
+              exit 1
+            fi
+            while read -r line || [ -n "$line" ]; do
+              case "$line" in
+                *"cargo install"*)
+                  echo "----------------------------------------"
+                  echo "Executing: $line --root /tmp"
+                  $line --root /tmp
+                  ;;
+              esac
+            done < "$MD_FILE"
+modules: 
+    - type: os-release
+      properties:
+        NAME: "Celestial Uprising"
+        PRETTY_NAME: "Celestial Uprising a003"
+        VERSION_CODENAME: "magrathea"
+        ID_LIKE: fedora
+        HOME_URL: "https://github.com/celestial-uprising/framework/"
+        BUG_REPORT_URL: "https://github.com/celestial-uprising/framework/"
+        VARIANT: "rusty-ucore"
+        RELEASE_TYPE: "alpha"
+    - type: dnf
+      install:
+        install-weak-deps: false
+        packages:
+          - vim
+          - firewall-config
+      remove:
+        packages:
+          - firefox
+          - nano
+          - nano-default-editor
+          - nfs-client-utils
+          - nfs-common-utils
+          - azure-vm-utils
+          - cockpit
+          - cockpit-bridge
+          - cockpit-ws
+    - type: copy
+      from: rust
+      src: /tmp/bin/
+      dest: /usr/bin/
