@@ -87,13 +87,8 @@ modules:
           - cockpit-ws
     - type: script
       scripts:
-        - installsignedkernel.sh
-        - ensureautoupdates.sh
-        - addimageinfo.sh
-        - installrpmfusion.sh
         - removeunusedrepos.sh
         - regenerateinitramfs.sh
-        - ensurenegativopresence.sh
     - type: files
       files:
         - source: system/usr
