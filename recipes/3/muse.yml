@@ -6,13 +6,6 @@ modules:
     - type: os-release
       properties:
         VARIANT: "muse"
-    - type: containerfile
-      snippets:
-        - COPY --from=ghcr.io/ublue-os/akmods:main-44 /rpms /tmp/rpms
-        - COPY --from=ghcr.io/ublue-os/akmods:main-44 /kernel-rpms /tmp/rpms/kernel
-        - RUN find /tmp/rpms
-        - RUN rpm -q ublue-os-akmods-addons || dnf install -y /tmp/rpms/ublue-os/ublue-os-akmods-addons*.rpm
-        - RUN dnf install -y /tmp/rpms/kmods/kmod-v4l2loopback*.rpm
     - type: kargs
       kargs:
         - zfs.zfs_arc_max=17179869184
