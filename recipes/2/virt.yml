@@ -25,6 +25,10 @@ modules:
           destination: /etc/udev/rules.d/99-cpu-governor.rules
         - source: 99-workstation-perf.conf
           destination: /etc/sysctl.d/99-workstation-perf.conf
+    - type: systemd
+      system:
+        enabled:
+          - lemurs.service
     - type: script
       scripts:
         - regenerateinitramfs.sh

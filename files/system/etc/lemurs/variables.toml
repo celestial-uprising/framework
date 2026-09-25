@@ -1,0 +1,12 @@
+# Theme Colors (Hex values or standard ANSI color names)
+background = "#1A1110"
+text       = "#FFB4AB"
+subtext    = "gray"
+highlight  = "#87CEEB"  # Sky Blue accent
+error      = "light red"
+
+# Custom Strings / Overrides
+banner = "CELESTIAL UPRISING OS"
+fallback_poweroff = "systemctl poweroff"
+fallback_reboot   = "systemctl reboot"
+
