@@ -6,15 +6,6 @@ modules:
     - type: os-release
       properties:
         VARIANT: "mini"
-    - type: containerfile
-      snippets:
-        - COPY --from=ghcr.io/ublue-os/akmods:main-44 /rpms /tmp/rpms
-        - COPY --from=ghcr.io/ublue-os/akmods:main-44 /kernel-rpms /tmp/rpms/kernel
-        - COPY --from=ghcr.io/ublue-os/akmods-extra:main-44 /rpms /tmp/rpms-extra
-        - RUN find /tmp/rpms
-        - RUN find /tmp/rpms-extra
-        - RUN rpm -q ublue-os-akmods-addons || dnf install -y /tmp/rpms/ublue-os/ublue-os-akmods-addons*.rpm
-        - RUN dnf install -y /tmp/rpms-extra/kmods/kmod-zenergy*.rpm /tmp/rpms-extra/kmods/kmod-ryzen-smu*.rpm
     - type: kargs
       kargs:
         - amdgpu.ppfeaturemask=0xffffffff
