@@ -34,9 +34,10 @@ jobs:
             -v .:/config:ro \
             -v ./output:/output \
             ghcr.io/osbuild/image-builder:latest \
-            --kickstart /config/universal-installer.cfg \
-            --type anaconda-iso \
-            quay.io/centos-bootc/centos-bootc:stream9
+            build \
+            --blueprint /config/universal-installer.cfg \
+            --bootc-ref quay.io/centos-bootc/centos-bootc:stream9 \
+            anaconda-iso
       - name: Upload Small Universal ISO to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
