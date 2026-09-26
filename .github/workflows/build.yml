@@ -31,8 +31,8 @@ jobs:
       - name: Generate Universal Net-Boot ISO
         run: |
           mkdir -p ./output
-          
-          # 1. Pull and compile your baseline container image 
+
+          # 1. Pull and compile your baseline container image
           sudo podman pull quay.io/centos-bootc/centos-bootc:stream9
           sudo podman run --rm --privileged \
             --security-opt label=type:unconfined_t \
@@ -43,6 +43,9 @@ jobs:
             --type anaconda-iso \
             --config /config.toml \
             quay.io/centos-bootc/centos-bootc:stream9
+
+          # FIX PERMISSIONS: Reclaim ownership of the output directory from root
+          sudo chown -R $(id -u):$(id -g) ./output
 
           # 2. Setup your local extraction tools
           sudo apt-get update && sudo apt-get install -y xorriso isolinux
@@ -117,10 +120,12 @@ jobs:
             -eltorito-alt-boot -e images/efiboot.img -no-emul-boot \
             -o ./output/universal-installer.iso ./iso_tmp
 
+      # FIX PATH: Point files to match the output of your custom xorriso build
       - name: Upload Installer ISO to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: "./output/bootc-installer/install.iso"
+          files: "./output/universal-installer.iso"
           tag_name: universal-installer-${{ github.run_number }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
