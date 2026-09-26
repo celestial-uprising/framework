@@ -35,7 +35,7 @@ jobs:
             -v ./output:/output \
             ghcr.io/osbuild/image-builder:latest \
             build \
-            --config /config/universal-installer.cfg \
+            --blueprint /config/universal-installer.cfg \
             --bootc-ref quay.io/centos-bootc/centos-bootc:stream9 \
             bootc-installer
       - name: Upload Small Universal ISO to GitHub Release
