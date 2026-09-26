@@ -31,6 +31,8 @@ jobs:
       - name: Generate Universal Net-Boot ISO
         run: |
           mkdir -p ./output
+
+          sudo podman pull quay.io/centos-bootc/centos-bootc:stream9
           
           sudo podman run --rm --privileged \
             --security-opt label=type:unconfined_t \
