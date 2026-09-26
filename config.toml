@@ -1,6 +1,7 @@
 [customizations.installer.kickstart]
 contents = """
-text
 authselect --enablenothing
+network --bootproto=dhcp --device=link --activate --onboot=on
+bootc --source-imgref ghcr.io/celestial-uprising/virt:latest
 """
 
