@@ -60,7 +60,7 @@ jobs:
           mkdir -p ./iso_tmp
           xorriso -osirrox on -indev "$TARGET_ISO" -extract / ./iso_tmp
 
-          # 5. Append your interactive 13 spins menu options to the GRUB configuration
+            # 5. Append your interactive 13 spins menu options to the GRUB configuration
           cat << 'EOF' >> ./iso_tmp/boot/grub2/grub.cfg
 
           menuentry 'Celestial-Uprising VIRT' --class fedora --class gnu-linux {
@@ -117,12 +117,10 @@ jobs:
           }
           EOF
 
-          xorriso -as mkisofs -V "BOOTC_NET" -c boot.catalog -b isolinux/isolinux.bin \
-            -no-emul-boot -boot-load-size 4 -boot-info-table \
+          xorriso -as mkisofs -V "BOOTC_NET" \
             -eltorito-alt-boot -e images/efiboot.img -no-emul-boot \
             -o ./output/universal-installer.iso ./iso_tmp
 
-      # FIX PATH: Point files to match the output of your custom xorriso build
       - name: Upload Installer ISO to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
