@@ -48,7 +48,7 @@ jobs:
 
           cat << 'EOF' >> ./iso_tmp/boot/grub2/grub.cfg
 
-        menuentry 'Celestial-Uprising: VIRT' --class fedora --class gnu-linux {
+          menuentry 'Celestial-Uprising VIRT' --class fedora --class gnu-linux {
               linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/virt:latest
               initrd /images/pxeboot/initrd.img
           }
