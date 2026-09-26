@@ -31,16 +31,18 @@ jobs:
       - name: Generate Universal Net-Boot ISO
         run: |
           mkdir -p ./output
-
-          sudo podman pull quay.io/centos-bootc/centos-bootc:stream9
           
+          # Pre-pull the base image layer onto host storage
+          sudo podman pull quay.io/centos-bootc/centos-bootc:stream9
+
+          # Build the baseline interactive installation media template
           sudo podman run --rm --privileged \
             --security-opt label=type:unconfined_t \
             -v /var/lib/containers/storage:/var/lib/containers/storage \
             -v ./config.toml:/config.toml:ro \
             -v ./output:/output \
             quay.io/centos-bootc/bootc-image-builder:latest \
-            --type bootc-installer \
+            --type anaconda-iso \
             --config /config.toml \
             quay.io/centos-bootc/centos-bootc:stream9
 
