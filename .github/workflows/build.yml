@@ -49,7 +49,7 @@ jobs:
           sudo apt-get update && sudo apt-get install -y xorriso isolinux
 
           mkdir -p ./iso_tmp
-          xorriso -osirrox on -indev ./output/bootc-installer/install.iso -extract / ./iso_tmp
+          xorriso -osirrox on -indev ./output/anaconda-iso/install.iso -extract / ./iso_tmp
 
           cat << 'EOF' >> ./iso_tmp/boot/grub2/grub.cfg
 
@@ -110,7 +110,7 @@ jobs:
           xorriso -as mkisofs -V "BOOTC_NET" -c boot.catalog -b isolinux/isolinux.bin \
             -no-emul-boot -boot-load-size 4 -boot-info-table \
             -eltorito-alt-boot -e images/efiboot.img -no-emul-boot \
-            -o ./output/bootc-installer/universal-install.iso ./iso_tmp
+            -o ./output/anaconda-iso/universal-install.iso ./iso_tmp
 
       - name: Upload Installer ISO to GitHub Release
         uses: softprops/action-gh-release@v2
