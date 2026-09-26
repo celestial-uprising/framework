@@ -1,0 +1,12 @@
+# config.toml
+
+[customizations.installer.kickstart]
+contents = """
+# Force the installer into interactive text mode
+text
+
+# Explicitly skip any automated installation steps so Anaconda stops 
+# and prompts you for users, disks, passwords, and networks manually.
+authselect --enablenothing
+"""
+

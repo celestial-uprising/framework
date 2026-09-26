@@ -10,10 +10,9 @@ on:
       - "**.png"
       - "**.webp"
   pull_request:
+    branches: [ main ]
   workflow_dispatch:
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
-  cancel-in-progress: true
+
 jobs:
   generate-universal-iso:
     runs-on: ubuntu-latest
@@ -22,38 +21,96 @@ jobs:
     steps:
       - name: Checkout Repository Code
         uses: actions/checkout@v4
+
       - name: Free Disk Space
         run: |
           sudo rm -rf /usr/share/dotnet
           sudo rm -rf /usr/local/lib/android
           sudo rm -rf /opt/ghc
+
       - name: Generate Universal Net-Boot ISO
         run: |
           mkdir -p ./output
-
-          # 1. Dynamically read your kickstart file and embed it safely inside a TOML block
-          python3 -c '
-          import json, os
-          with open("universal-installer.cfg", "r") as f:
-              ks_content = f.read()
-          config = {"customizations": {"installer": {"kickstart": {"contents": ks_content}}}}
-          with open("config.json", "w") as f:
-              json.dump(config, f)
-          '
-
-          # 2. Run the build passing your structured configuration
+          
           sudo podman run --rm --privileged \
             --security-opt label=type:unconfined_t \
-            -v .:/config:ro \
+            -v ./config.toml:/config.toml:ro \
             -v ./output:/output \
             quay.io/centos-bootc/bootc-image-builder:latest \
-            --type anaconda-iso \
-            --config /config/config.json \
+            --type bootc-installer \
+            --config /config.toml \
             quay.io/centos-bootc/centos-bootc:stream9
-      - name: Upload Small Universal ISO to GitHub Release
+
+          sudo apt-get update && sudo apt-get install -y xorriso isolinux
+
+          mkdir -p ./iso_tmp
+          xorriso -osirrox on -indev ./output/bootc-installer/install.iso -extract / ./iso_tmp
+
+          cat << 'EOF' >> ./iso_tmp/boot/grub2/grub.cfg
+
+        menuentry 'Celestial-Uprising: VIRT' --class fedora --class gnu-linux {
+              linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/virt:latest
+              initrd /images/pxeboot/initrd.img
+          }
+          menuentry 'Celestial-Uprising HEADLESS' --class fedora --class gnu-linux {
+              linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/headless:latest
+              initrd /images/pxeboot/initrd.img
+          }
+          menuentry 'Celestial-Uprising HEADLESS_NVIDIA' --class fedora --class gnu-linux {
+              linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/headless-nv:latest
+              initrd /images/pxeboot/initrd.img
+          }
+          menuentry 'Celestial-Uprising MINI' --class fedora --class gnu-linux {
+              linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/mini:latest
+              initrd /images/pxeboot/initrd.img
+          }
+          menuentry 'Celestial-Uprising MINI_NVIDIA' --class fedora --class gnu-linux {
+              linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/mini-nv:latest
+              initrd /images/pxeboot/initrd.img
+          }
+          menuentry 'Celestial-Uprising DEV' --class fedora --class gnu-linux {
+              linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/dev:latest
+              initrd /images/pxeboot/initrd.img
+          }
+          menuentry 'Celestial-Uprising DEV_NVIDIA' --class fedora --class gnu-linux {
+              linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/dev-nv:latest
+              initrd /images/pxeboot/initrd.img
+          }
+          menuentry 'Celestial-Uprising MUSE' --class fedora --class gnu-linux {
+              linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/muse:latest
+              initrd /images/pxeboot/initrd.img
+          }
+          menuentry 'Celestial-Uprising MUSE_NVIDIA' --class fedora --class gnu-linux {
+              linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/muse-nv:latest
+              initrd /images/pxeboot/initrd.img
+          }
+          menuentry 'Celestial-Uprising GG' --class fedora --class gnu-linux {
+              linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/gg:latest
+              initrd /images/pxeboot/initrd.img
+          }
+          menuentry 'Celestial-Uprising GG_NVIDIA' --class fedora --class gnu-linux {
+              linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/gg-nv:latest
+              initrd /images/pxeboot/initrd.img
+          }
+          menuentry 'Celestial-Uprising UNHOLY' --class fedora --class gnu-linux {
+              linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/unholy:latest
+              initrd /images/pxeboot/initrd.img
+          }
+          menuentry 'Celestial-Uprising UNHOLY_NVIDIA' --class fedora --class gnu-linux {
+              linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/unholy-nv:latest
+              initrd /images/pxeboot/initrd.img
+          }
+          EOF
+
+          xorriso -as mkisofs -V "BOOTC_NET" -c boot.catalog -b isolinux/isolinux.bin \
+            -no-emul-boot -boot-load-size 4 -boot-info-table \
+            -eltorito-alt-boot -e images/efiboot.img -no-emul-boot \
+            -o ./output/bootc-installer/universal-install.iso ./iso_tmp
+
+      - name: Upload Installer ISO to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: "./output/boot.iso"
+          files: "./output/bootc-installer/install.iso"
           tag_name: universal-installer-${{ github.run_number }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
