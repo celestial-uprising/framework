@@ -52,7 +52,8 @@ jobs:
 
           # 3. FIXED: Find the actual hashed .iso file name automatically
           #TARGET_ISO=$(ls ./output/anaconda-iso/*.iso | head -n 1)
-          TARGET_ISO=/run/osbuild/tree/install.iso
+          TARGET_ISO=$(ls ./*/*/*.iso | head -n 1)
+          #TARGET_ISO=/run/osbuild/tree/install.iso
           echo "Target ISO found: $TARGET_ISO"
 
           # 4. Extract the contents cleanly
