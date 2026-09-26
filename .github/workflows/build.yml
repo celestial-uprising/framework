@@ -32,10 +32,8 @@ jobs:
         run: |
           mkdir -p ./output
           
-          # Pre-pull the base image layer onto host storage
+          # 1. Pull and compile your baseline container image 
           sudo podman pull quay.io/centos-bootc/centos-bootc:stream9
-
-          # Build the baseline interactive installation media template
           sudo podman run --rm --privileged \
             --security-opt label=type:unconfined_t \
             -v /var/lib/containers/storage:/var/lib/containers/storage \
@@ -46,11 +44,18 @@ jobs:
             --config /config.toml \
             quay.io/centos-bootc/centos-bootc:stream9
 
+          # 2. Setup your local extraction tools
           sudo apt-get update && sudo apt-get install -y xorriso isolinux
 
-          mkdir -p ./iso_tmp
-          xorriso -osirrox on -indev ./output/anaconda-iso/install.iso -extract / ./iso_tmp
+          # 3. FIXED: Find the actual hashed .iso file name automatically
+          TARGET_ISO=$(ls ./output/anaconda-iso/*.iso | head -n 1)
+          echo "Target ISO found: $TARGET_ISO"
 
+          # 4. Extract the contents cleanly
+          mkdir -p ./iso_tmp
+          xorriso -osirrox on -indev "$TARGET_ISO" -extract / ./iso_tmp
+
+          # 5. Append your interactive 13 spins menu options to the GRUB configuration
           cat << 'EOF' >> ./iso_tmp/boot/grub2/grub.cfg
 
           menuentry 'Celestial-Uprising VIRT' --class fedora --class gnu-linux {
@@ -110,7 +115,7 @@ jobs:
           xorriso -as mkisofs -V "BOOTC_NET" -c boot.catalog -b isolinux/isolinux.bin \
             -no-emul-boot -boot-load-size 4 -boot-info-table \
             -eltorito-alt-boot -e images/efiboot.img -no-emul-boot \
-            -o ./output/anaconda-iso/universal-install.iso ./iso_tmp
+            -o ./output/universal-installer.iso ./iso_tmp
 
       - name: Upload Installer ISO to GitHub Release
         uses: softprops/action-gh-release@v2
