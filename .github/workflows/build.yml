@@ -35,9 +35,9 @@ jobs:
             -v ./output:/output \
             ghcr.io/osbuild/image-builder:latest \
             build \
-            --blueprint /config/universal-installer.cfg \
+            --config /config/universal-installer.cfg \
             --bootc-ref quay.io/centos-bootc/centos-bootc:stream9 \
-            anaconda-iso
+            bootc-installer
       - name: Upload Small Universal ISO to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
