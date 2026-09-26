@@ -26,11 +26,8 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - 1/headless.yml
-          - 1/headless-nv.yml
-          - 1/mini.yml
-          - 1/mini-nv.yml
-          - 1/virt.yml
+          - 1/base.yml
+          - 1/base-nv.yml
     steps:
       - name: Building Stage 1 Images
         uses: blue-build/github-action@v1.13
@@ -52,13 +49,13 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - 2/dev.yml
-          - 2/dev-nv.yml
-          - 2/gg.yml
-          - 2/gg-nv.yml
-          - 2/touch.yml
+          - 2/mini.yml
+          - 2/mini-nv.yml
+          - 2/headless.yml
+          - 2/headless-nv.yml
+          - 2/virt.yml
     steps:
-      - name: Building 2 Images
+      - name: Building Stage 2 Images
         uses: blue-build/github-action@v1.13
         with:
           recipe: ${{ matrix.recipe }}
@@ -77,8 +74,12 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - 3/unholy.yml
-          - 3/unholy-nv.yml
+          - 3/dev.yml
+          - 3/dev-nv.yml
+          - 3/gg.yml
+          - 3/gg-nv.yml
+          - 3/muse.yml
+          - 3/muse-nv.yml
     steps:
       - name: Building Stage 3 Images
         uses: blue-build/github-action@v1.13
@@ -87,3 +88,55 @@ jobs:
           cosign_private_key: ${{ secrets.SIGNING_SECRET }}
           registry_token: ${{ github.token }}
           maximize_build_space: false
+  stage_four:
+    name: Building Stage 4 Images
+    runs-on: ubuntu-latest
+    needs: stage_three
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        recipe:
+          - 4/unholy.yml
+          - 4/unholy-nv.yml
+    steps:
+      - name: Building Stage 4 Images
+        uses: blue-build/github-action@v1.13
+        with:
+          recipe: ${{ matrix.recipe }}
+          cosign_private_key: ${{ secrets.SIGNING_SECRET }}
+          registry_token: ${{ github.token }}
+          maximize_build_space: false
+  generate-universal-iso:
+    runs-on: ubuntu-latest
+    needs: stage_four
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repository Code
+        uses: actions/checkout@v4
+      - name: Free Disk Space
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/ghc
+      - name: Generate Universal Net-Boot ISO
+        run: |
+          mkdir -p ./output
+          sudo podman run --rm --privileged \
+            -v .:/config:ro \
+            -v ./output:/output \
+            ghcr.io/osbuild/image-builder:latest \
+            --kickstart /config/universal-installer.cfg \
+            --type anaconda-iso \
+            quay.io/centos-bootc/centos-bootc:stream9
+      - name: Upload Small Universal ISO to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: "./output/boot.iso"
+          tag_name: universal-installer-${{ github.run_number }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

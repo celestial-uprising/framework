@@ -15,104 +15,10 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
   cancel-in-progress: true
 jobs:
-  stage_one:
-    name: Build Stage 1 Images
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-    strategy:
-      fail-fast: false
-      matrix:
-        recipe:
-          - 1/base.yml
-          - 1/base-nv.yml
-    steps:
-      - name: Building Stage 1 Images
-        uses: blue-build/github-action@v1.13
-        with:
-          recipe: ${{ matrix.recipe }}
-          cosign_private_key: ${{ secrets.SIGNING_SECRET }}
-          registry_token: ${{ github.token }}
-          pr_event_number: ${{ github.event.number }}
-          maximize_build_space: true
-  stage_two:
-    name: Building Stage 2 Images
-    runs-on: ubuntu-latest
-    needs: stage_one
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-    strategy:
-      fail-fast: false
-      matrix:
-        recipe:
-          - 2/mini.yml
-          - 2/mini-nv.yml
-          - 2/headless.yml
-          - 2/headless-nv.yml
-          - 2/virt.yml
-    steps:
-      - name: Building Stage 2 Images
-        uses: blue-build/github-action@v1.13
-        with:
-          recipe: ${{ matrix.recipe }}
-          cosign_private_key: ${{ secrets.SIGNING_SECRET }}
-          registry_token: ${{ github.token }}
-          maximize_build_space: false
-  stage_three:
-    name: Building Stage 3 Images
-    runs-on: ubuntu-latest
-    needs: stage_two
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-    strategy:
-      fail-fast: false
-      matrix:
-        recipe:
-          - 3/dev.yml
-          - 3/dev-nv.yml
-          - 3/gg.yml
-          - 3/gg-nv.yml
-          - 3/muse.yml
-          - 3/muse-nv.yml
-    steps:
-      - name: Building Stage 3 Images
-        uses: blue-build/github-action@v1.13
-        with:
-          recipe: ${{ matrix.recipe }}
-          cosign_private_key: ${{ secrets.SIGNING_SECRET }}
-          registry_token: ${{ github.token }}
-          maximize_build_space: false
-  stage_four:
-    name: Building Stage 4 Images
-    runs-on: ubuntu-latest
-    needs: stage_three
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-    strategy:
-      fail-fast: false
-      matrix:
-        recipe:
-          - 4/unholy.yml
-          - 4/unholy-nv.yml
-    steps:
-      - name: Building Stage 4 Images
-        uses: blue-build/github-action@v1.13
-        with:
-          recipe: ${{ matrix.recipe }}
-          cosign_private_key: ${{ secrets.SIGNING_SECRET }}
-          registry_token: ${{ github.token }}
-          maximize_build_space: false
   generate-universal-iso:
     runs-on: ubuntu-latest
-    needs: stage_four
+    permissions:
+      contents: write
     steps:
       - name: Checkout Repository Code
         uses: actions/checkout@v4
@@ -127,15 +33,14 @@ jobs:
           sudo podman run --rm --privileged \
             -v .:/config:ro \
             -v ./output:/output \
-            registry.redhat.io/rhel9/bootc-image-builder:latest \
+            ghcr.io/osbuild/image-builder:latest \
             --kickstart /config/universal-installer.cfg \
             --type anaconda-iso \
             quay.io/centos-bootc/centos-bootc:stream9
       - name: Upload Small Universal ISO to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: ./output/bootiso/install.iso
+          files: "./output/boot.iso"
           tag_name: universal-installer-${{ github.run_number }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
