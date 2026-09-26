@@ -1,12 +1,12 @@
 # yaml-language-server: \$schema=https://blue-build.org
-name: base
+name: base-nv
 description: Celestial Uprising's Immutable Operating System
-base-image: ghcr.io/celestial-uprising/rusty-ucore
+base-image: ghcr.io/celestial-uprising/rusty-ucore-nv
 image-version: latest
 modules: 
     - type: os-release
       properties:
-        VARIANT: "base"
+        VARIANT: "base-nv"
     - type: containerfile
       snippets:
         - COPY --from=ghcr.io/ublue-os/akmods:main-44 /rpms /tmp/rpms

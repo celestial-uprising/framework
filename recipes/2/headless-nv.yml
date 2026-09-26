@@ -1,0 +1,57 @@
+name: headless-nv
+description: Celestial Uprising's Immutable Operating System
+base-image: ghcr.io/celestial-uprising/base-nv
+image-version: latest
+modules:
+    - type: os-release
+      properties:
+        VARIANT: "headless-nv"
+    - type: kargs
+      kargs:
+        - amdgpu.ppfeaturemask=0xffffffff
+        - zfs.zfs_arc_max=17179869184
+        - pcie_aspm=off
+    - type: dnf
+      install:
+        install-weak-deps: false
+        packages:
+          - google-noto-emoji-fonts
+          - tuned-ppd
+          - vulkan-validation-layers
+          - vulkan-tools
+          - ffmpeg
+          - qemu-system-x86
+          - qemu-system-aarch64
+          - edk2-aarch64
+          - qemu-system-riscv
+          - qemu-img
+          - qemu-audio-pipewire
+          - virglrenderer
+          - qemu-device-display-virtio-gpu-gl
+          - qemu-ui-opengl
+          - qemu-audio-spice
+          - qemu-char-spice
+          - qemu-device-display-qxl
+          - spice-gtk
+          - libguestfs-tools
+          - virt-install
+          - virt-top
+          - libvirt
+          - libvirt-daemon-qemu
+          - libvirt-daemon-driver-secret
+          - libvirt-daemon-driver-nodedev
+          - libvirt-daemon-driver-interface
+          - libvirt-daemon-driver-nwfilter
+          - libvirt-daemon-config-network
+          - libvirt-daemon-driver-network
+          - libvirt-daemon-driver-storage
+          - libvirt-daemon-driver-storage-zfs
+    - type: systemd
+      system:
+        enabled:
+          - lemurs.service
+    - type: script
+      scripts:
+        - regenerateinitramfs.sh
+    - type: wayblue-signing
+      source: local

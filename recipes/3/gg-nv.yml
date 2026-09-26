@@ -1,0 +1,37 @@
+name: gg-nv
+description: Celestial Uprising's Immutable Operating System
+base-image: ghcr.io/celestial-uprising/mini-nv
+image-version: latest
+modules:
+    - type: os-release
+      properties:
+        VARIANT: "gg-nv"
+    - type: kargs
+      kargs:
+        - zfs.zfs_arc_max=17179869184
+        - pcie_aspm=off
+    - type: dnf
+      repos:
+        nonfree: rpmfusion
+      install:
+        install-weak-deps: false
+        packages:
+          - piper
+          - obs-studio
+          - obs-studio-plugin-vaapi
+          - steam
+          - steam-devices
+          - mangohud
+          - gamescope
+          - gamemode
+    - type: files
+      files:
+        - source: 99-cpu-governor.rules
+          destination: /etc/udev/rules.d/99-cpu-governor.rules
+        - source: 99-workstation-perf.conf
+          destination: /etc/sysctl.d/99-workstation-perf.conf
+    - type: script
+      scripts:
+        - regenerateinitramfs.sh
+    - type: wayblue-signing
+      source: local
