@@ -30,13 +30,25 @@ jobs:
       - name: Generate Universal Net-Boot ISO
         run: |
           mkdir -p ./output
+
+          # 1. Dynamically read your kickstart file and embed it safely inside a TOML block
+          python3 -c '
+          import json, os
+          with open("universal-installer.cfg", "r") as f:
+              ks_content = f.read()
+          config = {"customizations": {"installer": {"kickstart": {"contents": ks_content}}}}
+          with open("config.json", "w") as f:
+              json.dump(config, f)
+          '
+
+          # 2. Run the build passing your structured configuration
           sudo podman run --rm --privileged \
             --security-opt label=type:unconfined_t \
             -v .:/config:ro \
             -v ./output:/output \
             quay.io/centos-bootc/bootc-image-builder:latest \
             --type anaconda-iso \
-            --kickstart /config/universal-installer.cfg \
+            --config /config/config.json \
             quay.io/centos-bootc/centos-bootc:stream9
       - name: Upload Small Universal ISO to GitHub Release
         uses: softprops/action-gh-release@v2
