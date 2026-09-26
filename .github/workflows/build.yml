@@ -31,13 +31,13 @@ jobs:
         run: |
           mkdir -p ./output
           sudo podman run --rm --privileged \
+            --security-opt label=type:unconfined_t \
             -v .:/config:ro \
             -v ./output:/output \
-            ghcr.io/osbuild/image-builder:latest \
-            build \
-            --blueprint /config/universal-installer.cfg \
-            --bootc-ref quay.io/centos-bootc/centos-bootc:stream9 \
-            bootc-installer
+            quay.io/centos-bootc/bootc-image-builder:latest \
+            --type anaconda-iso \
+            --kickstart /config/universal-installer.cfg \
+            quay.io/centos-bootc/centos-bootc:stream9
       - name: Upload Small Universal ISO to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
