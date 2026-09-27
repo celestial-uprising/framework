@@ -1,0 +1,67 @@
+name: bluebuild
+on:
+  schedule:
+    - cron: "00 06 * * *"
+  push:
+    paths-ignore:
+      - "**.md"
+      - "**.jpg"
+      - "**.jpeg"
+      - "**.png"
+      - "**.webp"
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  generate-universal-iso:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repository Code
+        uses: actions/checkout@v4
+
+      - name: Free Disk Space
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/ghc
+
+      - name: Generate Universal Net-Boot ISO
+        run: |
+          mkdir -p ./output
+
+          # 1. Pull and compile using the network-only 'iso' type
+          sudo podman pull quay.io/centos-bootc/centos-bootc:stream9
+          sudo podman run --rm --privileged \
+            --security-opt label=type:unconfined_t \
+            -v /var/lib/containers/storage:/var/lib/containers/storage \
+            -v ./config.toml:/config.toml:ro \
+            -v ./output:/output \
+            quay.io/centos-bootc/bootc-image-builder:latest \
+            --type iso \
+            --config /config.toml \
+            quay.io/centos-bootc/centos-bootc:stream9
+
+          # FIX PERMISSIONS: Reclaim ownership of the output directory from root
+          sudo chown -R $(id -u):$(id -g) ./output
+
+          # 2. Safely find the newly built minimal ISO image
+          TARGET_ISO=$(ls ./output/bootiso/*.iso | head -n 1)
+          echo "Target Net-Boot ISO found: $TARGET_ISO"
+          
+          # Move it to a clean path for the release uploader step
+          mv "$TARGET_ISO" ./output/universal-installer.iso
+
+      - name: Upload Installer ISO to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: "./output/universal-installer.iso"
+          tag_name: universal-installer-${{ github.run_number }}
+          body: |
+            ### Minimal Network Installer
+            This is a netinstall image. The target machine must be connected to the internet during deployment to download container layers.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
