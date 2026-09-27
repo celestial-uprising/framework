@@ -40,7 +40,7 @@ jobs:
             -v ./config.toml:/config.toml:ro \
             -v ./output:/output \
             quay.io/centos-bootc/bootc-image-builder:latest \
-            --type anaconda-iso \
+            --type iso \
             --config /config.toml \
             quay.io/centos-bootc/centos-bootc:stream9
 
