@@ -130,7 +130,7 @@ jobs:
 
 
       - name: Upload Installer ISO to GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: "./output/universal-installer.iso"
           tag_name: universal-installer-${{ github.run_number }}
