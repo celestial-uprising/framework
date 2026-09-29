@@ -14,6 +14,11 @@ stages:
         snippets:
           - mkdir -p /tmp/bin
           - |
+            ENV RUSTFLAGS="-C target-cpu=excavator -C llvm-args=-mtune=zen3"
+            ENV CARGO_PROFILE_RELEASE_OPT_LEVEL="3"
+            ENV CARGO_PROFILE_RELEASE_LTO="fat"
+            ENV CARGO_PROFILE_RELEASE_CODEGEN_UNITS="1"
+            ENV CARGO_PROFILE_RELEASE_PANIC="abort"
             apt-get update && apt-get install -y libdrm-dev pkg-config libpam0g-dev
             MD_FILE="/tmp/cargo-list.md"
             if [ ! -f "$MD_FILE" ]; then
@@ -33,7 +38,7 @@ modules:
     - type: os-release
       properties:
         NAME: "Celestial Uprising"
-        PRETTY_NAME: "Celestial Uprising a003"
+        PRETTY_NAME: "Celestial Uprising a004"
         VERSION_CODENAME: "magrathea"
         ID_LIKE: fedora
         HOME_URL: "https://github.com/celestial-uprising/framework/"
