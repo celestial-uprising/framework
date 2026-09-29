@@ -71,4 +71,3 @@ These images are signed with [Sigstore](https://www.sigstore.dev/)'s [cosign](ht
 ```bash
 cosign verify --key cosign.pub ghcr.io/celestial-uprising/framework
 ```
-RUST TOOLS = upmd abtop wrkflw basalt broot dust presenterm pastel viddy xan doxx amdtop swaptop siggy cargo-seek qrtool usbtree tenere wiki-tui igrep lazyrsync systeroid systemd-manager xleak kmon
