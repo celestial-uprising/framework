@@ -10,129 +10,103 @@ on:
       - "**.png"
       - "**.webp"
   pull_request:
-    branches: [ main ]
   workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
+  cancel-in-progress: true
 jobs:
-  generate-universal-iso:
+  stage_one:
+    name: Build Stage 1 Images
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
+      packages: write
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        recipe:
+          - 1/base.yml
+          - 1/base-nv.yml
     steps:
-      - name: Checkout Repository Code
-        uses: actions/checkout@v4
-      - name: Free Disk Space
-        run: |
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /usr/local/lib/android
-          sudo rm -rf /opt/ghc
-      - name: Generate Universal Net-Boot ISO
-        run: |
-          mkdir -p ./output
-
-          # 1. Pull the base container into local storage
-          sudo podman pull quay.io/centos-bootc/centos-bootc:stream9
-
-          # 2. Run the image builder container
-          sudo podman run --rm --privileged \
-            --security-opt label=type:unconfined_t \
-            -v /var/lib/containers/storage:/var/lib/containers/storage \
-            -v ./config.toml:/config.toml:ro \
-            -v ./output:/output \
-            quay.io/centos-bootc/bootc-image-builder:latest \
-            --type iso \
-            --config /config.toml \
-            quay.io/centos-bootc/centos-bootc:stream9
-
-          # FIX PERMISSIONS: Reclaim ownership of the output directory from root
-          sudo chown -R $(id -u):$(id -g) ./output
-
-          # 3. Setup your local extraction tools
-          sudo apt-get update && sudo apt-get install -y xorriso isolinux
-
-          # 4. Find the actual generated ISO file name automatically
-          TARGET_ISO=$(ls ./output/*/*.iso ./output/*.iso 2>/dev/null | head -n 1)
-          echo "Target ISO found: $TARGET_ISO"
-
-          # 5. Extract the contents cleanly
-          mkdir -p ./iso_tmp
-          xorriso -osirrox on -indev "$TARGET_ISO" -extract / ./iso_tmp
-
-          # 6. FORCE PAYLOAD DECOUPLING (Removes the hidden 2.5GB embedded rootfs)
-          # This drops your ISO size down to ~600MB
-          find ./iso_tmp -name "ostree" -exec rm -rf {} + || true
-          rm -f ./iso_tmp/images/install.img || true
-          
-          # Recreate a tiny, empty placeholder file so Anaconda's boot validation doesn't throw a panic
-          mkdir -p ./iso_tmp/images
-          touch ./iso_tmp/images/install.img
-
-          # 7. Append your interactive 13 spins menu options to the GRUB configuration
-          cat << 'EOF' >> ./iso_tmp/boot/grub2/grub.cfg
-
-          menuentry 'Celestial-Uprising VIRT' --class fedora --class gnu-linux {
-              linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/virt:latest
-              initrd /images/pxeboot/initrd.img
-          }
-          menuentry 'Celestial-Uprising HEADLESS' --class fedora --class gnu-linux {
-              linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/headless:latest
-              initrd /images/pxeboot/initrd.img
-          }
-          menuentry 'Celestial-Uprising HEADLESS_NVIDIA' --class fedora --class gnu-linux {
-              linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/headless-nv:latest
-              initrd /images/pxeboot/initrd.img
-          }
-          menuentry 'Celestial-Uprising MINI' --class fedora --class gnu-linux {
-              linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/mini:latest
-              initrd /images/pxeboot/initrd.img
-          }
-          menuentry 'Celestial-Uprising MINI_NVIDIA' --class fedora --class gnu-linux {
-              linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/mini-nv:latest
-              initrd /images/pxeboot/initrd.img
-          }
-          menuentry 'Celestial-Uprising DEV' --class fedora --class gnu-linux {
-              linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/dev:latest
-              initrd /images/pxeboot/initrd.img
-          }
-          menuentry 'Celestial-Uprising DEV_NVIDIA' --class fedora --class gnu-linux {
-              linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/dev-nv:latest
-              initrd /images/pxeboot/initrd.img
-          }
-          menuentry 'Celestial-Uprising MUSE' --class fedora --class gnu-linux {
-              linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/muse:latest
-              initrd /images/pxeboot/initrd.img
-          }
-          menuentry 'Celestial-Uprising MUSE_NVIDIA' --class fedora --class gnu-linux {
-              linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/muse-nv:latest
-              initrd /images/pxeboot/initrd.img
-          }
-          menuentry 'Celestial-Uprising GG' --class fedora --class gnu-linux {
-              linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/gg:latest
-              initrd /images/pxeboot/initrd.img
-          }
-          menuentry 'Celestial-Uprising GG_NVIDIA' --class fedora --class gnu-linux {
-              linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/gg-nv:latest
-              initrd /images/pxeboot/initrd.img
-          }
-          menuentry 'Celestial-Uprising UNHOLY' --class fedora --class gnu-linux {
-              linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/unholy:latest
-              initrd /images/pxeboot/initrd.img
-          }
-          menuentry 'Celestial-Uprising UNHOLY_NVIDIA' --class fedora --class gnu-linux {
-              linux /images/pxeboot/vmlinuz inst.text bootc.next=ghcr.io/celestial-uprising/unholy-nv:latest
-              initrd /images/pxeboot/initrd.img
-          }
-          EOF
-
-          # 8. Rebuild the ISO 
-          xorriso -as mkisofs -V "BOOTC_NET" \
-            -eltorito-alt-boot -e images/efiboot.img -no-emul-boot \
-            -o ./output/universal-installer.iso ./iso_tmp
-
-
-      - name: Upload Installer ISO to GitHub Release
-        uses: softprops/action-gh-release@v2
+      - name: Building Stage 1 Images
+        uses: blue-build/github-action@v1.13
         with:
-          files: "./output/universal-installer.iso"
-          tag_name: universal-installer-${{ github.run_number }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          recipe: ${{ matrix.recipe }}
+          cosign_private_key: ${{ secrets.SIGNING_SECRET }}
+          registry_token: ${{ github.token }}
+          pr_event_number: ${{ github.event.number }}
+          maximize_build_space: true
+  stage_two:
+    name: Building Stage 2 Images
+    runs-on: ubuntu-latest
+    needs: stage_one
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        recipe:
+          - 2/mini.yml
+          - 2/mini-nv.yml
+          - 2/headless.yml
+          - 2/headless-nv.yml
+          - 2/virt.yml
+    steps:
+      - name: Building Stage 2 Images
+        uses: blue-build/github-action@v1.13
+        with:
+          recipe: ${{ matrix.recipe }}
+          cosign_private_key: ${{ secrets.SIGNING_SECRET }}
+          registry_token: ${{ github.token }}
+          maximize_build_space: false
+  stage_three:
+    name: Building Stage 3 Images
+    runs-on: ubuntu-latest
+    needs: stage_two
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        recipe:
+          - 3/dev.yml
+          - 3/dev-nv.yml
+          - 3/gg.yml
+          - 3/gg-nv.yml
+          - 3/muse.yml
+          - 3/muse-nv.yml
+    steps:
+      - name: Building Stage 3 Images
+        uses: blue-build/github-action@v1.13
+        with:
+          recipe: ${{ matrix.recipe }}
+          cosign_private_key: ${{ secrets.SIGNING_SECRET }}
+          registry_token: ${{ github.token }}
+          maximize_build_space: false
+  stage_four:
+    name: Building Stage 4 Images
+    runs-on: ubuntu-latest
+    needs: stage_three
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        recipe:
+          - 4/unholy.yml
+          - 4/unholy-nv.yml
+    steps:
+      - name: Building Stage 4 Images
+        uses: blue-build/github-action@v1.13
+        with:
+          recipe: ${{ matrix.recipe }}
+          cosign_private_key: ${{ secrets.SIGNING_SECRET }}
+          registry_token: ${{ github.token }}
+          maximize_build_space: false
