@@ -19,7 +19,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout Repository Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Free Disk Space
         run: |
           sudo rm -rf /usr/share/dotnet
