@@ -146,8 +146,8 @@ modules:
             ]
           }
         mode: "0644"
-    - type: script
-      scripts:
-        - regenerateinitramfs.sh
-    - type: wayblue-signing
-      source: local
+  - type: script
+    scripts:
+      - regenerateinitramfs.sh
+  - type: wayblue-signing
+    source: local
