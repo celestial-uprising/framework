@@ -46,10 +46,6 @@ modules:
           - libvirt-daemon-driver-network
           - libvirt-daemon-driver-storage
           - libvirt-daemon-driver-storage-zfs
-    - type: systemd
-      system:
-        enabled:
-          - lemurs.service
     - type: script
       scripts:
         - regenerateinitramfs.sh
