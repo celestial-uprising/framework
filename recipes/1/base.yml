@@ -38,6 +38,7 @@ modules:
       install:
         install-weak-deps: false
         packages:
+          - ansible-core
           - tailscale
           - yazi
           - bottom
