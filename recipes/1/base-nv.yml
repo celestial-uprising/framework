@@ -57,6 +57,10 @@ modules:
     install:
       install-weak-deps: false
       packages:
+        - diffutils
+        - patch
+        - bash-completion
+        - nodejs
         - ansible-core
         - tailscale
         - yazi
