@@ -95,10 +95,10 @@ modules:
             - com.valvesoftware.SteamLink
             - de.haeckerfelix.Shortwave
             - net.codelogistics.webapps
-    - type: systemd
-      system:
-        enabled:
-          - lemurs.service
+    - type: files
+      files:
+        - source: niri-session.sh
+          destination: /etc/profile.d
     - type: script
       scripts:
         - regenerateinitramfs.sh

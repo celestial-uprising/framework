@@ -14,12 +14,7 @@ stages:
         snippets:
           - mkdir -p /tmp/bin
           - |
-            ENV RUSTFLAGS="-C target-cpu=excavator -C llvm-args=-mtune=zen3"
-            ENV CARGO_PROFILE_RELEASE_OPT_LEVEL="3"
-            ENV CARGO_PROFILE_RELEASE_LTO="fat"
-            ENV CARGO_PROFILE_RELEASE_CODEGEN_UNITS="1"
-            ENV CARGO_PROFILE_RELEASE_PANIC="abort"
-            apt-get update && apt-get install -y libdrm-dev pkg-config libpam0g-dev
+            apt-get update && apt-get install -y zig libdrm-dev pkg-config libpam0g-dev
             MD_FILE="/tmp/cargo-list.md"
             if [ ! -f "$MD_FILE" ]; then
               echo "Error: $MD_FILE not found!"

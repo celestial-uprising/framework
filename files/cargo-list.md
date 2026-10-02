@@ -27,7 +27,7 @@ cargo install xleak
 cargo install kmon
 cargo install emeraldian
 cargo install treemd
-cargo install --git https://github.com/AlexsJones/llmfit.git
+cargo install --git https://github.com/AlexsJones/llmfit.git llmfit
 cargo install --git https://github.com/herdrdev/herdr
 cargo install hyperfine
 cargo install gping
@@ -45,28 +45,25 @@ cargo install mandible
 cargo install rwx
 cargo install soundscope
 cargo install hexapoda
-cargo install binsider
-cargo install --locked --git https://github.com/findyourexit/zonetimeline-tui
+cargo install --locked --git https://github.com/findyourexit/zonetimeline-tui zonetimeline-tui
 cargo install hex-patch
 cargo install ekphos
 cargo install kite-tui
 cargo install scope-monitor
 cargo install cargo-selector
 cargo install seetui
-cargo install snipt
 cargo install darya
 cargo install crates-tui
 cargo install --locked --git https://github.com/linkdd/regname
 cargo install comchan
-cargo instal cargo-binstall
-cargo install oatmeal
+cargo install cargo-binstall
 cargo install eilmeldung
 cargo install kalker
 cargo install git-interactive-rebase-tool
 cargo install concord
 cargo install --git https://github.com/boxdot/gurk-rs gurk
 cargo install bookokrat
-cargo install tgt
+cargo install tgt --locked
 cargo install purple-ssh
 cargo install vortix
 cargo install twitch-tui
