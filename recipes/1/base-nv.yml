@@ -14,7 +14,7 @@ stages:
             mkdir -p /out/plugins
             cd /out/plugins
             npm init -y
-            npm install --ignore-scripts @earendil-works/pi-coding-agent statusline-pi
+            npm install --ignore-scripts @earendil-works/pi-coding-agent statusline-pi webfox pi-llama-cpp-stats pi-llama-infra
 # =========================================================================
 modules:
   - type: os-release
