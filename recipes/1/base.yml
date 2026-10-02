@@ -113,7 +113,8 @@ modules:
     fonts:
         nerd-fonts:
           - VictorMono
-  # 1. Copy ONLY the global dependency bundle directory to the host system data share
+
+  # 1. Copy the global dependency bundle directory to the host system data share
   - type: copy
     from: pi_builder
     src: /out/plugins
@@ -127,8 +128,8 @@ modules:
         mkdir -p /usr/bin
         cat << 'EOF' > /usr/bin/pi
         #!/bin/sh
-        # Invoke the host's Node runtime directly against the explicit global package entry point
-        exec /usr/bin/node /usr/share/pi-global-plugins/node_modules/@earendil-works/pi-coding-agent/bin/pi "$@"
+        # Invoke the host's Node runtime directly against the explicit global .bin wrapper path
+        exec /usr/bin/node /usr/share/pi-global-plugins/node_modules/.bin/pi "$@"
         EOF
         chmod 0755 /usr/bin/pi
 
@@ -160,7 +161,10 @@ modules:
             "showLatency": true
           },
           "plugins": [
-            "statusline-pi"
+            "statusline-pi",
+            "webfox",
+            "pi-llama-cpp-stats",
+            "pi-llama-infra"
           ]
         }
         EOF
