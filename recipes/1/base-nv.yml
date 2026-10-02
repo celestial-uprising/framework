@@ -124,12 +124,12 @@ modules:
   - type: script
     snippets:
       - |
-        echo "Creating native Pi CLI execution wrapper..."
+        echo "Creating native Pi CLI execution wrapper with ICU segfault patch..."
         mkdir -p /usr/bin
         cat << 'EOF' > /usr/bin/pi
         #!/bin/sh
-        # Invoke the host's Node runtime directly against the explicit global .bin wrapper path
-        exec /usr/bin/node /usr/share/pi-global-plugins/node_modules/.bin/pi "$@"
+        # Added the --no-experimental-intl-segmenter flag to prevent uCore/Fedora ICU crashes
+        exec /usr/bin/node --no-experimental-intl-segmenter /usr/share/pi-global-plugins/node_modules/.bin/pi "$@"
         EOF
         chmod 0755 /usr/bin/pi
 
