@@ -11,17 +11,10 @@ stages:
       - type: script
         snippets:
           - |
-            # Install the main CLI globally inside the build container
-            npm install -g --ignore-scripts @earendil-works/pi-coding-agent
-            
-            # Prepare output directories to stage artifacts
-            mkdir -p /out/bin /out/plugins
-            cp $(which pi) /out/bin/pi
-            
-            # Navigate, initialize, and install plugins in one contiguous block context
+            mkdir -p /out/plugins
             cd /out/plugins
             npm init -y
-            npm install --ignore-scripts statusline-pi
+            npm install --ignore-scripts @earendil-works/pi-coding-agent statusline-pi
 # =========================================================================
 modules:
   - type: os-release
@@ -120,21 +113,30 @@ modules:
     fonts:
         nerd-fonts:
           - VictorMono
-  - type: copy
-    from: pi_builder
-    src: /out/bin/pi
-    dest: /usr/bin/pi
+  # 1. Copy ONLY the global dependency bundle directory to the host system data share
   - type: copy
     from: pi_builder
     src: /out/plugins
     dest: /usr/share/pi-global-plugins
+
+  # 2. Generate the execution wrapper script and configuration files
   - type: script
     snippets:
+      - |
+        echo "Creating native Pi CLI execution wrapper..."
+        mkdir -p /usr/bin
+        cat << 'EOF' > /usr/bin/pi
+        #!/bin/sh
+        # Invoke the host's Node runtime directly against the explicit global package entry point
+        exec /usr/bin/node /usr/share/pi-global-plugins/node_modules/@earendil-works/pi-coding-agent/bin/pi "$@"
+        EOF
+        chmod 0755 /usr/bin/pi
+
       - |
         echo "Creating global Pi environment settings..."
         mkdir -p /etc/profile.d
         cat << 'EOF' > /etc/profile.d/pi-agent-defaults.sh
-        # Set up global runtime path routing for Node modules
+        # Register global plugin node tree path
         export NODE_PATH="/usr/share/pi-global-plugins/node_modules:$NODE_PATH"
         export PI_CONFIG_DIR="/etc/pi"
         EOF
