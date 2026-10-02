@@ -15,16 +15,11 @@ modules:
       install:
         install-weak-deps: false
         packages:
-          - qemu-guest-agent
           - spice-vdagent
     - type: files
       files:
         - source: dracut-virtio.conf
           destination: /etc/dracut.conf.d/virtio.conf
-        - source: 99-cpu-governor.rules
-          destination: /etc/udev/rules.d/99-cpu-governor.rules
-        - source: 99-workstation-perf.conf
-          destination: /etc/sysctl.d/99-workstation-perf.conf
     - type: script
       scripts:
         - regenerateinitramfs.sh

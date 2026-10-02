@@ -20,12 +20,14 @@ modules:
   - type: os-release
     properties:
       VARIANT: "base"
+# =========================================================================
   - type: containerfile
     snippets:
       - COPY --from=ghcr.io/ublue-os/akmods:main-44 /rpms /tmp/rpms
       - COPY --from=ghcr.io/ublue-os/akmods:main-44 /kernel-rpms /tmp/rpms/kernel
       - RUN find /tmp/rpms
       - RUN rpm -q ublue-os-akmods-addons || dnf install -y /tmp/rpms/ublue-os/ublue-os-akmods-addons*.rpm
+# =========================================================================
   - type: kargs
     kargs:
       - amd_iommu=on
@@ -37,6 +39,7 @@ modules:
       - net.ifnames=0
       - tcp_congestion_control=bbr
       - msr.allow_writes=on
+# =========================================================================
   - type: dnf
     repos:
       copr:
@@ -50,12 +53,9 @@ modules:
     install:
       install-weak-deps: false
       packages:
-        - diffutils
         - patch
-        - bash-completion
         - nodejs
         - ansible-core
-        - tailscale
         - yazi
         - bottom
         - gping
@@ -90,10 +90,7 @@ modules:
         - powerstat
         - fzf
         - ddcutil
-        - openssl
-        - distrobox
-    remove:
-      packages:
+      exclude:
         - firefox
         - nano
         - nano-default-editor
@@ -103,24 +100,24 @@ modules:
         - cockpit
         - cockpit-bridge
         - cockpit-ws
+# =========================================================================
   - type: files
     files:
       - source: system/usr
         destination: /usr
       - source: system/etc
         destination: /etc
+# =========================================================================
   - type: fonts
     fonts:
         nerd-fonts:
           - VictorMono
-
-  # 1. Copy the global dependency bundle directory to the host system data share
+# =========================================================================
   - type: copy
     from: pi_builder
     src: /out/plugins
     dest: /usr/share/pi-global-plugins
 
-  # 2. Generate the execution wrapper script and configuration files
   - type: script
     snippets:
       - |
@@ -128,7 +125,6 @@ modules:
         mkdir -p /usr/bin
         cat << 'EOF' > /usr/bin/pi
         #!/bin/sh
-        # Added the --no-experimental-intl-segmenter flag to prevent uCore/Fedora ICU crashes
         exec /usr/bin/node --no-experimental-intl-segmenter /usr/share/pi-global-plugins/node_modules/.bin/pi "$@"
         EOF
         chmod 0755 /usr/bin/pi
@@ -137,7 +133,6 @@ modules:
         echo "Creating global Pi environment settings..."
         mkdir -p /etc/profile.d
         cat << 'EOF' > /etc/profile.d/pi-agent-defaults.sh
-        # Register global plugin node tree path
         export NODE_PATH="/usr/share/pi-global-plugins/node_modules:$NODE_PATH"
         export PI_CONFIG_DIR="/etc/pi"
         EOF
@@ -169,8 +164,10 @@ modules:
         }
         EOF
         chmod 0644 /etc/pi/settings.json
+# =========================================================================
   - type: script
     scripts:
       - regenerateinitramfs.sh
+# =========================================================================
   - type: wayblue-signing
     source: local

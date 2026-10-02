@@ -40,9 +40,6 @@ modules:
           - headsetcontrol
           - mediainfo
           - xfce-polkit
-          - xdg-user-dirs
-          - dbus-tools
-          - dbus-daemon
           - pavucontrol
           - playerctl
           - vulkan-validation-layers
