@@ -13,9 +13,10 @@ stages:
           - npm install -g --ignore-scripts @earendil-works/pi-coding-agent
           - mkdir -p /out/bin /out/plugins
           - cp $(which pi) /out/bin/pi
-          - cd /out/plugins
-          - npm init -y
-          - npm install --ignore-scripts statusline-pi
+          - |
+            cd /out/plugins
+            npm init -y
+            npm install --ignore-scripts statusline-pi
 # =========================================================================
 modules: 
   - type: os-release
