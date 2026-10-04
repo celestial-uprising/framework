@@ -21,6 +21,7 @@ modules:
       install:
         install-weak-deps: false
         packages:
+          - qt6-qtvirtualkeyboard
           - sddm
           - google-noto-emoji-fonts
           - tuned-ppd
