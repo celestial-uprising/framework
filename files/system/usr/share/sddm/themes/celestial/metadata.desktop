@@ -1,0 +1,11 @@
+[SddmGreeterTheme]
+Name=Celestial
+Description=Celestial-Uprising theme. Inspired by HyprSDDM.
+Author=rhabdorabbit
+Copyright=(c) 2026
+License=MIT
+Type=celestial-theme
+Version=3.0
+MainScript=Main.qml
+QtVersion=6
+X-SDDM-Theme-InterfaceVersion=2

@@ -21,6 +21,9 @@ modules:
       install:
         install-weak-deps: false
         packages:
+          - sddm
+          - qt6-declarative
+          - qt6-svg
           - google-noto-emoji-fonts
           - tuned-ppd
           - kf6-qqc2-desktop-style
@@ -92,10 +95,10 @@ modules:
             - com.valvesoftware.SteamLink
             - de.haeckerfelix.Shortwave
             - net.codelogistics.webapps
-    - type: files
-      files:
-        - source: niri-session.sh
-          destination: /etc/profile.d
+    - type: systemd
+      system:
+        enabled:
+          - sddm.service
     - type: script
       scripts:
         - regenerateinitramfs.sh
