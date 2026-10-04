@@ -22,8 +22,6 @@ modules:
         install-weak-deps: false
         packages:
           - sddm
-          - qt6-declarative
-          - qt6-svg
           - google-noto-emoji-fonts
           - tuned-ppd
           - kf6-qqc2-desktop-style
