@@ -636,7 +636,7 @@ Rectangle {
                             smooth: true; visible: false
 
                             Component.onCompleted: {
-                                var s = Qt.resolvedUrl("assets/avatar.jpg");
+                                var s = Qt.resolvedUrl("/etc/default/avatar");
                                 if (typeof userModel !== "undefined" && userModel.count > 0) {
                                     var icon = userModel.data(userModel.index(container.userIndex, 0), Qt.UserRole + 3);
                                     if (icon && icon.toString().match(/\.(jpg|jpeg|png|bmp|webp|svg)$/i))
