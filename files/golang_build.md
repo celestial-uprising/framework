@@ -1,11 +1,9 @@
-# nastro: terminal audio recorder
-git clone https://github.com/scaccogatto/nastro
-cd nastro && make build
-./bin/nastro
+#!/bin/bash
 
-# lsoff: port viewer
-git clone https://github.com/yutat23/lsoff
-cd lsoff
-go build -o lsoff .
+export GODIR
+git clone git@github.com:nektos/act.git
+cd act
+make install
 
+cd $GODIR
 
