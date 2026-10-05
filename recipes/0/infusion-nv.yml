@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=https://blue-build.org
-name: infusion
+name: infusion-nv
 description: Celestial Uprising's Immutable Operating System
 base-image: ghcr.io/ublue-os/ucore
-image-version: testing
+image-version: testing-nvidia
 stages:
   - name: rusty
     from: quay.io/fedora/fedora:44
@@ -66,7 +66,7 @@ modules:
       ID_LIKE: fedora
       HOME_URL: "https://github.com/celestial-uprising/framework/"
       BUG_REPORT_URL: "https://github.com/celestial-uprising/framework/"
-      VARIANT: "infusion"
+      VARIANT: "infusion-nv"
       RELEASE_TYPE: "alpha"
   - type: dnf
     install:
