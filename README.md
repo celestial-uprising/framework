@@ -1,21 +1,29 @@
-# Celestial Uprising &nbsp; [![bluebuild build badge](https://github.com/celestial-uprising/framework/actions/workflows/build.yml/badge.svg)](https://github.com/celestial-uprising/framework/actions/workflows/build.yml)
+# Celestial-Uprising's Development Track &nbsp; [![bluebuild build badge](https://github.com/celestial-uprising/framework/actions/workflows/build.yml/badge.svg)](https://github.com/celestial-uprising/framework/actions/workflows/build.yml)
 
-Celestial Uprising's Framework brings the steadfast base of fedora atomic. Tidied up, and finished with a blissfully-minimal niri/fuzzel/waybar/kitty environment-- all configured OOTB for instant development.
+Celestial-Uprising brings the steadfast base of fedora atomic; tidied up, and finished with a blissfully-minimal niri environment.
 
-## *Celestial Uprising is proudly built for all, by lesbidoodles and their coven of magical rabbits*
+We have incorporated:
+- *Rhun* | gui Code-Editor, written in assembly resulting in astonishing speed and a slim footprint
+- *Neovim* | cli Editor, with lazyvim and its dependencies preconfigured
+- *Kitty* | terminal emulator, preconfigured for Celestial-Uprising and assigned to `CapsLock+Enter`
+- *Herdr* | terminal multiplexor, assigned to `CapsLock+Shift+Enter`
+- *Zen-Browser* | lightweight, appeasing design, compatible with firefox accounts
+- *Kontainer* | gui distrobox manager, built from source with compiler optimizations and lto for lowest overhead
+- *VMM* | access and manager virtual machines from any machine
+- *Tailscale* | wireguard infused protocol, vpn, secure access, and psuedo-local networking
+- *Plethora* of useful Rust and Golang tools to enable rapid systems development, management, and administration
 
-## Roadmap 
+## *Celestial-Uprising is proudly built for all, by lesbidoodles and their coven of magical rabbits*
 
 ## Spins
 
 - *virt*  -- secure and specialized for qemu/kvm/libvirt virtual enviroments
 - *headless / headless-nv*  -- server-oriented, deployable, and reliable
-- *mini / mini-nv*  -- minimal & desktop-ready; no qemu/kvm/libvirtd/zfs 
-- *muse / muse-nv*  -- elegant workspace with creator tools preinstalled 
+- *mini / mini-nv*  -- minimal & desktop-ready; no qemu/kvm/libvirtd/zfs
+- *muse / muse-nv*  -- elegant workspace with creator tools preinstalled
 - *dev / dev-nv*  -- clean & classy; qemu/kvm/libvirtd/zfs preinstalled
 - *gg / gg-nv*  -- minimal desktop, maximum fps; steam/gamescope/mangohud
 - *unholy / unholy-nv*  -- work hard, play hard, build anything
-
 
 ### Dog-fooding
 
