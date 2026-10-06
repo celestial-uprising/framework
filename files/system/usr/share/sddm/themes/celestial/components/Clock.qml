@@ -6,9 +6,9 @@ Item {
 
     property string backgroundSource: ""
 
-    property color defaultHoursColor: "#AED68A"
+    property color defaultHoursColor: "#FFB4AB"
 
-    property color defaultMinutesColor: "#D4E4BC"
+    property color defaultMinutesColor: "#D98A8A"
 
     property string fontFamily: "VictorMono Nerd Font Mono"
 
@@ -40,7 +40,7 @@ Item {
 
         var base = clock.baseAccent;
 
-        
+
 
         // Debug check (will show in sddm-greeter output)
 
@@ -48,69 +48,69 @@ Item {
 
 
 
-        // Material 3 logic: 
+        // Material 3 logic:
 
         // Hours = Vibrant/Deep version of accent
 
         // Minutes = Soft/Pastel version of accent
 
-        
+
 
                 if (base.hsvValue < 0.3) {
 
-        
+
 
                     // Extremely dark: Shift towards light theme for clock
 
-        
+
 
                     clock.smartHoursColor = Qt.hsva(base.hsvHue, 0.6, 0.9, 1.0);
 
-        
+
 
                     clock.smartMinutesColor = Qt.hsva(base.hsvHue, 0.35, 0.85, 1.0);
 
-        
+
 
                 } else if (base.hsvValue > 0.8 && base.hsvSaturation < 0.2) {
 
-        
+
 
                     // Very bright/white-ish: Darken slightly to keep it readable
 
-        
+
 
                     clock.smartHoursColor = Qt.hsva(base.hsvHue, 0.8, 0.7, 1.0);
 
-        
+
 
                     clock.smartMinutesColor = Qt.hsva(base.hsvHue, 0.5, 0.75, 1.0);
 
-        
+
 
                         } else {
 
-        
+
 
                             // Standard Range:
 
-        
+
 
                             // Hours: Bold & Vibrant
 
-        
+
 
                             clock.smartHoursColor = Qt.hsva(base.hsvHue, Math.min(1.0, base.hsvSaturation * 1.3), 0.95, 1.0);
 
-        
+
 
                             // Minutes: Middle ground - brighter than before, but still distinctly tinted
 
-        
+
 
                             clock.smartMinutesColor = Qt.hsva(base.hsvHue, Math.min(1.0, base.hsvSaturation * 0.75), 0.92, 1.0);
 
-        
+
 
                         }
 

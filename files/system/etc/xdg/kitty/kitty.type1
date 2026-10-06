@@ -33,36 +33,32 @@ inactive_tab_font_style         normal
 tab_activity_symbol             " ● "
 tab_title_template              "{fmt.fg.red}{bell_symbol}{activity_symbol}{fmt.fg.tab}{title[:30]}{title[30:] and '…'} [{index}]"
 active_tab_title_template       "{fmt.fg.red}{bell_symbol}{activity_symbol}{fmt.fg.tab}{title[:30]}{title[30:] and '…'} [{index}]"
+
 foreground            #f1dedc
 background            #1a1110
-selection_foreground #B5BD91
-selection_background #E1B8BC
+selection_foreground  #000000
+selection_background  #f9dedc
 url_color             #ffb4ab
-cursor               #E1B8BC
-cursor_text_color    #B5BD91
-#cursor #f1dedc
-#cursor_text_color #d8c2bf
+cursor #f1dedc
+cursor_text_color #d8c2bf
 
-# Normal Colors (0-7)
-color0  #B5BD91
-color1  #D98A8A
-color2  #94B5A0
-color3  #A8C3A8
-color4  #9B7E9F
-color5  #F7A8B8
-color6  #A4D8D8
-color7  #E1B8BC
-# Bright Colors (8-15)
-color8  #B0C4B1
-color9  #E59898
-color10 #A3C9AE
-color11 #BDE3CA
-color12 #B298B6
-color13 #FFB6C1
-color14 #B4EAEA
-color15 #F4DCDD
+color0   #1a1110
+color1   #ff7472
+color2   #99ff7f
+color3   #ffe472
+color4   #f29c92
+color5   #76362e
+color6   #ffb4ab
+color7   #fff1ef
+color8   #a59a99
+color9   #ffa09f
+color10  #b8ffa5
+color11  #ffeea5
+color12  #ffbfb7
+color13  #ffcac4
+color14  #ffddd9
+color15  #fff9f8
 
-# Key bindings
 map ctrl+n new_window
 map ctrl+t new_tab
 map ctrl+w close_tab
