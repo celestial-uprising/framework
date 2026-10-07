@@ -97,5 +97,10 @@ modules:
   - type: script
     scripts:
       - regenerateinitramfs.sh
+  - type: script
+    snippets:
+      - |
+        echo "LANG=en_US.UTF-8" > /etc/locale.conf
+        echo "LC_ALL=en_US.UTF-8" >> /etc/locale.conf
   - type: wayblue-signing
     source: local
