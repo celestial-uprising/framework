@@ -24,14 +24,12 @@ go install github.com/deveshctl/layerx@latest
 go install github.com/Achno/gowall@latest
 go install github.com/mop-tracker/mop/cmd/mop@latest
 go install github.com/zyedidia/eget@latest
-go install github.com/noborus/ov@latest
 go install github.com/dimonomid/nerdlog/cmd/nerdlog@latest
 go install github.com/Lifailon/lazyjournal@latest
 go install github.com/theyahya/enola/cmd/enola@latest
 go install github.com/xyproto/orbiton/v2@latest
 go install github.com/Bahaaio/pomo@latest
 go install github.com/termkit/gama@latest
-go install github.com/gcla/termshark/v2/cmd/termshark@latest
 go install github.com/erroneousboat/slack-term@latest
 go install github.com/Gaurav-Gosain/tuios/cmd/tuios@latest
 go install github.com/edoardottt/cariddi/cmd/cariddi@latest

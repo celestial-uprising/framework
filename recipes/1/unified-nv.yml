@@ -1,0 +1,252 @@
+# yaml-language-server: $schema=https://blue-build.org
+name: unified-nv
+description: Celestial-Uprising's Immutable Operating System
+base-image: ghcr.io/ublue-os/ucore
+image-version: testing-nvidia
+stages:
+  - name: rusty
+    from: quay.io/fedora/fedora:44
+    modules:
+      - type: copy
+        src: files/cargo-install.md
+        dest: /tmp/cargo-install.md
+      - type: copy
+        src: files/goblin-install.md
+        dest: /tmp/goblin-install.md
+      - type: script
+        snippets:
+          - mkdir -p /tmp/bin
+          - |
+            dnf5 upgrade -y && dnf5 install -y \
+              zig libdrm-devel pkg-config pam-devel cargo rustc \
+              systemd-devel libunwind-devel elfutils-devel \
+              protobuf-compiler perl clang-devel llvm-devel \
+              openssl-devel dbus-devel jack-audio-connection-kit-devel \
+              alsa-lib-devel cmake make gcc-c++ python3 python3-devel \
+              fontconfig-devel m4 pipewire-devel libva-devel libcxx-devel \
+              llvm-libunwind libpcap-devel golang \
+              libusb1-devel bluez-libs-devel pulseaudio-libs-devel libcap-devel zlib-devel \
+              cargo-binstall
+
+            FAILED_TOOLS=()
+
+            # Process Cargo tools with cargo-binstall & fallback
+            MD_FILE1="/tmp/cargo-install.md"
+            if [ -f "$MD_FILE1" ]; then
+              while read -r line || [ -n "$line" ]; do
+                case "$line" in
+                  *"cargo install"*)
+                    echo "----------------------------------------"
+                    pkg_args=$(echo "$line" | sed 's/cargo install //')
+                    echo "Processing Cargo package: $pkg_args"
+                    if ! cargo binstall -y --root /tmp $pkg_args 2>/dev/null; then
+                      echo "cargo-binstall failed for '$pkg_args'. Compiling via cargo install..."
+                      if ! $line --root /tmp; then
+                        echo "ERROR: Failed to install Cargo crate: $pkg_args"
+                        FAILED_TOOLS+=("Cargo: $line")
+                      fi
+                    fi
+                    ;;
+                esac
+              done < "$MD_FILE1"
+            fi
+
+            # Process Go tools
+            MD_FILE2="/tmp/goblin-install.md"
+            if [ -f "$MD_FILE2" ]; then
+              while read -r line || [ -n "$line" ]; do
+                case "$line" in
+                  *"go install"*)
+                    echo "----------------------------------------"
+                    echo "Executing Go install: $line"
+                    if ! env GOBIN=/tmp/bin $line; then
+                      echo "ERROR: Failed to install Go tool: $line"
+                      FAILED_TOOLS+=("Go: $line")
+                    fi
+                    ;;
+                esac
+              done < "$MD_FILE2"
+            fi
+
+            if [ ${#FAILED_TOOLS[@]} -ne 0 ]; then
+              echo "========================================"
+              echo "BUILD FAILED: The following tools failed to install:"
+              printf '%s\n' "${FAILED_TOOLS[@]}"
+              echo "========================================"
+              exit 1
+            fi
+
+            # Inventory built custom binaries for targeted runtime verification
+            ls -1 /tmp/bin > /tmp/custom-binaries.list
+
+modules:
+  - type: os-release
+    properties:
+      NAME: "Celestial Uprising"
+      PRETTY_NAME: "Celestial Uprising a006"
+      VERSION_CODENAME: "toast"
+      ID_LIKE: fedora
+      HOME_URL: "https://github.com/celestial-uprising/framework/"
+      BUG_REPORT_URL: "https://github.com/celestial-uprising/framework/"
+      VARIANT: "unified-nv"
+      RELEASE_TYPE: "alpha"
+
+  - type: containerfile
+    snippets:
+      - COPY --from=ghcr.io/ublue-os/akmods:main-44 /rpms /tmp/rpms
+      - COPY --from=ghcr.io/ublue-os/akmods:main-44 /kernel-rpms /tmp/rpms/kernel
+      - RUN find /tmp/rpms
+      - RUN rpm -q ublue-os-akmods-addons || dnf install -y /tmp/rpms/ublue-os/ublue-os-akmods-addons*.rpm
+      - RUN rm -rf /tmp/rpms
+
+  - type: kargs
+    kargs:
+      - amd_iommu=on
+      - iommu=pt
+      - kvm_amd.nested=1
+      - split_lock_detect=off
+      - transparent_hugepage=always
+      - kvm.ignore_msrs=1
+      - net.ifnames=0
+      - msr.allow_writes=on
+
+  - type: dnf
+    repos:
+      copr:
+        - lihaohong/yazi
+        - atim/bottom
+        - atim/lazygit
+        - atim/starship
+        - kylegospo/amdctl
+        - greg-at-redhat/glowm
+    install:
+      install-weak-deps: false
+      packages:
+        # Locales
+        - glibc-langpack-en
+
+        # Core & System Utilities
+        - vim
+        - firewall-config
+        - miller
+        - ansible-core
+        - tailscale
+        - libvirt-client
+        - tree
+        - chromium-headless
+        - wget
+        - git
+        - nmap
+        - traceroute
+        - whois
+        - powerstat
+        - fzf
+        - ddcutil
+        - rustup
+
+        # CLI Tools & Terminals
+        - yazi
+        - bottom
+        - gitui
+        - glowm
+        - lazygit
+        - starship
+        - amdctl
+        - neovim
+        - fd-find
+        - ripgrep
+        - zoxide
+        - bat
+        - eza
+        - luarocks
+        - tree-sitter-cli
+        - python3-neovim
+        - btop
+        - gdu
+        - diskus
+
+        # Runtime Shared Libraries for Compiled Binaries
+        - libusb1
+        - bluez-libs
+        - pulseaudio-libs
+        - libpcap
+        - libunwind
+        - libcap
+
+        # Tools migrated from Cargo/Go to DNF
+        - uv
+        - dust
+        - hyperfine
+        - procs
+        - viddy
+        - pastel
+        - trippy
+        - kmon
+        - diskonaut
+        - kalker
+        - git-interactive-rebase-tool
+        - termshark
+        - ov
+
+    remove:
+      packages:
+        - firefox
+        - nano
+        - nano-default-editor
+        - nfs-utils
+        - azure-vm-utils
+        - cockpit
+        - cockpit-bridge
+        - cockpit-ws
+
+  - type: copy
+    from: rusty
+    src: /tmp/bin/
+    dest: /usr/bin/
+
+  - type: copy
+    from: rusty
+    src: /tmp/custom-binaries.list
+    dest: /tmp/custom-binaries.list
+
+  - type: files
+    files:
+      - source: system/usr
+        destination: /usr
+      - source: system/etc
+        destination: /etc
+
+  - type: fonts
+    fonts:
+      nerd-fonts:
+        - VictorMono
+        - CascadiaCode
+
+  - type: script
+    scripts:
+      - regenerateinitramfs.sh
+
+  - type: script
+    snippets:
+      - |
+        echo "LANG=en_US.UTF-8" > /etc/locale.conf
+
+      - |
+        echo "Checking custom compiled binaries for missing runtime shared libraries..."
+        if [ -f /tmp/custom-binaries.list ]; then
+          while read -r bin_name || [ -n "$bin_name" ]; do
+            [ -z "$bin_name" ] && continue
+            bin_path="/usr/bin/$bin_name"
+            if [ -f "$bin_path" ] && [ -x "$bin_path" ]; then
+              missing=$(ldd "$bin_path" 2>/dev/null | grep "not found" || true)
+              if [ -n "$missing" ]; then
+                echo "WARNING: $bin_path is missing runtime dynamic libraries:"
+                echo "$missing"
+              fi
+            fi
+          done < /tmp/custom-binaries.list
+          rm -f /tmp/custom-binaries.list
+        fi
+
+  - type: wayblue-signing
+    source: local

@@ -26,8 +26,8 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - 1/base.yml
-          - 1/base-nv.yml
+          - 1/unified.yml
+          - 1/unified-nv.yml
     steps:
       - name: Building Stage 1 Images
         uses: blue-build/github-action@v1.13

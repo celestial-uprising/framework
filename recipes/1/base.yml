@@ -37,6 +37,25 @@ modules:
     install:
       install-weak-deps: false
       packages:
+        - libusb1
+        - bluez-libs
+        - pipewire-pulseaudio
+        - libpcap
+        - libunwind
+        - uv
+        - dust
+        - hyperfine
+        - procs
+        - viddy
+        - pastel
+        - trippy
+        - kmon
+        - diskonaut
+        - cargo-binstall
+        - kalker
+        - git-interactive-rebase-tool
+        - termshark
+        - ov
         - miller
         - ansible-core
         - tailscale
