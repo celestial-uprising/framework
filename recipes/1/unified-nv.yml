@@ -27,12 +27,8 @@ stages:
               llvm-libunwind libpcap-devel golang \
               libusb1-devel bluez-libs-devel pulseaudio-libs-devel libcap-devel zlib-devel \
               tar gzip curl
-
             curl -fsSL https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-x86_64-unknown-linux-musl.tgz | tar -xz -C /usr/bin cargo-binstall
-
             FAILED_TOOLS=()
-
-            # Process Cargo tools with cargo-binstall & fallback
             MD_FILE1="/tmp/cargo-install.md"
             if [ -f "$MD_FILE1" ]; then
               while read -r line || [ -n "$line" ]; do
@@ -52,8 +48,6 @@ stages:
                 esac
               done < "$MD_FILE1"
             fi
-
-            # Process Go tools
             MD_FILE2="/tmp/goblin-install.md"
             if [ -f "$MD_FILE2" ]; then
               while read -r line || [ -n "$line" ]; do
@@ -69,7 +63,6 @@ stages:
                 esac
               done < "$MD_FILE2"
             fi
-
             if [ ${#FAILED_TOOLS[@]} -ne 0 ]; then
               echo "========================================"
               echo "BUILD FAILED: The following tools failed to install:"
@@ -77,10 +70,7 @@ stages:
               echo "========================================"
               exit 1
             fi
-
-            # Inventory built custom binaries for targeted runtime verification
             ls -1 /tmp/bin > /tmp/custom-binaries.list
-
 modules:
   - type: os-release
     properties:
@@ -92,7 +82,6 @@ modules:
       BUG_REPORT_URL: "https://github.com/celestial-uprising/framework/"
       VARIANT: "unified-nv"
       RELEASE_TYPE: "alpha"
-
   - type: containerfile
     snippets:
       - COPY --from=ghcr.io/ublue-os/akmods:main-44 /rpms /tmp/rpms
@@ -100,7 +89,6 @@ modules:
       - RUN find /tmp/rpms
       - RUN rpm -q ublue-os-akmods-addons || dnf install -y /tmp/rpms/ublue-os/ublue-os-akmods-addons*.rpm
       - RUN rm -rf /tmp/rpms
-
   - type: kargs
     kargs:
       - amd_iommu=on
@@ -111,7 +99,6 @@ modules:
       - kvm.ignore_msrs=1
       - net.ifnames=0
       - msr.allow_writes=on
-
   - type: dnf
     repos:
       copr:
@@ -124,15 +111,20 @@ modules:
     install:
       install-weak-deps: false
       packages:
-        # Locales
+        - hashcat
+        - radare2
+        - tig
+        - nvtop
+        - rizin
+        - cpufetch
+        - calcurse
+        - links
+        - pdfgrep
         - glibc-langpack-en
-
-        # Core & System Utilities
         - vim
         - firewall-config
         - miller
         - ansible-core
-        - tailscale
         - libvirt-client
         - tree
         - chromium-headless
@@ -145,8 +137,6 @@ modules:
         - fzf
         - ddcutil
         - rustup
-
-        # CLI Tools & Terminals
         - yazi
         - bottom
         - gitui
@@ -164,32 +154,21 @@ modules:
         - tree-sitter-cli
         - python3-neovim
         - btop
+        - nvtop
+        - radeontop
         - gdu
         - diskus
-
-        # Runtime Shared Libraries for Compiled Binaries
-        - libusb1
         - bluez-libs
         - pulseaudio-libs
-        - libpcap
         - libunwind
-        - libcap
-
-        # Tools migrated from Cargo/Go to DNF
         - uv
         - dust
         - hyperfine
         - procs
-        - viddy
         - pastel
-        - trippy
-        - kmon
         - diskonaut
-        - kalker
         - git-interactive-rebase-tool
-        - termshark
         - ov
-
     remove:
       packages:
         - firefox
@@ -200,39 +179,32 @@ modules:
         - cockpit
         - cockpit-bridge
         - cockpit-ws
-
   - type: copy
     from: rusty
     src: /tmp/bin/
     dest: /usr/bin/
-
   - type: copy
     from: rusty
     src: /tmp/custom-binaries.list
     dest: /tmp/custom-binaries.list
-
   - type: files
     files:
       - source: system/usr
         destination: /usr
       - source: system/etc
         destination: /etc
-
   - type: fonts
     fonts:
       nerd-fonts:
         - VictorMono
         - CascadiaCode
-
   - type: script
     scripts:
       - regenerateinitramfs.sh
-
   - type: script
     snippets:
       - |
         echo "LANG=en_US.UTF-8" > /etc/locale.conf
-
       - |
         echo "Checking custom compiled binaries for missing runtime shared libraries..."
         if [ -f /tmp/custom-binaries.list ]; then
@@ -249,6 +221,5 @@ modules:
           done < /tmp/custom-binaries.list
           rm -f /tmp/custom-binaries.list
         fi
-
   - type: wayblue-signing
     source: local
