@@ -86,7 +86,7 @@ modules:
         - alsa-firmware
         - wireplumber
         - flatpak
-  - type: flatpak
+  - type: default-flatpak
     notify: true
     system:
       install:
