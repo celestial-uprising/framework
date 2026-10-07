@@ -5,7 +5,7 @@ Row {
     spacing: 20
     height: 30
     
-    property color textColor: "white"
+    property color textColor: "#D98A8A"
 
     // Battery
     Row {

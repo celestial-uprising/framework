@@ -3,8 +3,8 @@ import QtQuick
 Item {
     id: clock
     property string backgroundSource: ""
-    property color defaultHoursColor: "#FFB4AB"
-    property color defaultMinutesColor: "#D98A8A"
+    property color defaultHoursColor: "#D98A8A"
+    property color defaultMinutesColor: "#FFB4AB"
     property string fontFamily: "VictorMono Nerd Font Mono"
     property color baseAccent: config.accentColor
     property color smartHoursColor: defaultHoursColor
