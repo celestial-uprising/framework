@@ -86,14 +86,15 @@ modules:
         - alsa-firmware
         - wireplumber
         - flatpak
-  - type: default-flatpak
-    notify: true
-    system:
-      install:
-        - md.obsidian.Obsidian
-        - com.valvesoftware.SteamLink
-        - de.haeckerfelix.Shortwave
-        - net.codelogistics.webapps
+  - type: default-flatpaks
+    configurations:
+      - notify: true
+        scope: system
+        install:
+          - md.obsidian.Obsidian
+          - com.valvesoftware.SteamLink
+          - de.haeckerfelix.Shortwave
+          - net.codelogistics.webapps
   - type: systemd
     system:
       enabled:
