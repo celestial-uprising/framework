@@ -24,8 +24,7 @@ modules:
       packages:
         - niri
         - xwayland-satellite
-        - greetd
-        - greetd-tuigreet
+        - sddm
         - xdg-desktop-portal-gnome
         - xdg-desktop-portal-gtk
         - xfce-polkit
@@ -98,7 +97,7 @@ modules:
   - type: systemd
     system:
       enabled:
-        - greetd.service
+        - sddm.service
   - type: script
     scripts:
       - regenerateinitramfs.sh
