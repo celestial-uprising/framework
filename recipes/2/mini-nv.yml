@@ -95,6 +95,10 @@ modules:
           - com.valvesoftware.SteamLink
           - de.haeckerfelix.Shortwave
           - net.codelogistics.webapps
+  - type: script
+    snippets:
+      - "useradd -r -M -d /var/lib/greetd -s /sbin/nologin greeter || true"
+      - "mkdir -p /var/lib/greetd && chown -R greeter:greeter /var/lib/greetd"
   - type: systemd
     system:
       enabled:
