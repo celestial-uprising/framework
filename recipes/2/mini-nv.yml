@@ -98,8 +98,9 @@ modules:
           - de.haeckerfelix.Shortwave
           - net.codelogistics.webapps
   - type: files
-    src: system/
-    dest: /
+    files:
+      src: system/
+      dest: /
   - type: systemd
     system:
       enabled:
