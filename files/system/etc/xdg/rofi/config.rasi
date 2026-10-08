@@ -1,0 +1,134 @@
+/******************************************************************************
+ * ROFI Color theme
+ * User: Celestial-Uprising
+ * Copyright: Amelia Shepherd
+ ******************************************************************************/
+* {
+    crimson:            #d98a8a;
+    plum:		#9b7e9f;
+    coral:              #ffb4ab;
+    algae:	        #b5bd91;
+    red:           	#1a1110;
+    pink:		#e1b8bc;
+    bc:                 #b5bd9180;
+    spacing:            2;
+    sc:              	#9b7e9f40;
+    bg:           	#1a11100f;
+    text:	        #e1b8bc;
+    font:		"Victor Mono Nerd Font 16";
+}
+window {
+    background-color:	@bg;  
+    border-color:     	@bc;
+    border:   	        1;
+    padding:            5;
+}
+mainbox {
+    background-color:	@bg;
+    border-color:	@bc;
+    border:  		0;
+    padding: 		0;
+}
+message {
+    background-color:	@bg;
+    border:       	1px dash 0px 0px ;
+    border-color: 	@sc;
+    padding:      	1px ;
+}
+textbox {
+    background-color:	@bg;
+    border-color:	@sc;
+    text-color:		@text;
+}
+listview {
+    fixed-height: 	0;
+    border:       	2px dash 0px 0px ;
+    border-color: 	@sc;
+    spacing:      	2px ;
+    scrollbar:    	false;
+    padding:      	2px 0px 0px ;
+}
+element {
+    border:  		0;
+    padding: 		1px ;
+}
+element-text {
+    background-color:	@bg;
+    text-color:		@text;
+}
+element.normal.normal {
+    background-color:	@bg;
+    text-color:		@text;
+}
+element.normal.urgent {
+    background-color:	@bg;
+    text-color:		@text;
+}
+element.normal.active {
+    background-color:	@bg;
+    text-color:		@text;
+}
+element.selected.normal {
+    background-color:	@sc;
+    text-color:		@text;
+}
+element.selected.urgent {
+    background-color:	@sc;
+    text-color:		@text;
+}
+element.selected.active {
+    background-color:	@sc;
+    text-color:		@text;
+}
+element.alternate.normal {
+    background-color:	@bg;
+    text-color:		@text;
+}
+element.alternate.urgent {
+    background-color:	@bg;
+    text-color:		@text;
+}
+element.alternate.active {
+    background-color:	@bg;
+    text-color:		@text;
+}
+scrollbar {
+    width:        	4px ;
+    border:       	0;
+    handle-width: 	8px ;
+    padding:      	0;
+}
+mode-switcher {
+    border:       	2px dash 0px 0px ;
+    border-color: 	@sc;
+}
+button.selected {
+    background-color: 	@bg;
+    text-color:       	@text;
+}
+inputbar {
+    spacing:    	0;
+    text-color: 	@text;
+    padding:    	1px ;
+}
+case-indicator {
+    spacing:    	0;
+    text-color: 	@plum;
+}
+entry {
+    spacing:    	0;
+    text-color: 	@text;
+}
+prompt {
+    spacing:    	0;
+    text-color: 	@text;
+}
+inputbar {
+    children:   	[ prompt,textbox-prompt-colon,entry,case-indicator ];
+}
+textbox-prompt-colon {
+    expand:     	false;
+    str:        	":";
+    margin:     	0px 0.3em 0em 0em ;
+    text-color: 	@text;
+}
