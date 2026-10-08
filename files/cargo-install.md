@@ -1,10 +1,8 @@
-cargo install --git https://github.com/rezigned/upmd.git
 cargo install abtop
 cargo install wrkflw
 cargo install basalt-tui
 cargo install presenterm
 cargo install xan
-cargo install doxx
 cargo install amdtop
 cargo install swaptop
 cargo install siggy
@@ -27,33 +25,16 @@ cargo install binsider
 cargo install diskonaut
 cargo install bluetui
 cargo install impala
-cargo install asak
-cargo install reknife
-cargo install envex
-cargo install myx
-cargo install mandible
-cargo install rwx
-cargo install soundscope
-cargo install hexapoda
-cargo install --locked --git https://github.com/findyourexit/zonetimeline-tui zonetimeline-tui
-cargo install hex-patch
-cargo install ekphos
-cargo install kite-tui
-cargo install scope-monitor
 cargo install cargo-selector
 cargo install seetui
 cargo install darya
-cargo install crates-tui
 cargo install --locked --git https://github.com/linkdd/regname
 cargo install comchan
 cargo install eilmeldung
 cargo install concord
 cargo install --git https://github.com/boxdot/gurk-rs gurk
 cargo install bookokrat
-cargo install tgt --locked
 cargo install purple-ssh
 cargo install vortix
-cargo install twitch-tui
 cargo install xfr
 cargo install strace-tui
-cargo install netop

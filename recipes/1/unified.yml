@@ -75,7 +75,7 @@ modules:
   - type: os-release
     properties:
       NAME: "Celestial Uprising"
-      PRETTY_NAME: "Celestial Uprising a006"
+      PRETTY_NAME: "Celestial Uprising a007"
       VERSION_CODENAME: "toast"
       ID_LIKE: fedora
       HOME_URL: "https://github.com/celestial-uprising/framework/"
@@ -103,72 +103,60 @@ modules:
     repos:
       copr:
         - lihaohong/yazi
-        - atim/bottom
         - atim/lazygit
-        - atim/starship
         - kylegospo/amdctl
         - greg-at-redhat/glowm
     install:
       install-weak-deps: false
       packages:
-        - hashcat
-        - radare2
-        - tig
-        - nvtop
-        - rizin
-        - cpufetch
-        - calcurse
-        - links
-        - pdfgrep
         - glibc-langpack-en
-        - vim
         - firewall-config
-        - miller
         - ansible-core
         - tailscale
+        - links
         - libvirt-client
-        - tree
-        - chromium-headless
         - wget
-        - git
         - nmap
         - traceroute
         - whois
-        - powerstat
-        - fzf
         - ddcutil
         - rustup
+        - uv
         - yazi
-        - bottom
-        - gitui
-        - glowm
-        - lazygit
-        - starship
-        - amdctl
+        - vim
         - neovim
+        - python3-neovim
+        - lazygit
+        - luarocks
+        - tree-sitter-cli
         - fd-find
         - ripgrep
         - zoxide
         - bat
         - eza
-        - luarocks
-        - tree-sitter-cli
-        - python3-neovim
+        - fzf
+        - pdfgrep
+        - powerstat
+        - powertop
+        - cpufetch
+        - amdctl
         - btop
         - nvtop
         - radeontop
-        - gdu
-        - diskus
-        - bluez-libs
-        - pulseaudio-libs
         - libunwind
-        - uv
+        - tree
+        - gdu
+        - diskonaut
         - dust
         - hyperfine
         - procs
         - pastel
-        - diskonaut
+        - git
         - git-interactive-rebase-tool
+        - tig
+        - gitui
+        - glowm
+        - chromium-headless
         - ov
     remove:
       packages:
@@ -188,12 +176,6 @@ modules:
     from: rusty
     src: /tmp/custom-binaries.list
     dest: /tmp/custom-binaries.list
-  - type: files
-    files:
-      - source: system/usr
-        destination: /usr
-      - source: system/etc
-        destination: /etc
   - type: fonts
     fonts:
       nerd-fonts:

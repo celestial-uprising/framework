@@ -22,6 +22,9 @@ modules:
     install:
       install-weak-deps: false
       packages:
+        - bluez-libs
+        - pulseaudio-libs
+        - calcurse
         - niri
         - xwayland-satellite
         - sddm
@@ -94,6 +97,9 @@ modules:
           - com.valvesoftware.SteamLink
           - de.haeckerfelix.Shortwave
           - net.codelogistics.webapps
+  - type: files
+    src: system/
+    dest: /
   - type: systemd
     system:
       enabled:

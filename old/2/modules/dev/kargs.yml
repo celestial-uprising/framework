@@ -1,4 +1,0 @@
-type: kargs
-kargs:
-  - zfs.zfs_arc_max=17179869184
-  - pcie_aspm=off

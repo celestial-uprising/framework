@@ -1,8 +1,0 @@
-[customizations.installer.kickstart]
-contents = """
-network --bootproto=dhcp --device=link --activate --onboot=on
-text
-instmode interactive
-# skipx
-"""
-

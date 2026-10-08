@@ -26,11 +26,8 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - 2/mini.yml
-          - 2/mini-nv.yml
-          - 2/headless.yml
-          - 2/headless-nv.yml
-          - 2/virt.yml
+          - 1/unified.yml
+          - 1/unified-nv.yml
     steps:
       - name: Building Stage 1 Images
         uses: blue-build/github-action@v1.13
@@ -52,12 +49,11 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - 3/dev.yml
-          - 3/dev-nv.yml
-          - 3/gg.yml
-          - 3/gg-nv.yml
-          - 3/muse.yml
-          - 3/muse-nv.yml
+          - 2/mini.yml
+          - 2/mini-nv.yml
+          - 2/headless.yml
+          - 2/headless-nv.yml
+          - 2/virt.yml
     steps:
       - name: Building Stage 2 Images
         uses: blue-build/github-action@v1.13
@@ -78,10 +74,36 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
+          - 3/dev.yml
+          - 3/dev-nv.yml
+          - 3/gg.yml
+          - 3/gg-nv.yml
+          - 3/muse.yml
+          - 3/muse-nv.yml
+    steps:
+      - name: Building Stage 3 Images
+        uses: blue-build/github-action@v1.13
+        with:
+          recipe: ${{ matrix.recipe }}
+          cosign_private_key: ${{ secrets.SIGNING_SECRET }}
+          registry_token: ${{ github.token }}
+          maximize_build_space: false
+  stage_four:
+    name: Building Stage 4 Images
+    runs-on: ubuntu-latest
+    needs: stage_three
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        recipe:
           - 4/unholy.yml
           - 4/unholy-nv.yml
     steps:
-      - name: Building Stage 3 Images
+      - name: Building Stage 4 Images
         uses: blue-build/github-action@v1.13
         with:
           recipe: ${{ matrix.recipe }}

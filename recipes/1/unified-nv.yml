@@ -75,7 +75,7 @@ modules:
   - type: os-release
     properties:
       NAME: "Celestial Uprising"
-      PRETTY_NAME: "Celestial Uprising a006"
+      PRETTY_NAME: "Celestial Uprising a007"
       VERSION_CODENAME: "toast"
       ID_LIKE: fedora
       HOME_URL: "https://github.com/celestial-uprising/framework/"
@@ -103,9 +103,7 @@ modules:
     repos:
       copr:
         - lihaohong/yazi
-        - atim/bottom
         - atim/lazygit
-        - atim/starship
         - kylegospo/amdctl
         - greg-at-redhat/glowm
     install:
@@ -138,11 +136,9 @@ modules:
         - ddcutil
         - rustup
         - yazi
-        - bottom
         - gitui
         - glowm
         - lazygit
-        - starship
         - amdctl
         - neovim
         - fd-find
@@ -187,12 +183,6 @@ modules:
     from: rusty
     src: /tmp/custom-binaries.list
     dest: /tmp/custom-binaries.list
-  - type: files
-    files:
-      - source: system/usr
-        destination: /usr
-      - source: system/etc
-        destination: /etc
   - type: fonts
     fonts:
       nerd-fonts:

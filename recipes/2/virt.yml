@@ -1,6 +1,6 @@
 name: virt
 description: Celestial Uprising's Immutable Operating System
-base-image: ghcr.io/celestial-uprising/base
+base-image: ghcr.io/celestial-uprising/unified
 image-version: latest
 modules:
     - type: os-release
