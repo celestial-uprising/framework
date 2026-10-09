@@ -1,15 +1,15 @@
 # yaml-language-server: $schema=https://blue-build.org
-name: rusty-ucore
+name: core-nv
 description: Celestial Uprising's Immutable Operating System
 base-image: ghcr.io/ublue-os/ucore
-image-version: testing
+image-version: testing-nvidia
 stages:
   - name: rust
     from: quay.io/fedora/fedora:44
     modules:
       - type: copy
-        src: files/cargo-list.md
-        dest: /tmp/cargo-list.md
+        src: files/cargo-nobinstall.md
+        dest: /tmp/cargo-nobinstall.md
       - type: script
         snippets:
           - mkdir -p /tmp/bin
@@ -23,7 +23,7 @@ stages:
               fontconfig-devel m4 pipewire-devel libva-devel libcxx-devel \
               llvm-libunwind libpcap-devel
 
-            MD_FILE="/tmp/cargo-list.md"
+            MD_FILE="/tmp/cargo-nobinstall.md"
             if [ ! -f "$MD_FILE" ]; then
               echo "Error: $MD_FILE not found!"
               exit 1
@@ -42,30 +42,13 @@ modules:
     - type: os-release
       properties:
         NAME: "Celestial Uprising"
-        PRETTY_NAME: "Celestial Uprising a004"
-        VERSION_CODENAME: "magrathea"
+        PRETTY_NAME: "Celestial Uprising a007"
+        VERSION_CODENAME: "toast"
         ID_LIKE: fedora
         HOME_URL: "https://github.com/celestial-uprising/framework/"
         BUG_REPORT_URL: "https://github.com/celestial-uprising/framework/"
-        VARIANT: "rusty-ucore"
+        VARIANT: "core-nv"
         RELEASE_TYPE: "alpha"
-    - type: dnf
-      install:
-        install-weak-deps: false
-        packages:
-          - vim
-          - firewall-config
-      remove:
-        packages:
-          - firefox
-          - nano
-          - nano-default-editor
-          - nfs-client-utils
-          - nfs-common-utils
-          - azure-vm-utils
-          - cockpit
-          - cockpit-bridge
-          - cockpit-ws
     - type: copy
       from: rust
       src: /tmp/bin/

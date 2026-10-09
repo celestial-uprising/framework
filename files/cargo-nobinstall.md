@@ -1,5 +1,16 @@
 cargo install --git https://github.com/rezigned/upmd.git
+cargo install presenterm
+cargo install xan
+cargo install swaptop
+cargo install siggy
+cargo install --locked cargo-seek
+cargo install --git https://github.com/gnomeria/usbtree
+cargo install --git https://github.com/linkdd/regname --locked 
+cargo install purple-ssh
+cargo install vortix
+cargo install xfr
 cargo install doxx
+cargo install strace-tui
 cargo install asak
 cargo install reknife
 cargo install envex

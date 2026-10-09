@@ -1,0 +1,55 @@
+# yaml-language-server: $schema=https://blue-build.org
+name: core
+description: Celestial Uprising's Immutable Operating System
+base-image: ghcr.io/ublue-os/ucore
+image-version: testing
+stages:
+  - name: rust
+    from: quay.io/fedora/fedora:44
+    modules:
+      - type: copy
+        src: files/cargo-nobinstall.md
+        dest: /tmp/cargo-nobinstall.md
+      - type: script
+        snippets:
+          - mkdir -p /tmp/bin
+          - |
+            dnf5 upgrade -y && dnf5 install -y \
+              zig libdrm-devel pkg-config pam-devel cargo rustc \
+              systemd-devel libunwind-devel elfutils-devel \
+              protobuf-compiler perl clang-devel llvm-devel \
+              openssl-devel dbus-devel jack-audio-connection-kit-devel \
+              alsa-lib-devel cmake make gcc-c++ python3 python3-devel \
+              fontconfig-devel m4 pipewire-devel libva-devel libcxx-devel \
+              llvm-libunwind libpcap-devel
+
+            MD_FILE="/tmp/cargo-nobinstall.md"
+            if [ ! -f "$MD_FILE" ]; then
+              echo "Error: $MD_FILE not found!"
+              exit 1
+            fi
+
+            while read -r line || [ -n "$line" ]; do
+              case "$line" in
+                *"cargo install"*)
+                  echo "----------------------------------------"
+                  echo "Executing: $line --root /tmp"
+                  $line --root /tmp
+                  ;;
+              esac
+            done < "$MD_FILE"
+modules:
+    - type: os-release
+      properties:
+        NAME: "Celestial Uprising"
+        PRETTY_NAME: "Celestial Uprising a007"
+        VERSION_CODENAME: "toast"
+        ID_LIKE: fedora
+        HOME_URL: "https://github.com/celestial-uprising/framework/"
+        BUG_REPORT_URL: "https://github.com/celestial-uprising/framework/"
+        VARIANT: "core"
+        RELEASE_TYPE: "alpha"
+    - type: copy
+      from: rust
+      src: /tmp/bin/
+      dest: /usr/bin/

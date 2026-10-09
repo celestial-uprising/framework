@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=https://blue-build.org
 name: unified
 description: Celestial-Uprising's Immutable Operating System
-base-image: ghcr.io/ublue-os/ucore
-image-version: testing
+base-image: ghcr.io/celestial-uprising/core
+image-version: latest
 stages:
   - name: rusty
     from: quay.io/fedora/fedora:44
@@ -74,21 +74,7 @@ stages:
 modules:
   - type: os-release
     properties:
-      NAME: "Celestial Uprising"
-      PRETTY_NAME: "Celestial Uprising a007"
-      VERSION_CODENAME: "toast"
-      ID_LIKE: fedora
-      HOME_URL: "https://github.com/celestial-uprising/framework/"
-      BUG_REPORT_URL: "https://github.com/celestial-uprising/framework/"
       VARIANT: "unified"
-      RELEASE_TYPE: "alpha"
-  - type: containerfile
-    snippets:
-      - COPY --from=ghcr.io/ublue-os/akmods:main-44 /rpms /tmp/rpms
-      - COPY --from=ghcr.io/ublue-os/akmods:main-44 /kernel-rpms /tmp/rpms/kernel
-      - RUN find /tmp/rpms
-      - RUN rpm -q ublue-os-akmods-addons || dnf install -y /tmp/rpms/ublue-os/ublue-os-akmods-addons*.rpm
-      - RUN rm -rf /tmp/rpms
   - type: kargs
     kargs:
       - amd_iommu=on
