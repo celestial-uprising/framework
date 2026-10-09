@@ -128,8 +128,8 @@ modules:
         install -Dm755 "${TMP_DIR}/x/rhun-${VERSION}/bin/rhun" /usr/bin/rhun
   - type: files
     files:
-      - src: system/
-        dest: /
+      - source: system/
+        destination: /
   - type: systemd
     system:
       enabled:
