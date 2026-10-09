@@ -1,4 +1,9 @@
 cargo install --git https://github.com/rezigned/upmd.git
+cargo install amdtop
+cargo install wiki-tui
+cargo install bluetui
+cargo install seetui
+cargo install --git https://github.com/herdrdev/herdr
 cargo install presenterm
 cargo install xan
 cargo install swaptop

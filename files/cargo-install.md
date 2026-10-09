@@ -1,11 +1,8 @@
-cargo install amdtop
-cargo install --git https://github.com/herdrdev/herdr
 cargo install abtop
 cargo install wrkflw
 cargo install basalt-tui
 cargo install qrtool
 cargo install tenere
-cargo install wiki-tui
 cargo install igrep
 cargo install lazyrsync
 cargo install systeroid-tui
@@ -17,10 +14,8 @@ cargo install treemd
 cargo install --git https://github.com/AlexsJones/llmfit.git llmfit
 cargo install binsider
 cargo install diskonaut
-cargo install bluetui
 cargo install impala
 cargo install cargo-selector
-cargo install seetui
 cargo install darya
 cargo install comchan
 cargo install eilmeldung
