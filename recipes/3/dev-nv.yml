@@ -1,7 +1,7 @@
 name: dev-nv
 description: Celestial-Uprising's Immutable Operating System
 base-image: ghcr.io/celestial-uprising/mini-nv
-image-version: latest-nv
+image-version: latest
 modules:
   - type: os-release
     properties:
