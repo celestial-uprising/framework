@@ -1,5 +1,5 @@
 name: muse-nv
-description: Celestial Uprising's Immutable Operating System
+description: Celestial-Uprising's Immutable Operating System
 base-image: ghcr.io/celestial-uprising/mini-nv
 image-version: latest
 modules:

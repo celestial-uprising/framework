@@ -1,6 +1,4 @@
-
-go install github.com/cpcloud/micasa/cmd/micasa@latest
-go install github.com/whoop-t/manly@latest
+go install github.com/moezdil/siltide@latest
 go install github.com/dece2183/hexowl@latest
 go install github.com/miklosn/cmdperf/cmd/cmdperf@latest
 go install github.com/Zingzy/diskbloom@latest
@@ -9,15 +7,12 @@ go install github.com/xaaha/hulak@latest
 go install github.com/ChausseBenjamin/termpicker@latest
 go install github.com/museslabs/kyma@latest
 go install github.com/kencx/keyb@latest
-go install github.com/ddddddO/packemon/cmd/packemon@latest
 go install github.com/chojs23/ec/cmd/ec@latest
 go install github.com/andrianbdn/wg-cmd@latest
 go install github.com/babycommando/zuse@latest
 go install github.com/maaslalani/sheets@main
 go install github.com/maaslalani/nap@main
 go install github.com/szktkfm/mdtt/cmd/mdtt@latest
-go install github.com/ariasmn/ugm@latest
-go install github.com/renatoworks/oh-my-reddit@latest
 go install github.com/chip/pathos@latest
 go install github.com/samyakbardiya/trex@latest
 go install github.com/deveshctl/layerx@latest
@@ -27,12 +22,8 @@ go install github.com/zyedidia/eget@latest
 go install github.com/dimonomid/nerdlog/cmd/nerdlog@latest
 go install github.com/Lifailon/lazyjournal@latest
 go install github.com/theyahya/enola/cmd/enola@latest
-go install github.com/xyproto/orbiton/v2@latest
-go install github.com/Bahaaio/pomo@latest
 go install github.com/termkit/gama@latest
-go install github.com/erroneousboat/slack-term@latest
 go install github.com/Gaurav-Gosain/tuios/cmd/tuios@latest
 go install github.com/edoardottt/cariddi/cmd/cariddi@latest
 go install github.com/SurgeDM/Surge@latest
 go install github.com/karol-broda/snitch@latest
-go install github.com/control-theory/gonzo/cmd/gonzo@latest

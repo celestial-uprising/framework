@@ -95,61 +95,51 @@ modules:
     install:
       install-weak-deps: false
       packages:
-        - hashcat
-        - radare2
-        - tig
-        - nvtop
-        - rizin
-        - cpufetch
-        - calcurse
-        - links
-        - pdfgrep
         - glibc-langpack-en
-        - vim
         - firewall-config
-        - miller
         - ansible-core
+        - tailscale
+        - links
         - libvirt-client
-        - tree
-        - chromium-headless
         - wget
-        - git
         - nmap
         - traceroute
         - whois
-        - powerstat
-        - fzf
         - ddcutil
-        - rustup
+        - uv
         - yazi
-        - gitui
-        - glowm
-        - lazygit
-        - amdctl
+        - vim
         - neovim
+        - python3-neovim
+        - lazygit
+        - luarocks
+        - tree-sitter-cli
         - fd-find
         - ripgrep
         - zoxide
         - bat
         - eza
-        - luarocks
-        - tree-sitter-cli
-        - python3-neovim
+        - fzf
+        - pdfgrep
+        - powerstat
+        - powertop
+        - cpufetch
+        - amdctl
         - btop
-        - nvtop
-        - radeontop
-        - gdu
-        - diskus
-        - bluez-libs
-        - pulseaudio-libs
         - libunwind
-        - uv
+        - tree
+        - ncdu
+        - diskonaut
         - dust
         - hyperfine
         - procs
         - pastel
-        - diskonaut
+        - git
         - git-interactive-rebase-tool
+        - tig
+        - gitui
+        - glowm
+        - chromium-headless
         - ov
     remove:
       packages:
@@ -181,6 +171,7 @@ modules:
     snippets:
       - |
         echo "LANG=en_US.UTF-8" > /etc/locale.conf
+
       - |
         echo "Checking custom compiled binaries for missing runtime shared libraries..."
         if [ -f /tmp/custom-binaries.list ]; then

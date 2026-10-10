@@ -1,0 +1,66 @@
+# rhun configuration. Also editable from Settings (ctrl+,).
+# Changes are picked up while rhun is running.
+
+[ui]
+follow_system = true
+theme = ristretto
+dark_theme = ristretto
+light_theme = ristretto
+scale = 1.0
+font_size = 13
+font = Victor Mono Nerd Font Oblique
+sidebar = true
+sidebar_width = 240
+agents_panel = false
+agents_width = 380
+tooltips = true
+auto_hide_scrollbars = true
+decorations = false
+scroll_sensitivity = 1.0
+fast_scroll_sensitivity = 4.0
+
+[editor]
+font_size = 12
+font = Victor Mono Nerd Font Mono
+line_height = 1.5
+tab_width = 2
+insert_spaces = true
+line_numbers = true
+highlight_line = true
+animate_disk_changes = true
+match_brackets = true
+indent_guides = true
+word_wrap = true
+whitespace = false
+cursor_blink = true
+smooth_caret = true
+auto_pairs = true
+scroll_past_end = false
+vim_mode = true
+
+[files]
+trim_trailing_whitespace = true
+final_newline = true
+restore_session = true
+restore_project = true
+exclude = .git node_modules target build .cache __pycache__ .venv .idea .DS_Store
+
+[agents]
+sources = pi
+
+[terminal]
+shell = /usr/bin/bash
+font_size = 12
+scrollback = 100000
+height = 275
+
+[git]
+enabled = true
+commit_ai = off
+commit_model = qwen2.5-coder:1.5b
+
+[updates]
+check = false
+
+[keys]
+# ctrl+shift+d = duplicate_line

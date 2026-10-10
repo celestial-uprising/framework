@@ -1,5 +1,5 @@
 name: gg
-description: Celestial Uprising's Immutable Operating System
+description: Celestial-Uprising's Immutable Operating System
 base-image: ghcr.io/celestial-uprising/mini
 image-version: latest
 modules:

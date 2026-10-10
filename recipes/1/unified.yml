@@ -106,7 +106,6 @@ modules:
         - traceroute
         - whois
         - ddcutil
-        - rustup
         - uv
         - yazi
         - vim
@@ -127,11 +126,9 @@ modules:
         - cpufetch
         - amdctl
         - btop
-        - nvtop
-        - radeontop
         - libunwind
         - tree
-        - gdu
+        - ncdu
         - diskonaut
         - dust
         - hyperfine

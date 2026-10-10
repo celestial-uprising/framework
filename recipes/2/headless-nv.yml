@@ -1,5 +1,5 @@
 name: headless-nv
-description: Celestial-Uprising's Immutable Operating System
+description: Celestial Uprising's Immutable Operating System
 base-image: ghcr.io/celestial-uprising/unified-nv
 image-version: latest
 modules:
@@ -15,7 +15,7 @@ modules:
     install:
       install-weak-deps: false
       packages:
-        - miller
+        - links
         - rizin
         - hashcat
         - radare2
