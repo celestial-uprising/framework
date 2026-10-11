@@ -15,7 +15,6 @@ go install github.com/maaslalani/nap@main
 go install github.com/szktkfm/mdtt/cmd/mdtt@latest
 go install github.com/chip/pathos@latest
 go install github.com/samyakbardiya/trex@latest
-go install github.com/deveshctl/layerx@latest
 go install github.com/Achno/gowall@latest
 go install github.com/mop-tracker/mop/cmd/mop@latest
 go install github.com/zyedidia/eget@latest
