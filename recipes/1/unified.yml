@@ -148,6 +148,12 @@ modules:
         - nano-default-editor
         - nfs-utils
         - azure-vm-utils
+        - hyperv-daemons
+        - cups
+        - sane-backends
+        - ppp
+        - telnet
+        - qemu-guest-agent
         - cockpit
         - cockpit-bridge
         - cockpit-ws

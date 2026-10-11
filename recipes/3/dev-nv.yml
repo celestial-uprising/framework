@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://blue-build.org
 name: dev-nv
 description: Celestial-Uprising's Immutable Operating System
 base-image: ghcr.io/celestial-uprising/mini-nv

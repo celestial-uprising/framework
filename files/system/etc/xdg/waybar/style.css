@@ -1,6 +1,6 @@
 * {
-    font-family: 'VictorMonoNerdFont', 'Font Awesome 6 Free', 'Font Awesome 6 Brands', monospace;
-    font-size: 12px;
+    font-family: 'VictorMono Nerd Font';
+    font-size: 14px;
 }
 
 @define-color inactive_module_color #a9a9a9;
@@ -9,7 +9,7 @@ window#waybar {
     background-color: rgba(26, 17, 16, 0.5);
     border-color: rgba(100, 114, 125, 0.5);
     border-style: solid;
-    color: #ffffff;
+    color: #ffb4ab;
     transition-property: background-color;
     transition-duration: .5s;
 }
