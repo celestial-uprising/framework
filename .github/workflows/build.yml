@@ -4,7 +4,7 @@ on:
     - cron: "00 06 * * *"
   push:
     paths-ignore:
-      - "**.md"
+      - "*README.md"
       - "**.jpg"
       - "**.jpeg"
       - "**.png"
