@@ -95,6 +95,7 @@ modules:
     install:
       install-weak-deps: false
       packages:
+        - xorg-x11-drv-nvidia-libs
         - glibc-langpack-en
         - firewall-config
         - ansible-core
