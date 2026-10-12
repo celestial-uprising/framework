@@ -75,8 +75,6 @@ modules:
   - type: os-release
     properties:
       VARIANT: "unified-nv"
-
-modules:
   - type: containerfile
     snippets:
       - COPY --from=ghcr.io/ublue-os/akmods-nvidia-lts:main-44 /rpms/ /tmp/rpms
