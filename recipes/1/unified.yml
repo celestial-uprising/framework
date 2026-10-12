@@ -170,6 +170,10 @@ modules:
       nerd-fonts:
         - VictorMono
         - CascadiaCode
+  - type: files
+    files:
+      - source: system/usr/lib/bash/libflyline.so.1.9.0
+        destination: /usr/lib/bash/libflyline.so.1.9.0
   - type: script
     scripts:
       - regenerateinitramfs.sh
