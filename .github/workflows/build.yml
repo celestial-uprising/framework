@@ -26,7 +26,8 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - 1/unified-securecore.yml
+          - 1/unified.yml
+          - 1/unified-nv.yml
     steps:
       - name: Building Stage 1 Images
         uses: blue-build/github-action@v1.13
@@ -49,7 +50,9 @@ jobs:
       matrix:
         recipe:
           - 2/mini.yml
+          - 2/mini-nv.yml
           - 2/headless.yml
+          - 2/headless-nv.yml
           - 2/virt.yml
     steps:
       - name: Building Stage 2 Images
@@ -72,8 +75,11 @@ jobs:
       matrix:
         recipe:
           - 3/dev.yml
+          - 3/dev-nv.yml
           - 3/gg.yml
+          - 3/gg-nv.yml
           - 3/muse.yml
+          - 3/muse-nv.yml
     steps:
       - name: Building Stage 3 Images
         uses: blue-build/github-action@v1.13
@@ -95,6 +101,7 @@ jobs:
       matrix:
         recipe:
           - 4/unholy.yml
+          - 4/unholy-nv.yml
     steps:
       - name: Building Stage 4 Images
         uses: blue-build/github-action@v1.13
