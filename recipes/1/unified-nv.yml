@@ -98,7 +98,6 @@ modules:
       packages:
         - akmod-nvidia
         - nvidia-smi
-        - xorg-x11-drv-nvidia-libs
         - glibc-langpack-en
         - firewall-config
         - ansible-core
