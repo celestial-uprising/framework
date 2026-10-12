@@ -75,6 +75,9 @@ modules:
   - type: os-release
     properties:
       VARIANT: "unified-nv"
+- type: akmods
+    install:
+      - nvidia
   - type: kargs
     kargs:
       - amd_iommu=on
@@ -87,7 +90,6 @@ modules:
       - msr.allow_writes=on
   - type: dnf
     repos:
-      nonfree: rpmfusion
       copr:
         - lihaohong/yazi
         - atim/lazygit
@@ -96,8 +98,6 @@ modules:
     install:
       install-weak-deps: false
       packages:
-        - akmod-nvidia
-        - nvidia-smi
         - glibc-langpack-en
         - firewall-config
         - ansible-core
