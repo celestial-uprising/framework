@@ -159,6 +159,15 @@ modules:
         - cockpit
         - cockpit-bridge
         - cockpit-ws
+  - type: script
+    scripts:
+      - |
+        # Remove conflicting sysusers configurations to prevent RPM transaction failures
+        rm -f /usr/lib/sysusers.d/sssd.conf
+        rm -f /usr/lib/sysusers.d/systemd-resolve.conf
+        rm -f /usr/lib/sysusers.d/systemd-timesync.conf
+        # Regenerate sysusers database
+        systemd-sysusers || true
   - type: copy
     from: rusty
     src: /tmp/bin/
