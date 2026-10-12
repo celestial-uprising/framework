@@ -97,16 +97,11 @@ modules:
       install-weak-deps: false
       packages:
         - akmod-nvidia
-        - nvidia-driver-cuda
         - nvidia-smi
         - xorg-x11-drv-nvidia-libs
-        - nvidia-driver-nvdec
-        - nvidia-driver-nvenc
-        - nvidia-persistenced
         - glibc-langpack-en
         - firewall-config
         - ansible-core
-        - tailscale
         - links
         - libvirt-client
         - wget
