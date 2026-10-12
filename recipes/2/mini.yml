@@ -14,11 +14,16 @@ modules:
   - type: dnf
     repos:
       copr:
-        - ulysg/xwayland-satellite
-        - yalter/niri-git
-        - sneexy/zen-browser
-        - ferdiu/moonlight
-        - skoved/rmpc
+        - name: ulysg/xwayland-satellite
+          chroot: fedora-44-x86_64
+        - name: yalter/niri-git
+          chroot: fedora-44-x86_64
+        - name: sneexy/zen-browser
+          chroot: fedora-44-x86_64
+        - name: ferdiu/moonlight
+          chroot: fedora-44-x86_64
+        - name: skoved/rmpc
+          chroot: fedora-44-x86_64
     install:
       install-weak-deps: false
       packages:

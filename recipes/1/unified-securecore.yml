@@ -88,10 +88,14 @@ modules:
   - type: dnf
     repos:
       copr:
-        - lihaohong/yazi
-        - atim/lazygit
-        - kylegospo/amdctl
-        - greg-at-redhat/glowm
+        - name: lihaohong/yazi
+          chroot: fedora-44-x86_64
+        - name: atim/lazygit
+          chroot: fedora-44-x86_64
+        - name: kylegospo/amdctl
+          chroot: fedora-44-x86_64
+        - name: greg-at-redhat/glowm
+          chroot: fedora-44-x86_64
     install:
       install-weak-deps: false
       packages:
