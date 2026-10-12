@@ -95,6 +95,7 @@ modules:
     install:
       install-weak-deps: false
       packages:
+        - just
         - glibc-langpack-en
         - firewall-config
         - ansible-core
