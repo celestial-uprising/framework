@@ -1,12 +1,15 @@
 # yaml-language-server: $schema=https://blue-build.org
-name: unified-testing
+name: core-testing-nv
 description: Celestial-Uprising's Immutable Operating System
-base-image: ghcr.io/celestial-uprising/testing
+base-image:  ghcr.io/wayblueorg/niri-nvidia
 image-version: latest
 stages:
   - name: rusty
     from: quay.io/fedora/fedora:44
     modules:
+      - type: copy
+        src: files/cargo-nobinstall.md
+        dest: /tmp/cargo-nobinstall.md
       - type: copy
         src: files/cargo-install.md
         dest: /tmp/cargo-install.md
@@ -29,6 +32,20 @@ stages:
               tar gzip curl
             curl -fsSL https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-x86_64-unknown-linux-musl.tgz | tar -xz -C /usr/bin cargo-binstall
             FAILED_TOOLS=()
+            MD_FILE="/tmp/cargo-nobinstall.md"
+            if [ ! -f "$MD_FILE" ]; then
+              echo "Error: $MD_FILE not found!"
+              exit 1
+            fi
+            while read -r line || [ -n "$line" ]; do
+              case "$line" in
+                *"cargo install"*)
+                  echo "----------------------------------------"
+                  echo "Executing: $line --root /tmp"
+                  $line --root /tmp
+                  ;;
+              esac
+            done < "$MD_FILE"
             MD_FILE1="/tmp/cargo-install.md"
             if [ -f "$MD_FILE1" ]; then
               while read -r line || [ -n "$line" ]; do
@@ -73,8 +90,15 @@ stages:
             ls -1 /tmp/bin > /tmp/custom-binaries.list
 modules:
   - type: os-release
-    properties:
-      VARIANT: "unified-testing"
+      properties:
+        NAME: "Celestial Uprising"
+        PRETTY_NAME: "Celestial Uprising aTESTING"
+        VERSION_CODENAME: "no-transformers"
+        ID_LIKE: fedora
+        HOME_URL: "https://github.com/celestial-uprising/framework/"
+        BUG_REPORT_URL: "https://github.com/celestial-uprising/framework/"
+      VARIANT: "core-testing-nv"
+        RELEASE_TYPE: "alpha"
   - type: kargs
     kargs:
       - amd_iommu=on
@@ -144,6 +168,7 @@ modules:
         - ov
     remove:
       packages:
+        - papirus-icon-theme
         - firefox
         - nano
         - nano-default-editor
@@ -168,15 +193,27 @@ modules:
     from: rusty
     src: /tmp/bin/
     dest: /usr/bin/
-  - type: copy
-    from: rusty
-    src: /tmp/custom-binaries.list
-    dest: /tmp/custom-binaries.list
   - type: fonts
     fonts:
       nerd-fonts:
         - VictorMono
         - CascadiaCode
+  - type: containerfile
+    snippets:
+      - RUN sed -i 's/#override_install_langs=/override_install_langs=en_US/g' /etc/dnf/dnf.conf || true
+      - RUN find /usr/share/locale/* -maxdepth 0 -type d ! -name "en" ! -name "en_US" ! -name "en_GB" -exec rm -rf {} +
+      - RUN rm -rf /usr/share/soundfonts
+# Inside your recipe.yml modules list
+modules:
+  - type: containerfile
+    snippets:
+      - RUN sed -i 's/#override_install_langs=/override_install_langs=en_US/g' /etc/dnf/dnf.conf || true
+      - RUN find /usr/share/locale/* -maxdepth 0 -type d ! -name "en" ! -name "en_US" ! -name "en_GB" -exec rm -rf {} +
+      - RUN find /usr/share/fonts/google-noto* -maxdepth 0 -type d ! -name "*Sans*" ! -name "*Serif*" -exec rm -rf {} + || true
+      - RUN rm -rf /usr/share/fonts/google-noto-vf /usr/share/fonts/lohit* /usr/share/fonts/sil-padauk || true
+      - RUN fc-cache -f
+      - RUN rm -rf /usr/share/doc/* /usr/share/info/* /usr/share/gnome/help/* || true
+      - RUN rm -rf /usr/share/soundfonts
   - type: files
     files:
       - source: system/usr/lib/bash/libflyline.so.1.9.0

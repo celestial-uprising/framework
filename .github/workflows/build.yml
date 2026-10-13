@@ -5,10 +5,6 @@ on:
   push:
     paths-ignore:
       - "**.md"
-      - "**.jpg"
-      - "**.jpeg"
-      - "**.png"
-      - "**.webp"
   pull_request:
   workflow_dispatch:
 concurrency:
@@ -26,8 +22,8 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - 2/headless-testing.yml
-          - 2/headless-testing-nv.yml
+          - 1/core-testing.yml
+          - 1/core-testing-nv.yml
     steps:
       - name: Building Stage 1 Images
         uses: blue-build/github-action@v1.13
@@ -37,3 +33,27 @@ jobs:
           registry_token: ${{ github.token }}
           pr_event_number: ${{ github.event.number }}
           maximize_build_space: true
+  stage_two:
+    name: Building Stage 2 Images
+    runs-on: ubuntu-latest
+    needs: stage_one
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        recipe:
+          - 2/mini-testing.yml
+          - 2/mini-testing-nv.yml
+          - 2/headless-testing.yml
+          - 2/headless-testing-nv.yml
+    steps:
+      - name: Building Stage 2 Images
+        uses: blue-build/github-action@v1.13
+        with:
+          recipe: ${{ matrix.recipe }}
+          cosign_private_key: ${{ secrets.SIGNING_SECRET }}
+          registry_token: ${{ github.token }}
+          maximize_build_space: false
