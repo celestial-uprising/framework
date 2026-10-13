@@ -16,6 +16,9 @@ modules:
     install:
       install-weak-deps: false
       packages:
+        - chromium-headless
+        - thermald
+        - upower 
         - rizin
         - hashcat
         - radare2
