@@ -20,30 +20,9 @@ modules:
     install:
       install-weak-deps: false
       packages:
-        - bluez-libs
-        - pulseaudio-libs
         - calcurse
-        - niri
-        - xwayland-satellite
-        - sddm
-        - xdg-desktop-portal-gnome
-        - xdg-desktop-portal-gtk
-        - xfce-polkit
         - rofi-wayland
-        - waybar
         - dunst
-        - swaybg
-        - swaylock
-        - swayidle
-        - wl-clipboard
-        - grim
-        - slurp
-        - brightnessctl
-        - pamixer
-        - pavucontrol
-        - wlr-randr
-        - wlsunset
-        - kanshi
         - network-manager-applet
         - blueman
         - bluez-tools
@@ -76,6 +55,7 @@ modules:
     remove:
       auto-remove: true
       packages:
+        - 7zip
         - alacritty
         - ModemManager
         - NetworkManager-openconnect
