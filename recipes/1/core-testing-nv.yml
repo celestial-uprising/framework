@@ -203,8 +203,6 @@ modules:
       - RUN sed -i 's/#override_install_langs=/override_install_langs=en_US/g' /etc/dnf/dnf.conf || true
       - RUN find /usr/share/locale/* -maxdepth 0 -type d ! -name "en" ! -name "en_US" ! -name "en_GB" -exec rm -rf {} +
       - RUN rm -rf /usr/share/soundfonts
-# Inside your recipe.yml modules list
-modules:
   - type: containerfile
     snippets:
       - RUN sed -i 's/#override_install_langs=/override_install_langs=en_US/g' /etc/dnf/dnf.conf || true
