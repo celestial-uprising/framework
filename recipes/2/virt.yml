@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://blue-build.org
 name: virt
 description: Celestial Uprising's Immutable Operating System
-base-image: ghcr.io/celestial-uprising/unified
+base-image: ghcr.io/celestial-uprising/core
 image-version: latest
 modules:
   - type: os-release
@@ -22,6 +22,21 @@ modules:
         - links
         - spice-vdagent
         - qemu-guest-agent
+    remove:
+      packages:
+        - pipewire
+        - wireplumber
+        - linux-firmware
+        - alsa-lib
+        - upower
+        - bluez
+        - upower
+        - cups
+        - geoclue2
+        - plymouth
+        - wayland
+        - xorg-x11-xserver-Xwayland
+
   - type: files
     files:
       - source: dracut-virtio.conf

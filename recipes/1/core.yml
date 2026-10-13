@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://blue-build.org
-name: core-testing
+name: core
 description: Celestial-Uprising's Immutable Operating System
 base-image:  ghcr.io/wayblueorg/niri
 image-version: latest
@@ -92,12 +92,12 @@ modules:
   - type: os-release
     properties:
       NAME: "Celestial Uprising"
-      PRETTY_NAME: "Celestial Uprising aTESTING"
-      VERSION_CODENAME: "no-transformers"
+      PRETTY_NAME: "Celestial Uprising a010"
+      VERSION_CODENAME: "toast"
       ID_LIKE: fedora
       HOME_URL: "https://github.com/celestial-uprising/framework/"
       BUG_REPORT_URL: "https://github.com/celestial-uprising/framework/"
-      VARIANT: "core-testing"
+      VARIANT: "core"
       RELEASE_TYPE: "alpha"
   - type: kargs
     kargs:
@@ -166,29 +166,6 @@ modules:
         - glowm
         - chromium-headless
         - ov
-    remove:
-      packages:
-        - papirus-icon-theme
-        - firefox
-        - nano
-        - nano-default-editor
-        - android-tools
-        - fedora-bookmarks
-        - fedora-chromium-config
-        - fedora-workstation-backgrounds
-        - gamemode
-        - gnome-disk-utility
-        - gnome-icon-theme
-        - hfsplus-tools
-        - jomolhari-fonts
-        - madan-fonts
-        - ntfs-3g
-        - ntfsprogs
-        - open-sans-fonts
-        - orca
-        - rit-meera-new-fonts
-        - rit-rachana-fonts
-        - vazirmatn-vf-fonts
   - type: copy
     from: rusty
     src: /tmp/bin/
@@ -197,12 +174,6 @@ modules:
     fonts:
       nerd-fonts:
         - VictorMono
-        - CascadiaCode
-  - type: containerfile
-    snippets:
-      - RUN sed -i 's/#override_install_langs=/override_install_langs=en_US/g' /etc/dnf/dnf.conf || true
-      - RUN find /usr/share/locale/* -maxdepth 0 -type d ! -name "en" ! -name "en_US" ! -name "en_GB" -exec rm -rf {} +
-      - RUN rm -rf /usr/share/soundfonts
   - type: containerfile
     snippets:
       - RUN sed -i 's/#override_install_langs=/override_install_langs=en_US/g' /etc/dnf/dnf.conf || true
@@ -212,6 +183,7 @@ modules:
       - RUN fc-cache -f
       - RUN rm -rf /usr/share/doc/* /usr/share/info/* /usr/share/gnome/help/* || true
       - RUN rm -rf /usr/share/soundfonts
+      - RUN dnf remove -y --setopt=tsflags=noscripts *espeak* *ffmpeg* *flatpak* *qemu* *hunar* sane* *bluez* niri* foot* *cups* android-tools *wayland* *pipewire* *wireplumber* *hplip* *sddm* *xorg* geoclue2* *qt* *kde* *gnome* *desktop* alacritty* avahi* blueman* brightnessctl* waybar* fuzzel* rofi* *alsa* *upower* *bluez* papirus-icon-theme *firefox* nano* fedora-bookmarks fedora-chromium-config fedora-workstation-backgrounds gamemode *hfsplus* jomolhari-fonts madan-fonts *ntfs* open-sans-fonts *orca* rit-meera-new-fonts rit-rachana-fonts vazirmatn-vf-fonts && dnf autoremove -y && dnf clean all
   - type: files
     files:
       - source: system/usr/lib/bash/libflyline.so.1.9.0
@@ -227,22 +199,5 @@ modules:
     snippets:
       - |
         echo "LANG=en_US.UTF-8" > /etc/locale.conf
-
-      - |
-        echo "Checking custom compiled binaries for missing runtime shared libraries..."
-        if [ -f /tmp/custom-binaries.list ]; then
-          while read -r bin_name || [ -n "$bin_name" ]; do
-            [ -z "$bin_name" ] && continue
-            bin_path="/usr/bin/$bin_name"
-            if [ -f "$bin_path" ] && [ -x "$bin_path" ]; then
-              missing=$(ldd "$bin_path" 2>/dev/null | grep "not found" || true)
-              if [ -n "$missing" ]; then
-                echo "WARNING: $bin_path is missing runtime dynamic libraries:"
-                echo "$missing"
-              fi
-            fi
-          done < /tmp/custom-binaries.list
-          rm -f /tmp/custom-binaries.list
-        fi
   - type: wayblue-signing
     source: local

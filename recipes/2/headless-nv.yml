@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://blue-build.org
 name: headless-nv
 description: Celestial Uprising's Immutable Operating System
-base-image: ghcr.io/celestial-uprising/unified-nv
+base-image: ghcr.io/celestial-uprising/core-nv
 image-version: latest
 modules:
   - type: os-release
@@ -16,15 +16,9 @@ modules:
     install:
       install-weak-deps: false
       packages:
-        - links
         - rizin
         - hashcat
         - radare2
-        - google-noto-emoji-fonts
-        - tuned-ppd
-        - vulkan-validation-layers
-        - vulkan-tools
-        - ffmpeg
         - qemu-system-x86
         - qemu-system-aarch64
         - edk2-aarch64
@@ -51,12 +45,22 @@ modules:
         - libvirt-daemon-driver-network
         - libvirt-daemon-driver-storage
         - libvirt-daemon-driver-storage-zfs
+        - links
+        - google-noto-emoji-fonts
+        - tuned-ppd
+        - vulkan-validation-layers
+        - vulkan-tools
+        - ffmpeg
   - type: files
     files:
       - source: 99-cpu-governor.rules
         destination: /etc/udev/rules.d/99-cpu-governor.rules
       - source: 99-workstation-perf.conf
         destination: /etc/sysctl.d/99-workstation-perf.conf
+  - type: containerfile
+    snippets:
+      - RUN rpm-ostree install https://zfsonlinux.org/fedora/zfs-release-3-1.fc44.noarch.rpm
+      - RUN rpm-ostree install kernel-devel zfs
   - type: script
     scripts:
       - regenerateinitramfs.sh

@@ -22,8 +22,8 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - 1/core-testing.yml
-          - 1/core-testing-nv.yml
+          - 1/core.yml
+          - 1/core-nv.yml
     steps:
       - name: Building Stage 1 Images
         uses: blue-build/github-action@v1.13
@@ -45,10 +45,11 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - 2/mini-testing.yml
-          - 2/mini-testing-nv.yml
-          - 2/headless-testing.yml
-          - 2/headless-testing-nv.yml
+          - 2/mini.yml
+          - 2/mini-nv.yml
+          - 2/headless.yml
+          - 2/headless-nv.yml
+          - 2/virt.yml
     steps:
       - name: Building Stage 2 Images
         uses: blue-build/github-action@v1.13
