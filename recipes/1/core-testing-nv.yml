@@ -90,15 +90,15 @@ stages:
             ls -1 /tmp/bin > /tmp/custom-binaries.list
 modules:
   - type: os-release
-      properties:
-        NAME: "Celestial Uprising"
-        PRETTY_NAME: "Celestial Uprising aTESTING"
-        VERSION_CODENAME: "no-transformers"
-        ID_LIKE: fedora
-        HOME_URL: "https://github.com/celestial-uprising/framework/"
-        BUG_REPORT_URL: "https://github.com/celestial-uprising/framework/"
-        VARIANT: "core-testing-nv"
-        RELEASE_TYPE: "alpha"
+    properties:
+      NAME: "Celestial Uprising"
+      PRETTY_NAME: "Celestial Uprising aTESTING"
+      VERSION_CODENAME: "no-transformers"
+      ID_LIKE: fedora
+      HOME_URL: "https://github.com/celestial-uprising/framework/"
+      BUG_REPORT_URL: "https://github.com/celestial-uprising/framework/"
+      VARIANT: "core-testing-nv"
+      RELEASE_TYPE: "alpha"
   - type: kargs
     kargs:
       - amd_iommu=on
