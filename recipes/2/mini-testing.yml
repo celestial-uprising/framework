@@ -53,7 +53,7 @@ modules:
         - wireplumber
         - flatpak
     remove:
-      auto-remove: true
+      auto-remove: false
       packages:
         - 7zip
         - alacritty
