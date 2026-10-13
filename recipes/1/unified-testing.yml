@@ -148,8 +148,6 @@ modules:
         - nano
         - nano-default-editor
         - 7zip
-        - alacritty
-        - Thunar
         - android-tools
         - avahi
         - emacs-filesystem
@@ -160,7 +158,6 @@ modules:
         - gamemode
         - gnome-disk-utility
         - gnome-icon-theme
-        - gutenprint
         - hfsplus-tools
         - javascriptcoregtk4.1
         - jomolhari-fonts
