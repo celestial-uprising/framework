@@ -26,8 +26,6 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - 2/mini-testing.yml
-          - 2/mini-testing-nv.yml
           - 2/headless-testing.yml
           - 2/headless-testing-nv.yml
     steps:

@@ -13,9 +13,14 @@ modules:
       - zfs.zfs_arc_max=17179869184
       - pcie_aspm=off
   - type: dnf
+    repos:
+      copr:
+        - jguerin/zfs-fedora-ostree
     install:
       install-weak-deps: false
       packages:
+        - kmod-zfs
+        - zfs
         - rizin
         - hashcat
         - radare2
