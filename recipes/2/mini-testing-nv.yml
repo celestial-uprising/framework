@@ -1,12 +1,12 @@
 # yaml-language-server: $schema=https://blue-build.org
-name: mini-testing
+name: mini-testing-nv
 description: Celestial-Uprising's Immutable Operating System
-base-image: ghcr.io/celestial-uprising/unified-testing
+base-image: ghcr.io/celestial-uprising/unified-testing-nv
 image-version: latest
 modules:
   - type: os-release
     properties:
-      VARIANT: "mini-testing"
+      VARIANT: "mini-testing-nv"
   - type: kargs
     kargs:
       - amdgpu.ppfeaturemask=0xffffffff
