@@ -97,7 +97,7 @@ modules:
         ID_LIKE: fedora
         HOME_URL: "https://github.com/celestial-uprising/framework/"
         BUG_REPORT_URL: "https://github.com/celestial-uprising/framework/"
-      VARIANT: "core-testing-nv"
+        VARIANT: "core-testing-nv"
         RELEASE_TYPE: "alpha"
   - type: kargs
     kargs:
