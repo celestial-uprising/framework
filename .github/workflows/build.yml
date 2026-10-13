@@ -27,6 +27,7 @@ jobs:
       matrix:
         recipe:
           - 1/unified-testing.yml
+          - 1/unified-testing-nv.yml
     steps:
       - name: Building Stage 1 Images
         uses: blue-build/github-action@v1.13
@@ -49,7 +50,9 @@ jobs:
       matrix:
         recipe:
           - 2/mini-testing.yml
+          - 2/mini-testing-nv.yml
           - 2/headless-testing.yml
+          - 2/headless-testing-nv.yml
     steps:
       - name: Building Stage 2 Images
         uses: blue-build/github-action@v1.13
