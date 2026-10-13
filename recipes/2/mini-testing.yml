@@ -22,34 +22,9 @@ modules:
     install:
       install-weak-deps: false
       packages:
-        - bluez-libs
-        - pulseaudio-libs
         - calcurse
         - niri
         - xwayland-satellite
-        - sddm
-        - xdg-desktop-portal-gnome
-        - xdg-desktop-portal-gtk
-        - xfce-polkit
-        - rofi-wayland
-        - waybar
-        - dunst
-        - swaybg
-        - swaylock
-        - swayidle
-        - wl-clipboard
-        - grim
-        - slurp
-        - brightnessctl
-        - pamixer
-        - pavucontrol
-        - wlr-randr
-        - wlsunset
-        - kanshi
-        - network-manager-applet
-        - blueman
-        - bluez-tools
-        - google-noto-emoji-fonts
         - qt6-qtvirtualkeyboard
         - qt6-qt5compat
         - zen-browser
@@ -57,24 +32,12 @@ modules:
         - zathura
         - zathura-plugins-all
         - mpv
-        - ffmpeg
-        - ffmpegthumbnailer
         - mpd
         - mpc
         - rmpc
-        - imv
         - remmina
         - virt-manager
         - moonlight-qt
-        - headsetcontrol
-        - mediainfo
-        - playerctl
-        - tuned-ppd
-        - vulkan-validation-layers
-        - vulkan-tools
-        - alsa-firmware
-        - wireplumber
-        - flatpak
   - type: default-flatpaks
     configurations:
       - notify: true
