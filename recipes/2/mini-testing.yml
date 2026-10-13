@@ -77,9 +77,6 @@ modules:
       auto-remove: true
       packages:
         - alacritty
-        - 7zip
-        - 7zip-standalone
-        - ImageMagick
         - ModemManager
         - NetworkManager-openconnect
         - NetworkManager-openconnect-gnome
