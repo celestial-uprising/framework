@@ -1,0 +1,386 @@
+# yaml-language-server: $schema=https://blue-build.org
+name: unified-testing-nv
+description: Celestial-Uprising's Immutable Operating System
+base-image: ghcr.io/celestial-uprising/testing-nv
+image-version: latest
+stages:
+  - name: rusty
+    from: quay.io/fedora/fedora:44
+    modules:
+      - type: copy
+        src: files/cargo-install.md
+        dest: /tmp/cargo-install.md
+      - type: copy
+        src: files/goblin-install.md
+        dest: /tmp/goblin-install.md
+      - type: script
+        snippets:
+          - mkdir -p /tmp/bin
+          - |
+            dnf5 upgrade -y && dnf5 install -y \
+              zig libdrm-devel pkg-config pam-devel cargo rustc \
+              systemd-devel libunwind-devel elfutils-devel \
+              protobuf-compiler perl clang-devel llvm-devel \
+              openssl-devel dbus-devel jack-audio-connection-kit-devel \
+              alsa-lib-devel cmake make gcc-c++ python3 python3-devel \
+              fontconfig-devel m4 pipewire-devel libva-devel libcxx-devel \
+              llvm-libunwind libpcap-devel golang \
+              libusb1-devel bluez-libs-devel pulseaudio-libs-devel libcap-devel zlib-devel \
+              tar gzip curl
+            curl -fsSL https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-x86_64-unknown-linux-musl.tgz | tar -xz -C /usr/bin cargo-binstall
+            FAILED_TOOLS=()
+            MD_FILE1="/tmp/cargo-install.md"
+            if [ -f "$MD_FILE1" ]; then
+              while read -r line || [ -n "$line" ]; do
+                case "$line" in
+                  *"cargo install"*)
+                    echo "----------------------------------------"
+                    pkg_args=$(echo "$line" | sed 's/cargo install //')
+                    echo "Processing Cargo package: $pkg_args"
+                    if ! cargo binstall -y --root /tmp $pkg_args 2>/dev/null; then
+                      echo "cargo-binstall failed for '$pkg_args'. Compiling via cargo install..."
+                      if ! $line --root /tmp; then
+                        echo "ERROR: Failed to install Cargo crate: $pkg_args"
+                        FAILED_TOOLS+=("Cargo: $line")
+                      fi
+                    fi
+                    ;;
+                esac
+              done < "$MD_FILE1"
+            fi
+            MD_FILE2="/tmp/goblin-install.md"
+            if [ -f "$MD_FILE2" ]; then
+              while read -r line || [ -n "$line" ]; do
+                case "$line" in
+                  *"go install"*)
+                    echo "----------------------------------------"
+                    echo "Executing Go install: $line"
+                    if ! env GOBIN=/tmp/bin $line; then
+                      echo "ERROR: Failed to install Go tool: $line"
+                      FAILED_TOOLS+=("Go: $line")
+                    fi
+                    ;;
+                esac
+              done < "$MD_FILE2"
+            fi
+            if [ ${#FAILED_TOOLS[@]} -ne 0 ]; then
+              echo "========================================"
+              echo "BUILD FAILED: The following tools failed to install:"
+              printf '%s\n' "${FAILED_TOOLS[@]}"
+              echo "========================================"
+              exit 1
+            fi
+            ls -1 /tmp/bin > /tmp/custom-binaries.list
+modules:
+  - type: os-release
+    properties:
+      VARIANT: "unified-testing-nv"
+  - type: kargs
+    kargs:
+      - amd_iommu=on
+      - iommu=pt
+      - kvm_amd.nested=1
+      - split_lock_detect=off
+      - transparent_hugepage=always
+      - kvm.ignore_msrs=1
+      - net.ifnames=0
+      - msr.allow_writes=on
+  - type: dnf
+    repos:
+      copr:
+        - lihaohong/yazi
+        - atim/lazygit
+        - kylegospo/amdctl
+        - greg-at-redhat/glowm
+    install:
+      install-weak-deps: false
+      packages:
+        - just
+        - glibc-langpack-en
+        - firewall-config
+        - ansible-core
+        - tailscale
+        - links
+        - libvirt-client
+        - wget
+        - nmap
+        - traceroute
+        - whois
+        - ddcutil
+        - uv
+        - yazi
+        - vim
+        - neovim
+        - python3-neovim
+        - lazygit
+        - luarocks
+        - tree-sitter-cli
+        - fd-find
+        - ripgrep
+        - zoxide
+        - bat
+        - eza
+        - fzf
+        - pdfgrep
+        - powerstat
+        - powertop
+        - cpufetch
+        - amdctl
+        - btop
+        - libunwind
+        - tree
+        - ncdu
+        - diskonaut
+        - dust
+        - hyperfine
+        - procs
+        - pastel
+        - git
+        - git-interactive-rebase-tool
+        - tig
+        - gitui
+        - glowm
+        - chromium-headless
+        - ov
+    remove:
+      packages:
+        - firefox
+        - nano
+        - nano-default-editor
+        - nfs-utils
+        - azure-vm-utils
+        - hyperv-daemons
+        - cups
+        - sane-backends
+        - ppp
+        - telnet
+        - qemu-guest-agent
+        - cockpit
+        - cockpit-bridge
+        - cockpit-ws
+        - 7zip
+        - alacritty
+        - ModemManager
+        - NetworkManager-openconnect
+        - NetworkManager-openconnect-gnome
+        - NetworkManager-openvpn
+        - NetworkManager-openvpn-gnome
+        - NetworkManager-wwan
+        - Thunar
+        - android-tools
+        - avahi
+        - cups-ipptool
+        - default-fonts-am
+        - default-fonts-ar
+        - default-fonts-as
+        - default-fonts-ast
+        - default-fonts-be
+        - default-fonts-bg
+        - default-fonts-bn
+        - default-fonts-bo
+        - default-fonts-br
+        - default-fonts-chr
+        - default-fonts-dv
+        - default-fonts-dz
+        - default-fonts-el
+        - default-fonts-eo
+        - default-fonts-eu
+        - default-fonts-fa
+        - default-fonts-got
+        - default-fonts-gu
+        - default-fonts-he
+        - default-fonts-hi
+        - default-fonts-hy
+        - default-fonts-ia
+        - default-fonts-ii
+        - default-fonts-iu
+        - default-fonts-ka
+        - default-fonts-kab
+        - default-fonts-km
+        - default-fonts-kn
+        - default-fonts-ku
+        - default-fonts-lo
+        - default-fonts-mai
+        - default-fonts-ml
+        - default-fonts-mni
+        - default-fonts-mr
+        - default-fonts-my
+        - default-fonts-nb
+        - default-fonts-ne
+        - default-fonts-nn
+        - default-fonts-nqo
+        - default-fonts-nr
+        - default-fonts-nso
+        - default-fonts-or
+        - default-fonts-pa
+        - default-fonts-ru
+        - default-fonts-sat
+        - default-fonts-si
+        - default-fonts-ss
+        - default-fonts-syr
+        - default-fonts-ta
+        - default-fonts-te
+        - default-fonts-th
+        - default-fonts-tn
+        - default-fonts-ts
+        - default-fonts-uk
+        - default-fonts-ur
+        - default-fonts-ve
+        - default-fonts-vi
+        - default-fonts-xh
+        - default-fonts-yi
+        - default-fonts-zu
+        - docbook-dtds
+        - docbook-style-xsl
+        - emacs-filesystem
+        - espeak-ng
+        - exiv2
+        - exiv2-libs
+        - fedora-bookmarks
+        - fedora-chromium-config
+        - fedora-workstation-backgrounds
+        - fprintd
+        - fprintd-pam
+        - fwupd
+        - gamemode
+        - gnome-disk-utility
+        - gnome-icon-theme
+        - google-noto-naskh-arabic-vf-fonts
+        - google-noto-sans-arabic-vf-fonts
+        - google-noto-sans-armenian-vf-fonts
+        - google-noto-sans-bengali-vf-fonts
+        - google-noto-sans-canadian-aboriginal-vf-fonts
+        - google-noto-sans-cherokee-vf-fonts
+        - google-noto-sans-cjk-vf-fonts
+        - google-noto-sans-devanagari-vf-fonts
+        - google-noto-sans-ethiopic-vf-fonts
+        - google-noto-sans-georgian-vf-fonts
+        - google-noto-sans-gujarati-vf-fonts
+        - google-noto-sans-gurmukhi-vf-fonts
+        - google-noto-sans-hebrew-vf-fonts
+        - google-noto-sans-kannada-vf-fonts
+        - google-noto-sans-khmer-vf-fonts
+        - google-noto-sans-lao-vf-fonts
+        - google-noto-sans-meetei-mayek-vf-fonts
+        - google-noto-sans-mono-cjk-vf-fonts
+        - google-noto-sans-mono-vf-fonts
+        - google-noto-sans-nko-fonts
+        - google-noto-sans-ol-chiki-vf-fonts
+        - google-noto-sans-oriya-vf-fonts
+        - google-noto-sans-sinhala-vf-fonts
+        - google-noto-sans-symbols-vf-fonts
+        - google-noto-sans-syriac-vf-fonts
+        - google-noto-sans-tamil-vf-fonts
+        - google-noto-sans-telugu-vf-fonts
+        - google-noto-sans-thaana-vf-fonts
+        - google-noto-sans-thai-vf-fonts
+        - google-noto-sans-yi-fonts
+        - google-noto-serif-armenian-vf-fonts
+        - google-noto-serif-bengali-vf-fonts
+        - google-noto-serif-cjk-vf-fonts
+        - google-noto-serif-devanagari-vf-fonts
+        - google-noto-serif-ethiopic-vf-fonts
+        - google-noto-serif-georgian-vf-fonts
+        - google-noto-serif-gujarati-vf-fonts
+        - google-noto-serif-gurmukhi-vf-fonts
+        - google-noto-serif-hebrew-vf-fonts
+        - google-noto-serif-kannada-vf-fonts
+        - google-noto-serif-khmer-vf-fonts
+        - google-noto-serif-lao-vf-fonts
+        - google-noto-serif-oriya-vf-fonts
+        - google-noto-serif-sinhala-vf-fonts
+        - google-noto-serif-tamil-vf-fonts
+        - google-noto-serif-telugu-vf-fonts
+        - google-noto-serif-thai-vf-fonts
+        - google-noto-serif-vf-fonts
+        - graphviz-libs
+        - gutenprint
+        - gutenprint-libs
+        - gvfs
+        - gvfs-archive
+        - gvfs-client
+        - gvfs-fuse
+        - gvfs-gphoto2
+        - gvfs-mtp
+        - gvfs-nfs
+        - gvfs-smb
+        - hfsplus-tools
+        - hplip-common
+        - hplip-libs
+        - hunspell-en-AU
+        - hunspell-en-CA
+        - hunspell-en-GB
+        - hyperv-daemons-license
+        - hypervfcopyd
+        - hypervkvpd
+        - hypervvssd
+        - jasper-libs
+        - javascriptcoregtk4.1
+        - jomolhari-fonts
+        - madan-fonts
+        - mailcap
+        - mozilla-filesystem
+        - ntfs-3g
+        - ntfs-3g-libs
+        - ntfs-3g-system-compression
+        - ntfsprogs
+        - open-sans-fonts
+        - openexr2-libs
+        - open-vm-tools-desktop
+        - openvpn
+        - orca
+        - oxygen-icon-theme
+        - printer-driver-brlaser
+        - redhat-menus
+        - rit-meera-new-fonts
+        - rit-rachana-fonts
+        - vazirmatn-vf-fonts
+        - virtualbox-guest-additions
+        - wofi
+  - type: copy
+    from: rusty
+    src: /tmp/bin/
+    dest: /usr/bin/
+  - type: copy
+    from: rusty
+    src: /tmp/custom-binaries.list
+    dest: /tmp/custom-binaries.list
+  - type: fonts
+    fonts:
+      nerd-fonts:
+        - VictorMono
+        - CascadiaCode
+  - type: files
+    files:
+      - source: system/usr/lib/bash/libflyline.so.1.9.0
+        destination: /usr/lib/bash/libflyline.so.1.9.0
+  - type: files
+    files:
+      - source: system/etc/profile.d/
+        destination: /etc/profile.d/
+  - type: script
+    scripts:
+      - regenerateinitramfs.sh
+  - type: script
+    snippets:
+      - |
+        echo "LANG=en_US.UTF-8" > /etc/locale.conf
+
+      - |
+        echo "Checking custom compiled binaries for missing runtime shared libraries..."
+        if [ -f /tmp/custom-binaries.list ]; then
+          while read -r bin_name || [ -n "$bin_name" ]; do
+            [ -z "$bin_name" ] && continue
+            bin_path="/usr/bin/$bin_name"
+            if [ -f "$bin_path" ] && [ -x "$bin_path" ]; then
+              missing=$(ldd "$bin_path" 2>/dev/null | grep "not found" || true)
+              if [ -n "$missing" ]; then
+                echo "WARNING: $bin_path is missing runtime dynamic libraries:"
+                echo "$missing"
+              fi
+            fi
+          done < /tmp/custom-binaries.list
+          rm -f /tmp/custom-binaries.list
+        fi
+  - type: wayblue-signing
+    source: local

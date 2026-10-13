@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://blue-build.org
 name: testing
 description: Celestial Uprising's Immutable Operating System
-base-image: ghcr.io/wayblueorg/niri-nvidia
+base-image: ghcr.io/wayblueorg/niri
 image-version: latest
 stages:
   - name: rust
