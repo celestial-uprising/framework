@@ -12,6 +12,7 @@ modules:
       - amdgpu.ppfeaturemask=0xffffffff
       - zfs.zfs_arc_max=17179869184
       - pcie_aspm=off
+  - type: dnf
     install:
       install-weak-deps: false
       packages:
