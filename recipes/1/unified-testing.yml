@@ -147,11 +147,8 @@ modules:
         - firefox
         - nano
         - nano-default-editor
-        - 7zip
         - android-tools
-        - avahi
         - emacs-filesystem
-        - exiv2
         - fedora-bookmarks
         - fedora-chromium-config
         - fedora-workstation-backgrounds
@@ -159,24 +156,17 @@ modules:
         - gnome-disk-utility
         - gnome-icon-theme
         - hfsplus-tools
-        - javascriptcoregtk4.1
         - jomolhari-fonts
         - madan-fonts
-        - mailcap
         - mozilla-filesystem
         - ntfs-3g
-        - ntfs-3g-libs
-        - ntfs-3g-system-compression
         - ntfsprogs
         - open-sans-fonts
-        - openexr2-libs
-        - open-vm-tools-desktop
         - orca
         - redhat-menus
         - rit-meera-new-fonts
         - rit-rachana-fonts
         - vazirmatn-vf-fonts
-        - wofi
   - type: copy
     from: rusty
     src: /tmp/bin/
