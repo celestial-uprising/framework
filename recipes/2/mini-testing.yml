@@ -14,12 +14,9 @@ modules:
   - type: dnf
     repos:
       copr:
-        - name: sneexy/zen-browser
-          chroot: fedora-44-x86_64
-        - name: ferdiu/moonlight
-          chroot: fedora-44-x86_64
-        - name: skoved/rmpc
-          chroot: fedora-44-x86_64
+        - sneexy/zen-browser
+        - ferdiu/moonlight
+        - skoved/rmpc
     install:
       install-weak-deps: false
       packages:
@@ -92,15 +89,7 @@ modules:
         - Thunar
         - android-tools
         - avahi
-        - bluez-cups
-        - braille-printer-app
-        - cups
-        - cups-browsed
-        - cups-client
-        - cups-filters
-        - cups-filters-driverless
         - cups-ipptool
-        - default-editor-8.7.1-2
         - default-fonts-am
         - default-fonts-ar
         - default-fonts-as
@@ -163,7 +152,6 @@ modules:
         - default-fonts-zu
         - docbook-dtds
         - docbook-style-xsl
-        - dymo-cups-drivers
         - emacs-filesystem
         - espeak-ng
         - exiv2
@@ -171,12 +159,9 @@ modules:
         - fedora-bookmarks
         - fedora-chromium-config
         - fedora-workstation-backgrounds
-        - firefox
         - fprintd
         - fprintd-pam
         - fwupd
-        - gtk-vnc2
-        - gvnc
         - gamemode
         - gnome-disk-utility
         - gnome-icon-theme
@@ -230,7 +215,6 @@ modules:
         - google-noto-serif-vf-fonts
         - graphviz-libs
         - gutenprint
-        - gutenprint-cups
         - gutenprint-libs
         - gvfs
         - gvfs-archive
@@ -241,29 +225,21 @@ modules:
         - gvfs-nfs
         - gvfs-smb
         - hfsplus-tools
-        - hplip
         - hplip-common
         - hplip-libs
         - hunspell-en-AU
         - hunspell-en-CA
         - hunspell-en-GB
-        - hyperv-daemons
         - hyperv-daemons-license
         - hypervfcopyd
         - hypervkvpd
         - hypervvssd
-        - jose
         - jasper-libs
         - javascriptcoregtk4.1
         - jomolhari-fonts
-        - mergerfs
-        - moby-engine
-        - moby-filesystem
         - madan-fonts
         - mailcap
         - mozilla-filesystem
-        - nano
-        - nfs-utils
         - ntfs-3g
         - ntfs-3g-libs
         - ntfs-3g-system-compression
@@ -271,7 +247,6 @@ modules:
         - open-sans-fonts
         - openexr2-libs
         - open-vm-tools-desktop
-        - openspace
         - openvpn
         - orca
         - oxygen-icon-theme
@@ -279,8 +254,6 @@ modules:
         - redhat-menus
         - rit-meera-new-fonts
         - rit-rachana-fonts
-        - totem
-        - vapoursynth-libs
         - vazirmatn-vf-fonts
         - virtualbox-guest-additions
         - wofi
