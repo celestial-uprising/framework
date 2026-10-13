@@ -175,7 +175,6 @@ modules:
         - openexr2-libs
         - open-vm-tools-desktop
         - orca
-        - oxygen-icon-theme
         - redhat-menus
         - rit-meera-new-fonts
         - rit-rachana-fonts
