@@ -124,7 +124,11 @@ modules:
       - RUN fc-cache -f
       - RUN rm -rf /usr/share/doc/* /usr/share/info/* /usr/share/gnome/help/* || true
       - RUN rm -rf /usr/share/soundfonts
-      - RUN wget https://github.com/HalFrgrd/flyline/releases/download/v1.10.0/libflyline-v1.10.0-x86_64-unknown-linux-gnu.tar.gz -O /usr/lib/bash/libflyline.so
+      - RUN dnf remove -y --setopt=tsflags=noscripts *espeak* *flatpak* *qemu* *hunar* sane* foot* *cups* android-tools *gdm* *gnome* *gir1* *desktop* *hplip* *sddm* *xorg* geoclue2* *qt* *kde* alacritty* avahi* waybar* fuzzel* rofi* papirus-icon-theme *firefox* nano* fedora-bookmarks fedora-chromium-config fedora-workstation-backgrounds gamemode *hfsplus* jomolhari-fonts madan-fonts *ntfs* open-sans-fonts *orca* rit-meera-new-fonts rit-rachana-fonts vazirmatn-vf-fonts && dnf autoremove -y && dnf clean all
+  - type: files
+    files:
+      - source: flyline.so
+        destination: /usr/lib/bash/libflyline.so
   - type: files
     files:
       - source: system/etc/profile.d/flyline.sh
