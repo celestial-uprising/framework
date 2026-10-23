@@ -1,14 +1,6 @@
 go install github.com/moezdil/siltide@latest
-go install github.com/Zingzy/diskbloom@latest
 go install github.com/ChausseBenjamin/termpicker@latest
-go install github.com/kencx/keyb@latest
-go install github.com/chojs23/ec/cmd/ec@latest
-go install github.com/babycommando/zuse@latest
-go install github.com/maaslalani/sheets@main
 go install github.com/szktkfm/mdtt/cmd/mdtt@latest
-go install github.com/chip/pathos@latest
 go install github.com/zyedidia/eget@latest
 go install github.com/Lifailon/lazyjournal@latest
-go install github.com/theyahya/enola/cmd/enola@latest
 go install github.com/termkit/gama@latest
-go install github.com/edoardottt/cariddi/cmd/cariddi@latest
