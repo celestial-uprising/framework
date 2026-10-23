@@ -102,12 +102,6 @@ modules:
       - net.ifnames=0
       - msr.allow_writes=on
   - type: dnf
-    repos:
-      copr:
-        - lihaohong/yazi
-        - atim/lazygit
-        - kylegospo/amdctl
-        - greg-at-redhat/glowm
     install:
       install-weak-deps: false
       packages:
@@ -138,8 +132,6 @@ modules:
         - pdfgrep
         - powerstat
         - powertop
-        - cpufetch
-        - amdctl
         - btop
         - nvtop
         - radeontop
@@ -150,9 +142,7 @@ modules:
         - procs
         - pastel
         - git
-        - glowm
-        - chromium-headless
-        - ov
+        - glow
   - type: copy
     from: rusty
     src: /tmp/bin/
