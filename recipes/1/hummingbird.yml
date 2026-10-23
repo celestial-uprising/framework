@@ -2,7 +2,7 @@
 name: core
 description: Celestial-Uprising's Immutable Operating System
 base-image:  quay.io/hummingbird-community/bootc-os
-image-version: latest
+image-version: rolling
 stages:
   - name: rusty
     from: quay.io/fedora/fedora:44
