@@ -106,43 +106,7 @@ modules:
       install-weak-deps: false
       packages:
         - glibc-langpack-en
-        - firewall-config
-        - ansible-core
-        - tailscale
-        - libvirt-client
-        - wget
-        - nmap
-        - traceroute
-        - whois
-        - ddcutil
-        - uv
-        - yazi
-        - vim
-        - neovim
-        - python3-neovim
-        - lazygit
-        - luarocks
-        - tree-sitter-cli
-        - fd-find
-        - ripgrep
-        - zoxide
-        - bat
-        - eza
-        - fzf
-        - pdfgrep
-        - powerstat
-        - powertop
-        - btop
-        - nvtop
-        - radeontop
-        - s-tui
-        - libunwind
-        - gdu
-        - hyperfine
-        - procs
-        - pastel
         - git
-        - glow
   - type: copy
     from: rusty
     src: /tmp/bin/
