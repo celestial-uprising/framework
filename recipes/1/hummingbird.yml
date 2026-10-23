@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=https://blue-build.org
 name: core
 description: Celestial-Uprising's Immutable Operating System
-base-image:  quay.io/hummingbird-community/bootc-os
-image-version: rolling
+base-image:  quay.io/hummingbird-community/os-minimal
+image-version: latest
 stages:
   - name: rusty
     from: quay.io/fedora/fedora:44
