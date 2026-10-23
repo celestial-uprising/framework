@@ -170,9 +170,7 @@ modules:
       - RUN fc-cache -f
       - RUN rm -rf /usr/share/doc/* /usr/share/info/* /usr/share/gnome/help/* || true
       - RUN rm -rf /usr/share/soundfonts
-      - |
-        set -euo pipefail
-        wget https://github.com/HalFrgrd/flyline/releases/download/v1.10.0/libflyline-v1.10.0-x86_64-unknown-linux-gnu.tar.gz -O /usr/lib/bash/libflyline.so
+      - RUN wget https://github.com/HalFrgrd/flyline/releases/download/v1.10.0/libflyline-v1.10.0-x86_64-unknown-linux-gnu.tar.gz -O /usr/lib/bash/libflyline.so
   - type: files
     files:
       - source: system/etc/profile.d/flyline.sh
