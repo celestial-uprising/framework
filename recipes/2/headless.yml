@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://blue-build.org
 name: headless
 description: Celestial Uprising's Immutable Operating System
-base-image: ghcr.io/celestial-uprising/ucore
+base-image: ghcr.io/celestial-uprising/core
 image-version: latest
 modules:
   - type: os-release
@@ -16,12 +16,6 @@ modules:
     install:
       install-weak-deps: false
       packages:
-        - chromium-headless
-        - thermald
-        - upower 
-        - rizin
-        - hashcat
-        - radare2
         - qemu-system-x86
         - qemu-system-aarch64
         - edk2-aarch64
@@ -49,11 +43,9 @@ modules:
         - libvirt-daemon-driver-storage
         - libvirt-daemon-driver-storage-zfs
         - links
-        - google-noto-emoji-fonts
         - tuned-ppd
         - vulkan-validation-layers
         - vulkan-tools
-        - ffmpeg
   - type: files
     files:
       - source: 99-cpu-governor.rules

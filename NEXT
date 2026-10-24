@@ -1,0 +1,23 @@
+Build from source:
+  - waybar
+  - rofi
+  - niri
+
+Leave installed:
+  - gdm3
+  - wayland
+  - upower ?
+  - libappindicator-gtk3 ?
+  - libdbusmenu-gtk3 ?
+  - libnl ?
+  - libpulse ?
+  - gtkmm3 ?
+  - jsoncpp ?
+
+Resolve:
+  - chrono-date
+  - spdlog
+  - xkbregistry
+  - fmt
+  - libevdev
+  - 
