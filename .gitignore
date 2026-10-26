@@ -6,3 +6,5 @@ cosign.private
 /.bluebuild-scripts_*
 *.bak
 /files/rpm/*
+/files/corgi
+/files/pi-b*

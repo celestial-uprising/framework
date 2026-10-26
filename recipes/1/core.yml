@@ -1,92 +1,12 @@
 # yaml-language-server: $schema=https://blue-build.org
 name: core
-description: Celestial-Uprising's Immutable Operating System
-base-image: quay.io/fedora/fedora-bootc
-image-version: 46
-stages:
-  - name: rusty
-    from: quay.io/fedora/fedora:46
-    modules:
-      - type: copy
-        src: files/cargo-nobinstall.md
-        dest: /tmp/cargo-nobinstall.md
-      - type: copy
-        src: files/cargo-binstall.md
-        dest: /tmp/cargo-binstall.md
-      - type: copy
-        src: files/goblin-install.md
-        dest: /tmp/goblin-install.md
-      - type: script
-        snippets:
-          - mkdir -p /tmp/bin
-          - |
-            dnf5 upgrade -y && dnf5 install -y \
-              zig libdrm-devel pkg-config pam-devel cargo rustc \
-              systemd-devel libunwind-devel elfutils-devel \
-              protobuf-compiler perl clang-devel llvm-devel \
-              openssl-devel dbus-devel jack-audio-connection-kit-devel \
-              alsa-lib-devel cmake make gcc-c++ python3 python3-devel \
-              fontconfig-devel m4 pipewire-devel libva-devel libcxx-devel \
-              llvm-libunwind libpcap-devel golang \
-              libusb1-devel bluez-libs-devel pulseaudio-libs-devel libcap-devel zlib-devel \
-              tar gzip curl
-            curl -fsSL https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-x86_64-unknown-linux-musl.tgz | tar -xz -C /usr/bin cargo-binstall
-            FAILED_TOOLS=()
-            MD_FILE="/tmp/cargo-nobinstall.md"
-            if [ ! -f "$MD_FILE" ]; then
-              echo "Error: $MD_FILE not found!"
-              exit 1
-            fi
-            while read -r line || [ -n "$line" ]; do
-              case "$line" in
-                *"cargo install"*)
-                  echo "----------------------------------------"
-                  echo "Executing: $line --root /tmp"
-                  $line --root /tmp
-                  ;;
-              esac
-            done < "$MD_FILE"
-            MD_FILE1="/tmp/cargo-binstall.md"
-            if [ ! -f "$MD_FILE1" ]; then
-              echo "Error: $MD_FILE1 not found!"
-              exit 1
-            fi
-            while read -r line || [ -n "$line" ]; do
-              case "$line" in
-                *"cargo binstall"*)
-                  echo "----------------------------------------"
-                  echo "Executing: $line --root /tmp"
-                  $line --root /tmp
-                  ;;
-              esac
-            done < "$MD_FILE"
-            MD_FILE2="/tmp/goblin-install.md"
-            if [ -f "$MD_FILE2" ]; then
-              while read -r line || [ -n "$line" ]; do
-                case "$line" in
-                  *"go install"*)
-                    echo "----------------------------------------"
-                    echo "Executing Go install: $line"
-                    if ! env GOBIN=/tmp/bin $line; then
-                      echo "ERROR: Failed to install Go tool: $line"
-                      FAILED_TOOLS+=("Go: $line")
-                    fi
-                    ;;
-                esac
-              done < "$MD_FILE2"
-            fi
-            dnf5 clean all
+description: Celestial Uprising's Immutable Operating System
+base-image: ghcr.io/celestial-uprising/prebake
+image-version: latest
 modules:
   - type: os-release
     properties:
-      NAME: "Celestial Uprising"
-      PRETTY_NAME: "Celestial Uprising a12"
-      VERSION_CODENAME: "chickpea"
-      ID_LIKE: fedora
-      HOME_URL: "https://github.com/celestial-uprising/framework/"
-      BUG_REPORT_URL: "https://github.com/celestial-uprising/framework/"
       VARIANT: "core"
-      RELEASE_TYPE: "alpha"
   - type: kargs
     kargs:
       - amd_iommu=on
@@ -96,11 +16,17 @@ modules:
       - transparent_hugepage=always
       - kvm.ignore_msrs=1
       - net.ifnames=0
-      - msr.allow_writes=on
   - type: dnf
     install:
       install-weak-deps: false
       packages:
+        - zram-generator
+        - zram-generator-defaults
+        - bash-completion
+        - whois
+        - distrobox
+        - sshfs
+        - rsync
         - linux-firmware
         - iw
         - iwd
@@ -127,36 +53,23 @@ modules:
         - fzf
         - pdfgrep
         - powertop
+        - nvtop
+        - radeontop
+        - s-tui
+        - lm_sensors
         - btop
         - gdu
         - hyperfine
         - pastel
         - git
-        - ov
+        - jq
   - type: copy
     from: rusty
     src: /tmp/bin/
     dest: /usr/bin/
-  - type: fonts
-    fonts:
-      nerd-fonts:
-        - VictorMono
-  - type: files
-    files:
-      - source: libflyline
-        destination: /usr/lib/bash/libflyline.so
-  - type: files
-    files:
-      - source: system/etc/profile.d/flyline.sh
-        destination: /etc/profile.d/
-  - type: files
-    files:
-      - source: system/etc/profile.d/locale.sh
-        destination: /etc/profile.d/
-  - type: files
-    files:
-      - source: system/etc/profile.d/aliases.sh
-        destination: /etc/profile.d/
+  - type: script
+    scripts:
+      - lazyvim.sh
   - type: script
     scripts:
       - regenerateinitramfs.sh

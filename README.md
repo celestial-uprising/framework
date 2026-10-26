@@ -4,7 +4,7 @@
 
 Project is back under constant development-- I have returned to the lab from my misadventures with health,..
 
-## *Project Hummingbird* + *Lesbidoodle Rabbit Coven Magic* = *Celestial Uprising*
+## *Immutable Linux* + *Lesbidoodle Rabbit Coven Magic* = *Celestial Uprising*
 
 - *Flyline* | bash plugin, written in assembly resulting in astonishing speed and a slim footprint
 - *Herdr* | terminal multiplexor, assigned to `CapsLock+Shift+Enter`

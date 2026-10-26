@@ -1,4 +1,3 @@
-alias ls='ls --color=auto'
 alias ll="ls -lAsSh"
 alias l='ls -A'
 alias grep='grep --color=auto'
