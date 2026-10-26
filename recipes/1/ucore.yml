@@ -1,11 +1,11 @@
 # yaml-language-server: $schema=https://blue-build.org
 name: ucore
 description: Celestial-Uprising's Immutable Operating System
-base-image:  ghcr.io/ublue-os/ucore
-image-version: latest
+base-image: quay.io/fedora/fedora-cloud 
+image-version: 45
 stages:
   - name: rusty
-    from: quay.io/fedora/fedora:44
+    from: quay.io/fedora/fedora:45
     modules:
       - type: copy
         src: files/cargo-nobinstall.md

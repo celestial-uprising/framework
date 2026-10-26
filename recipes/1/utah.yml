@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=https://blue-build.org
-name: core-nv
-description: Celestial-Uprising's Immutable Operating System
-base-image:  ghcr.io/wayblueorg/niri-nvidia
-image-version: latest
+name: core
+description: Celestial Uprising's Immutable Operating System
+base-image: ghcr.io/projectbluefin/utah
+image-version: testing
 stages:
   - name: rusty
     from: quay.io/fedora/fedora:44
@@ -80,24 +80,16 @@ stages:
                 esac
               done < "$MD_FILE2"
             fi
-            if [ ${#FAILED_TOOLS[@]} -ne 0 ]; then
-              echo "========================================"
-              echo "BUILD FAILED: The following tools failed to install:"
-              printf '%s\n' "${FAILED_TOOLS[@]}"
-              echo "========================================"
-              exit 1
-            fi
-            ls -1 /tmp/bin > /tmp/custom-binaries.list
 modules:
   - type: os-release
     properties:
       NAME: "Celestial Uprising"
-      PRETTY_NAME: "Celestial Uprising a010"
-      VERSION_CODENAME: "toast"
+      PRETTY_NAME: "Celestial Uprising a011"
+      VERSION_CODENAME: "hummingbird"
       ID_LIKE: fedora
       HOME_URL: "https://github.com/celestial-uprising/framework/"
       BUG_REPORT_URL: "https://github.com/celestial-uprising/framework/"
-      VARIANT: "core-nv"
+      VARIANT: "core"
       RELEASE_TYPE: "alpha"
   - type: kargs
     kargs:
@@ -110,62 +102,11 @@ modules:
       - net.ifnames=0
       - msr.allow_writes=on
   - type: dnf
-    repos:
-      copr:
-        - lihaohong/yazi
-        - atim/lazygit
-        - kylegospo/amdctl
-        - greg-at-redhat/glowm
     install:
       install-weak-deps: false
       packages:
-        - just
         - glibc-langpack-en
-        - firewall-config
-        - ansible-core
-        - tailscale
-        - links
-        - libvirt-client
-        - wget
-        - nmap
-        - traceroute
-        - whois
-        - ddcutil
-        - uv
-        - yazi
-        - vim
-        - neovim
-        - python3-neovim
-        - lazygit
-        - luarocks
-        - tree-sitter-cli
-        - fd-find
-        - ripgrep
-        - zoxide
-        - bat
-        - eza
-        - fzf
-        - pdfgrep
-        - powerstat
-        - powertop
-        - cpufetch
-        - amdctl
-        - btop
-        - libunwind
-        - tree
-        - ncdu
-        - diskonaut
-        - dust
-        - hyperfine
-        - procs
-        - pastel
         - git
-        - git-interactive-rebase-tool
-        - tig
-        - gitui
-        - glowm
-        - chromium-headless
-        - ov
   - type: copy
     from: rusty
     src: /tmp/bin/
@@ -183,21 +124,25 @@ modules:
       - RUN fc-cache -f
       - RUN rm -rf /usr/share/doc/* /usr/share/info/* /usr/share/gnome/help/* || true
       - RUN rm -rf /usr/share/soundfonts
-      - RUN dnf remove -y --setopt=tsflags=noscripts *espeak* *ffmpeg* *flatpak* *qemu* *hunar* sane* *bluez* niri* foot* *cups* android-tools *wayland* *pipewire* *wireplumber* *hplip* *sddm* *xorg* geoclue2* *qt* *kde* *gnome* *desktop* alacritty* avahi* blueman* brightnessctl* waybar* fuzzel* rofi* *alsa* *upower* *bluez* papirus-icon-theme *firefox* nano* fedora-bookmarks fedora-chromium-config fedora-workstation-backgrounds gamemode *hfsplus* jomolhari-fonts madan-fonts *ntfs* open-sans-fonts *orca* rit-meera-new-fonts rit-rachana-fonts vazirmatn-vf-fonts && dnf autoremove -y && dnf clean all
+      - RUN dnf remove -y --setopt=tsflags=noscripts *espeak* *flatpak* *qemu* *hunar* sane* foot* *cups* android-tools *gdm* *gnome* *gir1* *desktop* *hplip* *sddm* *xorg* geoclue2* *qt* *kde* alacritty* avahi* waybar* fuzzel* rofi* papirus-icon-theme *firefox* nano* fedora-bookmarks fedora-chromium-config fedora-workstation-backgrounds gamemode *hfsplus* jomolhari-fonts madan-fonts *ntfs* open-sans-fonts *orca* rit-meera-new-fonts rit-rachana-fonts vazirmatn-vf-fonts && dnf autoremove -y && dnf clean all
   - type: files
     files:
-      - source: system/usr/lib/bash/libflyline.so.1.9.0
-        destination: /usr/lib/bash/libflyline.so.1.9.0
+      - source: libflyline
+        destination: /usr/lib/bash/libflyline.so
   - type: files
     files:
-      - source: system/etc/profile.d/
+      - source: system/etc/profile.d/flyline.sh
+        destination: /etc/profile.d/
+  - type: files
+    files:
+      - source: system/etc/profile.d/locale.sh
+        destination: /etc/profile.d/
+  - type: files
+    files:
+      - source: system/etc/profile.d/db.sh
         destination: /etc/profile.d/
   - type: script
     scripts:
       - regenerateinitramfs.sh
-  - type: script
-    snippets:
-      - |
-        echo "LANG=en_US.UTF-8" > /etc/locale.conf
   - type: wayblue-signing
     source: local

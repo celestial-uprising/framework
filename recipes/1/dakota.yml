@@ -1,0 +1,198 @@
+# yaml-language-server: $schema=https://blue-build.org
+name: core
+description: Celestial Uprising's Immutable Operating System
+base-image: ghcr.io/projectbluefin/dakota
+image-version: latest
+stages:
+  - name: rusty
+    from: quay.io/fedora/fedora:44
+    modules:
+      - type: copy
+        src: files/cargo-nobinstall.md
+        dest: /tmp/cargo-nobinstall.md
+      - type: copy
+        src: files/cargo-install.md
+        dest: /tmp/cargo-install.md
+      - type: copy
+        src: files/goblin-install.md
+        dest: /tmp/goblin-install.md
+      - type: script
+        snippets:
+          - mkdir -p /tmp/bin
+          - |
+            dnf5 upgrade -y && dnf5 install -y \
+              zig libdrm-devel pkg-config pam-devel cargo rustc \
+              systemd-devel libunwind-devel elfutils-devel \
+              protobuf-compiler perl clang-devel llvm-devel \
+              openssl-devel dbus-devel jack-audio-connection-kit-devel \
+              alsa-lib-devel cmake make gcc-c++ python3 python3-devel \
+              fontconfig-devel m4 pipewire-devel libva-devel libcxx-devel \
+              llvm-libunwind libpcap-devel golang \
+              libusb1-devel bluez-libs-devel pulseaudio-libs-devel libcap-devel zlib-devel \
+              tar gzip curl
+            curl -fsSL https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-x86_64-unknown-linux-musl.tgz | tar -xz -C /usr/bin cargo-binstall
+            FAILED_TOOLS=()
+            MD_FILE="/tmp/cargo-nobinstall.md"
+            if [ ! -f "$MD_FILE" ]; then
+              echo "Error: $MD_FILE not found!"
+              exit 1
+            fi
+            while read -r line || [ -n "$line" ]; do
+              case "$line" in
+                *"cargo install"*)
+                  echo "----------------------------------------"
+                  echo "Executing: $line --root /tmp"
+                  $line --root /tmp
+                  ;;
+              esac
+            done < "$MD_FILE"
+            MD_FILE1="/tmp/cargo-install.md"
+            if [ -f "$MD_FILE1" ]; then
+              while read -r line || [ -n "$line" ]; do
+                case "$line" in
+                  *"cargo install"*)
+                    echo "----------------------------------------"
+                    pkg_args=$(echo "$line" | sed 's/cargo install //')
+                    echo "Processing Cargo package: $pkg_args"
+                    if ! cargo binstall -y --root /tmp $pkg_args 2>/dev/null; then
+                      echo "cargo-binstall failed for '$pkg_args'. Compiling via cargo install..."
+                      if ! $line --root /tmp; then
+                        echo "ERROR: Failed to install Cargo crate: $pkg_args"
+                        FAILED_TOOLS+=("Cargo: $line")
+                      fi
+                    fi
+                    ;;
+                esac
+              done < "$MD_FILE1"
+            fi
+            MD_FILE2="/tmp/goblin-install.md"
+            if [ -f "$MD_FILE2" ]; then
+              while read -r line || [ -n "$line" ]; do
+                case "$line" in
+                  *"go install"*)
+                    echo "----------------------------------------"
+                    echo "Executing Go install: $line"
+                    if ! env GOBIN=/tmp/bin $line; then
+                      echo "ERROR: Failed to install Go tool: $line"
+                      FAILED_TOOLS+=("Go: $line")
+                    fi
+                    ;;
+                esac
+              done < "$MD_FILE2"
+            fi
+            if [ ${#FAILED_TOOLS[@]} -ne 0 ]; then
+              echo "========================================"
+              echo "BUILD FAILED: The following tools failed to install:"
+              printf '%s\n' "${FAILED_TOOLS[@]}"
+              echo "========================================"
+              exit 1
+            fi
+            ls -1 /tmp/bin > /tmp/custom-binaries.list
+modules:
+  - type: os-release
+    properties:
+      NAME: "Celestial Uprising"
+      PRETTY_NAME: "Celestial Uprising a011"
+      VERSION_CODENAME: "toast"
+      ID_LIKE: fedora
+      HOME_URL: "https://github.com/celestial-uprising/framework/"
+      BUG_REPORT_URL: "https://github.com/celestial-uprising/framework/"
+      VARIANT: "core"
+      RELEASE_TYPE: "alpha"
+  - type: kargs
+    kargs:
+      - amd_iommu=on
+      - iommu=pt
+      - kvm_amd.nested=1
+      - split_lock_detect=off
+      - transparent_hugepage=always
+      - kvm.ignore_msrs=1
+      - net.ifnames=0
+      - msr.allow_writes=on
+  - type: dnf
+    repos:
+      copr:
+        - lihaohong/yazi
+        - atim/lazygit
+        - kylegospo/amdctl
+        - greg-at-redhat/glowm
+    install:
+      install-weak-deps: false
+      packages:
+        - just
+        - glibc-langpack-en
+        - firewall-config
+        - tailscale
+        - libvirt-client
+        - wget
+        - nmap
+        - traceroute
+        - whois
+        - ddcutil
+        - uv
+        - yazi
+        - vim
+        - neovim
+        - python3-neovim
+        - lazygit
+        - luarocks
+        - tree-sitter-cli
+        - fd-find
+        - ripgrep
+        - zoxide
+        - bat
+        - eza
+        - fzf
+        - pdfgrep
+        - powerstat
+        - powertop
+        - cpufetch
+        - amdctl
+        - btop
+        - libunwind
+        - ncdu
+        - hyperfine
+        - procs
+        - pastel
+        - git
+        - glowm
+        - chromium-headless
+  - type: copy
+    from: rusty
+    src: /tmp/bin/
+    dest: /usr/bin/
+  - type: fonts
+    fonts:
+      nerd-fonts:
+        - VictorMono
+  - type: containerfile
+    snippets:
+      - RUN sed -i 's/#override_install_langs=/override_install_langs=en_US/g' /etc/dnf/dnf.conf || true
+      - RUN find /usr/share/locale/* -maxdepth 0 -type d ! -name "en" ! -name "en_US" ! -name "en_GB" -exec rm -rf {} +
+      - RUN find /usr/share/fonts/google-noto* -maxdepth 0 -type d ! -name "*Sans*" ! -name "*Serif*" -exec rm -rf {} + || true
+      - RUN rm -rf /usr/share/fonts/google-noto-vf /usr/share/fonts/lohit* /usr/share/fonts/sil-padauk || true
+      - RUN fc-cache -f
+      - RUN rm -rf /usr/share/doc/* /usr/share/info/* /usr/share/gnome/help/* || true
+      - RUN rm -rf /usr/share/soundfonts
+      - RUN dnf remove -y --setopt=tsflags=noscripts *espeak* *ffmpeg* *flatpak* *qemu* *hunar* sane* *bluez* niri* foot* *cups* android-tools *wayland* *pipewire* *wireplumber* *hplip* *sddm* *xorg* geoclue2* *qt* *kde* *gnome* *desktop* alacritty* avahi* blueman* brightnessctl* waybar* fuzzel* rofi* *alsa* *upower* *bluez* papirus-icon-theme *firefox* nano* fedora-bookmarks fedora-chromium-config fedora-workstation-backgrounds gamemode *hfsplus* jomolhari-fonts madan-fonts *ntfs* open-sans-fonts *orca* rit-meera-new-fonts rit-rachana-fonts vazirmatn-vf-fonts && dnf autoremove -y && dnf clean all
+  - type: files
+    files:
+      - source: libflyline
+        destination: /usr/lib/bash/libflyline.so
+  - type: files
+    files:
+      - source: system/etc/profile.d/flyline.sh
+        destination: /etc/profile.d/
+  - type: files
+    files:
+      - source: system/etc/profile.d/locale.sh
+        destination: /etc/profile.d/
+  - type: files
+    files:
+      - source: system/etc/profile.d/db.sh
+        destination: /etc/profile.d/
+  - type: script
+    scripts:
+      - regenerateinitramfs.sh
+  - type: wayblue-signing
+    source: local

@@ -1,14 +1,15 @@
-alias bb="bluebuild"
-alias bbb="bluebuild build --build-driver podman"
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
 alias ls='ls --color=auto'
 alias ll="ls -lAsSh"
 alias l='ls -A'
+alias grep='grep --color=auto'
+
 alias db='distrobox enter'
 alias dbc='distrobox create'
 alias dbn='distrobox create --nvidia'
+
+alias bb="bluebuild"
+alias bbb="bluebuild build --build-driver podman"
+
 alias pmls='podman ps'
 alias pmll='podman ps -a'
 alias pmr='podman run'

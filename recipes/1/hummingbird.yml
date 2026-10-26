@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=https://blue-build.org
 name: core
 description: Celestial Uprising's Immutable Operating System
-base-image: ghcr.io/projectbluefin/utah
-image-version: testing
+base-image: quay.io/hummingbird-community/bootc-os
+image-version: latest-builder
 stages:
   - name: rusty
     from: quay.io/fedora/fedora:44
@@ -127,7 +127,7 @@ modules:
       - RUN dnf remove -y --setopt=tsflags=noscripts *espeak* *flatpak* *qemu* *hunar* sane* foot* *cups* android-tools *gdm* *gnome* *gir1* *desktop* *hplip* *sddm* *xorg* geoclue2* *qt* *kde* alacritty* avahi* waybar* fuzzel* rofi* papirus-icon-theme *firefox* nano* fedora-bookmarks fedora-chromium-config fedora-workstation-backgrounds gamemode *hfsplus* jomolhari-fonts madan-fonts *ntfs* open-sans-fonts *orca* rit-meera-new-fonts rit-rachana-fonts vazirmatn-vf-fonts && dnf autoremove -y && dnf clean all
   - type: files
     files:
-      - source: flyline.so
+      - source: libflyline
         destination: /usr/lib/bash/libflyline.so
   - type: files
     files:
