@@ -63,10 +63,6 @@ modules:
         - pastel
         - git
         - jq
-  - type: copy
-    from: rusty
-    src: /tmp/bin/
-    dest: /usr/bin/
   - type: script
     scripts:
       - lazyvim.sh
