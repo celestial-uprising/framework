@@ -1,0 +1,151 @@
+# yaml-language-server: $schema=https://blue-build.org
+name: mini
+description: Celestial Uprising's Immutable Operating System
+base-image: ghcr.io/celestial-uprising/core
+image-version: latest
+stages:
+  - name: rusty
+    from: quay.io/fedora/fedora:rawhide
+    modules:
+      - type: script
+        snippets:
+          - mkdir -p /tmp/bin
+          - |
+            dnf install cargo rustc gcc clang libudev-devel libgbm-devel \
+              libxkbcommon-devel mesa-libEGL-devel wayland-devel \
+              libinput-devel dbus-devel systemd-devel libseat-devel \
+              pipewire-devel pango-devel libdisplay-info-devel \
+              xorg-x11-server-Xwayland libxcb-devel xcb-util-cursor-devel \
+              xcb-util-devel xcb-util-image-devel xcb-util-keysyms-devel \
+              xcb-util-renderutil-devel xcb-util-wm-devel
+            git clone https://github.com/YaLTeR/niri.git
+            cd niri
+            cargo build --release
+            cp target/release/niri /usr/bin/niri
+            cp resources/niri.desktop /usr/share/wayland-sessions/niri.desktop
+            cp resources/niri-session /usr/bin/niri-session
+            cd ../
+            cargo install --locked xwayland-satellite
+            cp ~/.cargo/bin/xwayland-satellite /usr/bin/xwayland-satellite
+modules:
+  - type: os-release
+    properties:
+      VARIANT: "mini"
+  - type: kargs
+    kargs:
+      - amdgpu.ppfeaturemask=0xffffffff
+      - amdgpu.sg_display=0
+  - type: dnf
+    install:
+      install-weak-deps: false
+      packages:
+        - upower 
+        - spice-vdagent
+        - spice-webdavd
+        - pipewire
+        - mesa-vulkan-drivers
+        - google-crc32c
+        - gnome-keyring
+        - alsa-sof-firmware
+        - bluez-libs
+        - pulseaudio-libs
+        - calcurse
+        - sddm
+        - xdg-desktop-portal-gnome
+        - xdg-desktop-portal-gtk
+        - xfce-polkit
+        - rofi-wayland
+        - waybar
+        - dunst
+        - swaybg
+        - swaylock
+        - swayidle
+        - wl-clipboard
+        - grim
+        - slurp
+        - brightnessctl
+        - pamixer
+        - pavucontrol
+        - wlr-randr
+        - wlsunset
+        - kanshi
+        - network-manager-applet
+        - blueman
+        - bluez-tools
+        - google-noto-emoji-fonts
+        - qt6-qtvirtualkeyboard
+        - qt6-qt5compat
+        - kitty
+        - zathura
+        - zathura-plugins-all
+        - mpv
+        - ffmpeg
+        - ffmpegthumbnailer
+        - mpd
+        - mpc
+        - imv
+        - remmina
+        - virt-manager
+        - headsetcontrol
+        - mediainfo
+        - playerctl
+        - tuned-ppd
+        - vulkan-validation-layers
+        - vulkan-tools
+        - alsa-firmware
+        - wireplumber
+        - flatpak
+  - type: default-flatpaks
+    configurations:
+      - notify: true
+        scope: system
+        install:
+          - de.haeckerfelix.Shortwave
+          - net.codelogistics.webapps
+          - app.zen_browser.zen
+  - type: script
+    snippets:
+      - |
+        set -euo pipefail
+        
+        RELEASES="https://github.com/vshvedov/rhun/releases"
+        TMP_DIR=$(mktemp -d)
+        trap 'rm -rf "$TMP_DIR"' EXIT
+
+        echo "Fetching latest rhun version..."
+        VERSION=$(curl -fsSL "${RELEASES}/latest/download/VERSION" | tr -d ' \r\n')
+        NAME="rhun-${VERSION}-linux-x86_64.tar.gz"
+
+        echo "Downloading rhun ${VERSION}..."
+        curl -fsSL "${RELEASES}/download/v${VERSION}/${NAME}" -o "${TMP_DIR}/${NAME}"
+        curl -fsSL "${RELEASES}/download/v${VERSION}/SHA256SUMS" -o "${TMP_DIR}/SHA256SUMS"
+
+        echo "Verifying checksum..."
+        WANT=$(awk -v f="$NAME" '$2 == f || $2 == "*" f { print $1 }' "${TMP_DIR}/SHA256SUMS")
+        GOT=$(sha256sum "${TMP_DIR}/${NAME}" | awk '{ print $1 }')
+        if [ "$GOT" != "$WANT" ]; then
+          echo "Checksum verification failed for ${NAME}"
+          exit 1
+        fi
+
+        echo "Installing binary to /usr/bin/rhun..."
+        mkdir -p "${TMP_DIR}/x"
+        tar -xzf "${TMP_DIR}/${NAME}" -C "${TMP_DIR}/x"
+        install -Dm755 "${TMP_DIR}/x/rhun-${VERSION}/bin/rhun" /usr/bin/rhun
+  - type: copy
+    from: rusty
+    src: /tmp/bin/
+    dest: /usr/bin/
+  - type: files
+    files:
+      - source: system/
+        destination: /
+  - type: systemd
+    system:
+      enabled:
+        - sddm.service
+  - type: script
+    scripts:
+      - regenerateinitramfs.sh
+  - type: wayblue-signing
+    source: local

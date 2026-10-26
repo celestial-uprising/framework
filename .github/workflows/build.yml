@@ -26,7 +26,7 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - 1/hummingbird.yml
+          - 1/core.yml
     steps:
       - name: Building Stage 1 Images
         uses: blue-build/github-action@v1.13
@@ -48,7 +48,7 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - 2/headless.yml
+          - 2/mini-raw.yml
     steps:
       - name: Building Stage 2 Images
         uses: blue-build/github-action@v1.13
