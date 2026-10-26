@@ -24,9 +24,6 @@ stages:
             cp target/release/niri /usr/bin/niri
             cp resources/niri.desktop /usr/share/wayland-sessions/niri.desktop
             cp resources/niri-session /usr/bin/niri-session
-            cd ../
-            cargo install --locked xwayland-satellite
-            cp ~/.cargo/bin/xwayland-satellite /usr/bin/xwayland-satellite
             dnf clean --all
 modules:
   - type: os-release
@@ -40,6 +37,7 @@ modules:
     install:
       install-weak-deps: false
       packages:
+        - xwayland-satellite
         - upower 
         - spice-vdagent
         - spice-webdavd
