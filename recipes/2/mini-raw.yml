@@ -24,7 +24,7 @@ stages:
             cp target/release/niri /usr/bin/niri
             cp resources/niri.desktop /usr/share/wayland-sessions/niri.desktop
             cp resources/niri-session /usr/bin/niri-session
-            dnf clean --all
+            dnf clean all
 modules:
   - type: os-release
     properties:
