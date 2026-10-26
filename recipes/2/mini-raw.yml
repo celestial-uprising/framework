@@ -77,6 +77,8 @@ modules:
         - iwd
         - iwlwifi-mvm-firmware
         - NetworkManager-wifi
+        - pciutils
+        - kernel-modules-extra
   - type: default-flatpaks
     configurations:
       - notify: true
