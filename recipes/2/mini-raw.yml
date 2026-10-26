@@ -12,7 +12,7 @@ stages:
           - mkdir -p /tmp/bin
           - |
             dnf install -y git cargo rustc gcc clang libudev-devel libgbm-devel \
-              libxkbcommon-devel mesa-libEGL-devel wayland-devel \
+              libxkbcommon-devel cairo-gobject-devel mesa-libEGL-devel wayland-devel \
               libinput-devel dbus-devel systemd-devel libseat-devel \
               pipewire-devel pango-devel libdisplay-info-devel \
               xorg-x11-server-Xwayland libxcb-devel xcb-util-cursor-devel \
@@ -27,6 +27,7 @@ stages:
             cd ../
             cargo install --locked xwayland-satellite
             cp ~/.cargo/bin/xwayland-satellite /usr/bin/xwayland-satellite
+            dnf clean --all
 modules:
   - type: os-release
     properties:
