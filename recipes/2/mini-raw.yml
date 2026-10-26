@@ -73,6 +73,10 @@ modules:
         - alsa-firmware
         - wireplumber
         - flatpak
+        - iw
+        - iwd
+        - iwlwifi-mvm-firmware
+        - NetworkManager-wifi
   - type: default-flatpaks
     configurations:
       - notify: true
