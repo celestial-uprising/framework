@@ -3,28 +3,6 @@ name: mini
 description: Celestial Uprising's Immutable Operating System
 base-image: ghcr.io/celestial-uprising/core
 image-version: latest
-stages:
-  - name: rusty
-    from: quay.io/fedora/fedora:rawhide
-    modules:
-      - type: script
-        snippets:
-          - mkdir -p /tmp/bin
-          - |
-            dnf install -y git cargo rustc gcc clang libudev-devel libgbm-devel \
-              libxkbcommon-devel cairo-gobject-devel mesa-libEGL-devel wayland-devel \
-              libinput-devel dbus-devel systemd-devel libseat-devel \
-              pipewire-devel pango-devel libdisplay-info-devel \
-              xorg-x11-server-Xwayland libxcb-devel xcb-util-cursor-devel \
-              xcb-util-devel xcb-util-image-devel xcb-util-keysyms-devel \
-              xcb-util-renderutil-devel xcb-util-wm-devel
-            git clone https://github.com/YaLTeR/niri.git
-            cd niri
-            cargo build --release
-            cp target/release/niri /usr/bin/niri
-            cp resources/niri.desktop /usr/share/wayland-sessions/niri.desktop
-            cp resources/niri-session /usr/bin/niri-session
-            dnf clean all
 modules:
   - type: os-release
     properties:
@@ -37,6 +15,7 @@ modules:
     install:
       install-weak-deps: false
       packages:
+        - niri
         - xwayland-satellite
         - upower 
         - spice-vdagent
@@ -107,10 +86,6 @@ modules:
       - corgi.sh
       - rhun.sh
       - lazyvim.sh
-  - type: copy
-    from: rusty
-    src: /tmp/bin/
-    dest: /usr/bin/
   - type: files
     files:
       - source: system/
