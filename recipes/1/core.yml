@@ -101,7 +101,7 @@ modules:
     install:
       install-weak-deps: false
       packages:
-        - linux-firmare
+        - linux-firmware
         - iw
         - iwd
         - iwlwifi-mvm-firmware
