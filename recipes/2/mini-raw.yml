@@ -11,7 +11,7 @@ stages:
         snippets:
           - mkdir -p /tmp/bin
           - |
-            dnf install cargo rustc gcc clang libudev-devel libgbm-devel \
+            dnf install -y cargo rustc gcc clang libudev-devel libgbm-devel \
               libxkbcommon-devel mesa-libEGL-devel wayland-devel \
               libinput-devel dbus-devel systemd-devel libseat-devel \
               pipewire-devel pango-devel libdisplay-info-devel \
