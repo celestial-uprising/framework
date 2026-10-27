@@ -32,7 +32,7 @@ mkdir -p "$XDG_CONFIG_HOME/pi-bolt" "$XDG_DATA_HOME/pi-bolt"
 # Download the installer script locally to review its behavior or handle variables cleanly
 curl -fsSL https://pi-bolt.opensec.in/install.sh -o /tmp/pi-bolt-install.sh
 chmod +x /tmp/pi-bolt-install.sh
-/tmp/pi-bolt-install.sh
+/tmp/pi-bolt-install.sh -s -- -y --all-extensions
 
 # Fallback check: Did it install to our isolated $HOME or the root system?
 if [ -f "$HOME/.local/bin/pi-bolt" ]; then
@@ -52,7 +52,7 @@ mkdir -p "$XDG_CONFIG_HOME/corgi" "$XDG_DATA_HOME/corgi"
 
 curl -fsSL https://corgi.computer -o /tmp/corgi-install.sh
 chmod +x /tmp/corgi-install.sh
-/tmp/corgi-install.sh
+/tmp/corgi-install.sh -s -- --silent
 
 # Fallback check for binary placement
 if [ -f "$HOME/.local/bin/corgi" ]; then
