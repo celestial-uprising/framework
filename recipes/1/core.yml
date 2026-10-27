@@ -148,6 +148,7 @@ modules:
         - curl
         - fontconfig-devel
         - wget
+        - plymouth-theme-spinner
   - type: copy
     from: rusty
     src: /tmp/bin/
@@ -176,9 +177,9 @@ modules:
     files:
       - source: system/etc/profile.d/exports.sh
         destination: /etc/profile.d/
+  - type: script
     scripts:
       - install-tools.sh
       - regenerateinitramfs.sh
   - type: wayblue-signing
     source: local
-
