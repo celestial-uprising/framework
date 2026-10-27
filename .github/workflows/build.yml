@@ -26,7 +26,7 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - 1/core-new.yml
+          - 1/core.yml
     steps:
       - name: Building Stage 1 Images
         uses: blue-build/github-action@v1.13
