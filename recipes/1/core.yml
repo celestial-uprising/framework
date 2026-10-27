@@ -30,31 +30,18 @@ stages:
               libusb1-devel bluez-libs-devel pulseaudio-libs-devel libcap-devel zlib-devel \
               tar gzip curl
             curl -fsSL https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-x86_64-unknown-linux-musl.tgz | tar -xz -C /usr/bin cargo-binstall
-            FAILED_TOOLS=()
             MD_FILE="/tmp/cargo-nobinstall.md"
-            if [ ! -f "$MD_FILE" ]; then
-              echo "Error: $MD_FILE not found!"
-              exit 1
-            fi
             while read -r line || [ -n "$line" ]; do
               case "$line" in
                 *"cargo install"*)
-                  echo "----------------------------------------"
-                  echo "Executing: $line --root /tmp"
                   $line --root /tmp
                   ;;
               esac
             done < "$MD_FILE"
             MD_FILE1="/tmp/cargo-binstall.md"
-            if [ ! -f "$MD_FILE1" ]; then
-              echo "Error: $MD_FILE1 not found!"
-              exit 1
-            fi
             while read -r line || [ -n "$line" ]; do
               case "$line" in
                 *"cargo binstall"*)
-                  echo "----------------------------------------"
-                  echo "Executing: $line --root /tmp"
                   $line --root /tmp
                   ;;
               esac
@@ -64,11 +51,8 @@ stages:
               while read -r line || [ -n "$line" ]; do
                 case "$line" in
                   *"go install"*)
-                    echo "----------------------------------------"
-                    echo "Executing Go install: $line"
                     if ! env GOBIN=/tmp/bin $line; then
                       echo "ERROR: Failed to install Go tool: $line"
-                      FAILED_TOOLS+=("Go: $line")
                     fi
                     ;;
                 esac
@@ -149,6 +133,8 @@ modules:
         - fontconfig-devel
         - wget
         - plymouth-theme-spinner
+        - nodejs
+        - npm
   - type: copy
     from: rusty
     src: /tmp/bin/
@@ -173,13 +159,10 @@ modules:
     files:
       - source: system/etc/profile.d/aliases.sh
         destination: /etc/profile.d/
-  - type: files
-    files:
-      - source: system/etc/profile.d/exports.sh
-        destination: /etc/profile.d/
   - type: script
     scripts:
-      - install-tools.sh
+      - lazyvim.sh
+      - pibolt.sh
       - regenerateinitramfs.sh
   - type: wayblue-signing
     source: local
