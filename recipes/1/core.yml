@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=https://blue-build.org
 name: core
 description: Celestial Uprising's Immutable Operating System
-base-image: ghcr.io/celestial-uprising/prebake
-image-version: latest
+base-image: quay.io/fedora/fedora-bootc
+image-version: 46
 modules:
   - type: os-release
     properties:
@@ -63,9 +63,6 @@ modules:
         - pastel
         - git
         - jq
-  - type: script
-    scripts:
-      - lazyvim.sh
   - type: script
     scripts:
       - regenerateinitramfs.sh

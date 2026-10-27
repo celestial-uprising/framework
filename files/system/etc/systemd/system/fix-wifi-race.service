@@ -1,0 +1,11 @@
+[Unit]
+Description=Force Enable Wi-Fi Radio after boot race condition
+After=NetworkManager.service network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/nmcli radio wifi on
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target
