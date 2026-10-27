@@ -45,27 +45,7 @@ fi
 chmod 755 /usr/bin/pi-bolt
 
 # ==========================================
-# 4. CORGI SETUP
-# ==========================================
-echo "=== Bootstrapping Corgi ==="
-mkdir -p "$XDG_CONFIG_HOME/corgi" "$XDG_DATA_HOME/corgi"
-
-curl -fsSL https://corgi.computer -o /tmp/corgi-install.sh
-chmod +x /tmp/corgi-install.sh
-/tmp/corgi-install.sh -s -- --silent
-
-# Fallback check for binary placement
-if [ -f "$HOME/.local/bin/corgi" ]; then
-  mv "$HOME/.local/bin/corgi" /usr/bin/corgi
-elif [ -f "/root/.local/bin/corgi" ]; then
-  mv "/root/.local/bin/corgi" /usr/bin/corgi
-else
-  echo "ERROR: corgi binary location could not be determined." && exit 1
-fi
-chmod 755 /usr/bin/corgi
-
-# ==========================================
-# 5. UNIVERSAL USER SEEDING
+# 4. UNIVERSAL USER SEEDING
 # ==========================================
 echo "=== Transferring Build Blueprints ==="
 
@@ -98,9 +78,5 @@ safe_copy_config "$XDG_DATA_HOME/nvim" "/usr/share/factory/lazyvim/share" "/etc/
 # Distribute Pi-Bolt
 safe_copy_config "$XDG_CONFIG_HOME/pi-bolt" "/usr/share/factory/pibolt/config" "/etc/skel/.config/pi-bolt"
 safe_copy_config "$XDG_DATA_HOME/pi-bolt" "/usr/share/factory/pibolt/share" "/etc/skel/.local/share/pi-bolt"
-
-# Distribute Corgi
-safe_copy_config "$XDG_CONFIG_HOME/corgi" "/usr/share/factory/corgi/config" "/etc/skel/.config/corgi"
-safe_copy_config "$XDG_DATA_HOME/corgi" "/usr/share/factory/corgi/share" "/etc/skel/.local/share/corgi"
 
 echo "=== Universal installation successfully completed ==="
