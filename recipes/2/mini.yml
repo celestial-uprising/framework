@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://blue-build.org
 name: mini
 description: Celestial Uprising's Immutable Operating System
-base-image: ghcr.io/celestial-uprising/core
+base-image: ghcr.io/celestial-uprising/yotta
 image-version: latest
 modules:
   - type: os-release

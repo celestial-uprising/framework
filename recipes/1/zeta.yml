@@ -1,4 +1,4 @@
-name: zeta
+name: zetta
 description: Celestial Uprising's Immutable Operating System
 base-image: quay.io/fedora/fedora-bootc
 image-version: 44
@@ -72,12 +72,12 @@ modules:
   - type: os-release
     properties:
       NAME: "Celestial Uprising"
-      PRETTY_NAME: "Celestial Uprising a14"
-      VERSION_CODENAME: "candyfloss"
+      PRETTY_NAME: "Celestial Uprising a15"
+      VERSION_CODENAME: "peachrings"
       ID_LIKE: fedora
       HOME_URL: "https://github.com/celestial-uprising/framework/"
       BUG_REPORT_URL: "https://github.com/celestial-uprising/framework/"
-      VARIANT: "zeta"
+      VARIANT: "zetta"
       RELEASE_TYPE: "alpha"
   - type: kargs
     kargs:
@@ -179,7 +179,6 @@ modules:
         destination: /etc/profile.d/
   - type: script
     scripts:
-      - lazyvim.sh
       - pibolt.sh
       - regenerateinitramfs.sh
   - type: wayblue-signing
