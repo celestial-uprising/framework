@@ -1,17 +1,15 @@
 # yaml-language-server: $schema=https://blue-build.org
-name: muse-nv
-description: Celestial-Uprising's Immutable Operating System
-base-image: ghcr.io/celestial-uprising/mini-nv
+name: zetta-unholy
+description: Celestial Uprising's Immutable Operating System
+base-image: ghcr.io/celestial-uprising/zetta-dev
 image-version: latest
 modules:
   - type: os-release
     properties:
-      VARIANT: "muse-nv"
-  - type: kargs
-    kargs:
-      - zfs.zfs_arc_max=17179869184
-      - pcie_aspm=off
+      VARIANT: "zetta-unholy"
   - type: dnf
+    repos:
+      nonfree: rpmfusion
     install:
       install-weak-deps: false
       packages:
@@ -24,7 +22,6 @@ modules:
         - audacity
         - kicad
         - kicad-packages3d
-        - kicad-doc
         - pulseview
         - openscad
         - mypaint
@@ -36,6 +33,12 @@ modules:
         - librecad
         - obs-studio
         - obs-studio-plugin-vaapi
+        - steam
+        - steam-devices
+        - mangohud
+        - gamescope
+        - gamemode
+        - piper
   - type: default-flatpaks
     configurations:
       - notify: true

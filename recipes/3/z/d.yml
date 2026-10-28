@@ -1,15 +1,15 @@
 # yaml-language-server: $schema=https://blue-build.org
-name: dev
+name: zetta-dev
 description: Celestial-Uprising's Immutable Operating System
-base-image: ghcr.io/celestial-uprising/mini
+base-image: ghcr.io/celestial-uprising/zetta-mini
 image-version: latest
 modules:
   - type: os-release
     properties:
-      VARIANT: "dev"
+      VARIANT: "zetta-dev"
   - type: kargs
     kargs:
-      - zfs.zfs_arc_max=17179869184
+      - zfs.zfs_arc_max=34359738368
       - pcie_aspm=off
   - type: dnf
     install:

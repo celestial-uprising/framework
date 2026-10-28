@@ -1,0 +1,56 @@
+# yaml-language-server: $schema=https://blue-build.org
+name: headless
+description: Celestial Uprising's Immutable Operating System
+base-image: ghcr.io/celestial-uprising/yotta
+image-version: latest
+modules:
+  - type: os-release
+    properties:
+      VARIANT: "headless"
+  - type: kargs
+    kargs:
+      - amdgpu.ppfeaturemask=0xffffffff
+      - pcie_aspm=off
+  - type: dnf
+    install:
+      install-weak-deps: false
+      packages:
+        - qemu-system-x86-core
+        - qemu-system-aarch64-core
+        - qemu-system-riscv-core
+        - qemu-img
+        - qemu-kvm-core
+        - qemu-device-display-virtio-gpu
+        - qemu-device-display-virtio-gpu-gl
+        - qemu-char-spice
+        - spice-server
+        - virglrenderer
+        - seabios
+        - edk2-ovmf
+        - edk2-aarch64
+        - libvirt-daemon-kvm
+        - libvirt-daemon-qemu
+        - libvirt-daemon-common
+        - libvirt-nss
+        - virt-install
+        - libvirt-daemon-config-network
+        - dnsmasq
+        - tuned
+        - numactl
+        - usbutils
+        - qemu-block-curl
+        - tuned-ppd
+        - vulkan-validation-layers
+        - vulkan-tools
+        - ffmpeg
+  - type: files
+    files:
+      - source: 99-cpu-governor.rules
+        destination: /etc/udev/rules.d/99-cpu-governor.rules
+      - source: 99-workstation-perf.conf
+        destination: /etc/sysctl.d/99-workstation-perf.conf
+  - type: script
+    scripts:
+      - regenerateinitramfs.sh
+  - type: wayblue-signing
+    source: local

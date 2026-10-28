@@ -1,0 +1,44 @@
+# yaml-language-server: $schema=https://blue-build.org
+name: virt
+description: Celestial Uprising's Immutable Operating System
+base-image: ghcr.io/celestial-uprising/yotta
+image-version: latest
+modules:
+  - type: os-release
+    properties:
+      VARIANT: "virt"
+  - type: kargs
+    kargs:
+      - console=tty0
+      - console=ttyS0,115200n8
+      - scsi_mod.use_blk_mq=1
+  - type: dnf
+    install:
+      install-weak-deps: false
+      packages:
+        - spice-vdagent
+        - qemu-guest-agent
+    remove:
+      packages:
+        - pipewire
+        - wireplumber
+        - linux-firmware
+        - alsa-lib
+        - upower
+        - bluez
+        - upower
+        - cups
+        - geoclue2
+        - plymouth
+        - wayland
+        - xorg-x11-xserver-Xwayland
+
+  - type: files
+    files:
+      - source: dracut-virtio.conf
+        destination: /etc/dracut.conf.d/virtio.conf
+  - type: script
+    scripts:
+      - regenerateinitramfs.sh
+  - type: wayblue-signing
+    source: local

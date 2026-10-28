@@ -1,14 +1,15 @@
 # yaml-language-server: $schema=https://blue-build.org
-name: virt
+name: zetta-virt
 description: Celestial Uprising's Immutable Operating System
-base-image: ghcr.io/celestial-uprising/yotta
+base-image: ghcr.io/celestial-uprising/zetta
 image-version: latest
 modules:
   - type: os-release
     properties:
-      VARIANT: "virt"
+      VARIANT: "zetta-virt"
   - type: kargs
     kargs:
+      - zfs.zfs_arc_max=1073741824
       - console=tty0
       - console=ttyS0,115200n8
       - scsi_mod.use_blk_mq=1
@@ -16,10 +17,6 @@ modules:
     install:
       install-weak-deps: false
       packages:
-        - rizin
-        - hashcat
-        - radare2
-        - links
         - spice-vdagent
         - qemu-guest-agent
     remove:
@@ -36,7 +33,6 @@ modules:
         - plymouth
         - wayland
         - xorg-x11-xserver-Xwayland
-
   - type: files
     files:
       - source: dracut-virtio.conf

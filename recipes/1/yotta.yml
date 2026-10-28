@@ -1,10 +1,10 @@
 name: yotta
 description: Celestial Uprising's Immutable Operating System
 base-image: quay.io/fedora/fedora-bootc
-image-version: 46
+image-version: rawhide
 stages:
   - name: rusty
-    from: quay.io/fedora/fedora:46
+    from: quay.io/fedora/fedora:rawhide
     modules:
       - type: copy
         src: files/cargo-nobinstall.md
@@ -63,8 +63,8 @@ modules:
   - type: os-release
     properties:
       NAME: "Celestial Uprising"
-      PRETTY_NAME: "Celestial Uprising a15"
-      VERSION_CODENAME: "peachrings"
+      PRETTY_NAME: "Celestial Uprising a16"
+      VERSION_CODENAME: "dumpling"
       ID_LIKE: fedora
       HOME_URL: "https://github.com/celestial-uprising/framework/"
       BUG_REPORT_URL: "https://github.com/celestial-uprising/framework/"
