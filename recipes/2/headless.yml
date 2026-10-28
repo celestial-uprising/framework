@@ -16,10 +16,40 @@ modules:
     install:
       install-weak-deps: false
       packages:
-        - qemu-system-x86
-        - qemu-system-arm
-        - qemu-system-riscv
-        - 
+        - qemu-system-x86-core
+        - qemu-system-aarch64-core
+        - qemu-system-riscv-core
+        - qemu-img
+        - qemu-kvm-core
+        - qemu-device-display-virtio-gpu
+        - qemu-device-display-virtio-gpu-gl
+        - qemu-char-spice
+        - spice-server
+        - virglrenderer
+        - seabios
+        - edk2-ovmf
+        - edk2-aarch64
+        - edk2-riscv
+        - libvirt-daemon-kvm
+        - libvirt-daemon-qemu
+        - libvirt-daemon-common
+        - libvirt-client
+        - libvirt-nss
+        - virt-install
+        - libvirt-daemon-config-network
+        - dnsmasq
+        - iptables-nft
+        - vde2
+        - vde-cryptcab
+        - tuned
+        - numactl
+        - pciutils
+        - usbutils
+        - qemu-block-curl
+        - tuned-ppd
+        - vulkan-validation-layers
+        - vulkan-tools
+        - ffmpeg
   - type: files
     files:
       - source: 99-cpu-governor.rules

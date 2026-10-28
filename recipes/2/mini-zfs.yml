@@ -1,0 +1,104 @@
+# yaml-language-server: $schema=https://blue-build.org
+name: mini-zfs
+description: Celestial Uprising's Immutable Operating System
+base-image: ghcr.io/celestial-uprising/core
+image-version: latest
+modules:
+  - type: os-release
+    properties:
+      VARIANT: "mini-zfs"
+  - type: kargs
+    kargs:
+      - amdgpu.ppfeaturemask=0xffffffff
+      - amdgpu.sg_display=0
+  - type: dnf
+    install:
+      install-weak-deps: false
+      packages:
+        - niri
+        - xwayland-satellite
+        - upower 
+        - spice-vdagent
+        - spice-webdavd
+        - pipewire
+        - mesa-vulkan-drivers
+        - google-crc32c
+        - gnome-keyring
+        - alsa-sof-firmware
+        - bluez-libs
+        - pulseaudio-libs
+        - calcurse
+        - sddm
+        - xdg-desktop-portal-gnome
+        - xdg-desktop-portal-gtk
+        - xfce-polkit
+        - rofi-wayland
+        - waybar
+        - dunst
+        - swaybg
+        - swaylock
+        - swayidle
+        - wl-clipboard
+        - grim
+        - slurp
+        - brightnessctl
+        - pamixer
+        - pavucontrol
+        - wlr-randr
+        - wlsunset
+        - kanshi
+        - network-manager-applet
+        - blueman
+        - bluez-tools
+        - google-noto-emoji-fonts
+        - qt6-qtvirtualkeyboard
+        - qt6-qt5compat
+        - kitty
+        - zathura
+        - zathura-plugins-all
+        - mpv
+        - ffmpeg
+        - ffmpegthumbnailer
+        - mpd
+        - mpc
+        - imv
+        - remmina
+        - virt-manager
+        - headsetcontrol
+        - mediainfo
+        - playerctl
+        - tuned-ppd
+        - vulkan-validation-layers
+        - vulkan-tools
+        - alsa-firmware
+        - wireplumber
+        - flatpak
+  - type: default-flatpaks
+    configurations:
+      - notify: true
+        scope: system
+        install:
+          - de.haeckerfelix.Shortwave
+          - net.codelogistics.webapps
+          - app.zen_browser.zen
+  - type: script
+    scripts:
+      - rhun.sh
+  - type: files
+    files:
+      - source: system/
+        destination: /
+  - type: systemd
+    system:
+      enabled:
+        - fix-wifi-race.service
+        - sddm.service
+  - type: containerfile
+    snippets:
+      - RUN rpm-ostree install https://zfsonlinux.org/fedora/zfs-release-3-1.fc44.noarch.rpm
+      - RUN rpm-ostree install kernel-devel zfs
+  - type: script
+    scripts:
+      - regenerateinitramfs.sh
+  - type: wayblue-signing
+    source: local

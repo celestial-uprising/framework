@@ -15,8 +15,6 @@ modules:
     install:
       install-weak-deps: false
       packages:
-        - chromium-headless
-        - thermald
         - upower 
         - rizin
         - hashcat
@@ -55,7 +53,7 @@ modules:
         destination: /etc/sysctl.d/99-workstation-perf.conf
   - type: containerfile
     snippets:
-      - RUN rpm-ostree install https://zfsonlinux.org/fedora/zfs-release-3-1.fc44.noarch.rpm
+      - RUN rpm-ostree install https://zfsonlinux.org/fedora/zfs-release-3-1.fc46.noarch.rpm
       - RUN rpm-ostree install kernel-devel zfs
   - type: script
     scripts:
