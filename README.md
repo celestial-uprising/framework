@@ -8,11 +8,15 @@ Project is back under constant development-- I have returned to the lab from my 
 
 - *Flyline* | bash plugin, written in assembly resulting in astonishing speed and a slim footprint
 - *Herdr* | terminal multiplexor, assigned to `CapsLock+Shift+Enter`
-- *Neovim* | cli Editor, with lazyvim and its dependencies preconfigured
+- *Neovim* | cli Editor, with lazyvim's dependencies preconfigured
+- *Pi-Bolt* | llm harness, precompiled Pi Agent for maximum speed with plugin compatibility 
 - *Tailscale* | wireguard infused protocol, vpn, secure access, and psuedo-local networking
-- *Rhun* | gui Code-Editor, written in assembly resulting in astonishing speed and a slim footprint
+- *Rhun* | IDE written in assembly, truly absurd speed in a slim footprint
 - *Kitty* | terminal emulator, preconfigured for Celestial-Uprising and assigned to `CapsLock+Enter`
 - *Zen-Browser* | lightweight, appeasing design, compatible with firefox accounts
+- *Niri* | rust built tiling window manager of the future
+- *Waybar* | simple, yet pleasing (intended to be replaced by a rust native tool...)
+- *Rofi* | launcher, preconfigured for Celestial-Uprising and assigned to `CapsLock+d`
 
 ## *Celestial-Uprising is proudly built for all, by lesbidoodles and their coven of magical rabbits*
 
