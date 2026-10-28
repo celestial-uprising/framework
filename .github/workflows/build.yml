@@ -27,7 +27,7 @@ jobs:
       matrix:
         recipe:
           - 1/core.yml
-          - 1/core-zfs.yml
+          - 1/zeta.yml
     steps:
       - name: Building Stage 1 Images
         uses: blue-build/github-action@v1.13
@@ -50,7 +50,7 @@ jobs:
       matrix:
         recipe:
           - 2/mini.yml
-          - 2/mini-zfs.yml
+          - 2/zeta-mini.yml
           - 2/headless.yml
     steps:
       - name: Building Stage 2 Images

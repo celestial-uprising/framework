@@ -63,7 +63,7 @@ modules:
   - type: os-release
     properties:
       NAME: "Celestial Uprising"
-      PRETTY_NAME: "Celestial Uprising a13"
+      PRETTY_NAME: "Celestial Uprising a14"
       VERSION_CODENAME: "candyfloss"
       ID_LIKE: fedora
       HOME_URL: "https://github.com/celestial-uprising/framework/"
