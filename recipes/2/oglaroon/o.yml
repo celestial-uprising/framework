@@ -1,12 +1,12 @@
 # yaml-language-server: $schema=https://blue-build.org
-name: mini
+name: oglaroon
 description: Celestial Uprising's Immutable Operating System
-base-image: ghcr.io/celestial-uprising/yotta
+base-image: ghcr.io/celestial-uprising/oglaroon-core
 image-version: latest
 modules:
   - type: os-release
     properties:
-      VARIANT: "mini"
+      VARIANT: "oglaroon"
   - type: kargs
     kargs:
       - amdgpu.ppfeaturemask=0xffffffff
@@ -15,6 +15,8 @@ modules:
     install:
       install-weak-deps: false
       packages:
+        - google-noto-sans-fonts
+        - google-noto-serif-fonts
         - niri
         - xwayland-satellite
         - upower 
@@ -93,6 +95,7 @@ modules:
       enabled:
         - fix-wifi-race.service
         - sddm.service
+        - powertop.service
   - type: script
     scripts:
       - regenerateinitramfs.sh

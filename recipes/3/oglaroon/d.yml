@@ -1,12 +1,12 @@
 # yaml-language-server: $schema=https://blue-build.org
-name: dev
-description: Celestial-Uprising's Immutable Operating System
-base-image: ghcr.io/celestial-uprising/mini
+name: oglaroon-dev
+description: Celestial Uprising's Immutable Operating System
+base-image: ghcr.io/celestial-uprising/oglaroon
 image-version: latest
 modules:
   - type: os-release
     properties:
-      VARIANT: "dev"
+      VARIANT: "oglaroon-dev"
   - type: kargs
     kargs:
       - pcie_aspm=off

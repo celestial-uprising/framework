@@ -6,4 +6,8 @@ go install github.com/Lifailon/lazyjournal@latest
 go install github.com/termkit/gama@latest
 go install github.com/jesseduffield/lazygit@latest
 go install github.com/charmbracelet/glow/v2@latest
-
+go install github.com/kencx/keyb@latest
+go install github.com/chojs23/ec/cmd/ec@latest
+go install github.com/fumiyas/qrc/cmd/qrc
+go install github.com/ashish0kumar/stormy@latest
+go install github.com/maaslalani/sheets@main

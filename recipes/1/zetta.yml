@@ -99,6 +99,9 @@ modules:
     install:
       install-weak-deps: false
       packages:
+        - xorg-x11-drv-nvidia-cuda
+        - libva-nvidia-driver
+        - zfs
         - zram-generator-defaults
         - whois
         - distrobox
@@ -109,6 +112,7 @@ modules:
         - iwlwifi-mvm-firmware
         - NetworkManager-wifi
         - pciutils
+        - usbutils
         - kernel-modules-extra
         - glibc-langpack-en
         - tailscale
@@ -139,14 +143,12 @@ modules:
         - pastel
         - git
         - make
+        - gcc
         - fontconfig-devel
         - wget
         - plymouth-theme-spinner
         - nodejs
         - npm
-        - xorg-x11-drv-nvidia-cuda
-        - libva-nvidia-driver
-        - zfs
   - type: containerfile
     snippets:
       - COPY --from=driver-builder /usr/lib/modules/ /usr/lib/modules/

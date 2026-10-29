@@ -1,12 +1,12 @@
 # yaml-language-server: $schema=https://blue-build.org
-name: virt
+name: oglaroon-virt
 description: Celestial Uprising's Immutable Operating System
-base-image: ghcr.io/celestial-uprising/yotta
+base-image: ghcr.io/celestial-uprising/oglaroon-core
 image-version: latest
 modules:
   - type: os-release
     properties:
-      VARIANT: "virt"
+      VARIANT: "oglaroon-virt"
   - type: kargs
     kargs:
       - console=tty0
@@ -18,21 +18,6 @@ modules:
       packages:
         - spice-vdagent
         - qemu-guest-agent
-    remove:
-      packages:
-        - pipewire
-        - wireplumber
-        - linux-firmware
-        - alsa-lib
-        - upower
-        - bluez
-        - upower
-        - cups
-        - geoclue2
-        - plymouth
-        - wayland
-        - xorg-x11-xserver-Xwayland
-
   - type: files
     files:
       - source: dracut-virtio.conf

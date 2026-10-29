@@ -26,7 +26,6 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - 1/yotta.yml
           - 1/zetta.yml
     steps:
       - name: Building Stage 1 Images
@@ -50,11 +49,8 @@ jobs:
       matrix:
         recipe:
           - 2/z/m.yml
-          - 2/y/m.yml
           - 2/z/h.yml
-          - 2/y/h.yml
           - 2/z/v.yml
-          - 2/y/v.yml
     steps:
       - name: Building Stage 2 Images
         uses: blue-build/github-action@v1.13
@@ -76,11 +72,8 @@ jobs:
       matrix:
         recipe:
           - 3/z/d.yml
-          - 3/y/d.yml
           - 3/z/g.yml
-          - 3/y/g.yml
           - 3/z/m.yml
-          - 3/y/m.yml
     steps:
       - name: Building Stage 3 Images
         uses: blue-build/github-action@v1.13
@@ -102,7 +95,6 @@ jobs:
       matrix:
         recipe:
           - 4/z/u.yml
-          - 4/y/u.yml
     steps:
       - name: Building Stage 4 Images
         uses: blue-build/github-action@v1.13

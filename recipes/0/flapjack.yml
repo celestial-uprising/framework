@@ -1,10 +1,10 @@
-name: core
+name: oglaroon-core
 description: Celestial Uprising's Immutable Operating System
 base-image: quay.io/fedora/fedora-bootc
-image-version: 46
+image-version: rawhide
 stages:
   - name: rusty
-    from: quay.io/fedora/fedora:46
+    from: quay.io/fedora/fedora:rawhide
     modules:
       - type: copy
         src: files/cargo-nobinstall.md
@@ -62,14 +62,14 @@ stages:
 modules:
   - type: os-release
     properties:
-      NAME: "Celestial Uprising"
-      PRETTY_NAME: "Celestial Uprising a13"
-      VERSION_CODENAME: "candyfloss"
+      NAME: "Oglaroon"
+      PRETTY_NAME: "Oglaroon b02 by Celestial Uprising"
+      VERSION_CODENAME: "dumpling"
       ID_LIKE: fedora
       HOME_URL: "https://github.com/celestial-uprising/framework/"
       BUG_REPORT_URL: "https://github.com/celestial-uprising/framework/"
-      VARIANT: "core"
-      RELEASE_TYPE: "alpha"
+      VARIANT: "oglaroon-core"
+      RELEASE_TYPE: "beta"
   - type: kargs
     kargs:
       - amd_iommu=on
@@ -83,19 +83,17 @@ modules:
     install:
       install-weak-deps: false
       packages:
-        - zram-generator
         - zram-generator-defaults
-        - bash-completion
         - whois
         - distrobox
         - sshfs
         - rsync
-        - linux-firmware
         - iw
         - iwd
         - iwlwifi-mvm-firmware
         - NetworkManager-wifi
         - pciutils
+        - usbutils
         - kernel-modules-extra
         - glibc-langpack-en
         - tailscale
@@ -125,11 +123,8 @@ modules:
         - hyperfine
         - pastel
         - git
-        - jq
         - make
-        - unzip
         - gcc
-        - curl
         - fontconfig-devel
         - wget
         - plymouth-theme-spinner
@@ -161,6 +156,5 @@ modules:
         destination: /etc/profile.d/
   - type: script
     scripts:
-      - lazyvim.sh
       - pibolt.sh
       - regenerateinitramfs.sh

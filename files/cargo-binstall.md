@@ -4,3 +4,15 @@ cargo binstall treemd
 cargo binstall llmfit
 cargo binstall yazi-fm
 cargo binstall yazi-cli
+cargo binstall presenterm
+cargo binstall trippy
+cargo binstall viddy
+cargo binstall xan
+cargo binstall doxx
+cargo binstall diskonaut
+cargo binstall git-interactive-rebase-tool
+cargo binstall xleak
+cargo binstall bookokrat
+cargo binstall wiki-tui
+cargo binstall asak
+cargo binstall darya

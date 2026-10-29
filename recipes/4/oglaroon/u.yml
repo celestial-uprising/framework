@@ -1,16 +1,15 @@
 # yaml-language-server: $schema=https://blue-build.org
-name: muse
-description: Celestial-Uprising's Immutable Operating System
-base-image: ghcr.io/celestial-uprising/mini
+name: oglaroon-unholy
+description: Celestial Uprising's Immutable Operating System
+base-image: ghcr.io/celestial-uprising/oglaroon-dev
 image-version: latest
 modules:
   - type: os-release
     properties:
-      VARIANT: "muse"
-  - type: kargs
-    kargs:
-      - pcie_aspm=off
+      VARIANT: "oglaroon-unholy"
   - type: dnf
+    repos:
+      nonfree: rpmfusion
     install:
       install-weak-deps: false
       packages:
@@ -23,18 +22,18 @@ modules:
         - audacity
         - kicad
         - kicad-packages3d
-        - kicad-doc
-        - pulseview
-        - openscad
         - mypaint
         - mypaint-brushes
         - opentoonz
         - scribus
-        - google-noto-sans-fonts
-        - google-noto-serif-fonts
-        - librecad
         - obs-studio
         - obs-studio-plugin-vaapi
+        - steam
+        - steam-devices
+        - mangohud
+        - gamescope
+        - gamemode
+        - piper
   - type: default-flatpaks
     configurations:
       - notify: true
