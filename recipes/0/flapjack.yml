@@ -156,5 +156,6 @@ modules:
         destination: /etc/profile.d/
   - type: script
     scripts:
+      - corgi.sh
       - pibolt.sh
       - regenerateinitramfs.sh

@@ -1,0 +1,106 @@
+# yaml-language-server: $schema=https://blue-build.org
+name: yotta
+description: Celestial Uprising's Immutable Operating System
+base-image: ghcr.io/celestial-uprising/oglaroon-core
+image-version: latest
+modules:
+  - type: os-release
+    properties:
+      VARIANT: "yotta"
+  - type: kargs
+    kargs:
+      - amdgpu.ppfeaturemask=0xffffffff
+      - amdgpu.sg_display=0
+  - type: dnf
+    repos:
+      copr:
+        - avengemedia/dms
+    install:
+      install-weak-deps: false
+      packages:
+        - seatd
+        - dms
+        - quickshell
+        - matugen 
+        - greetd
+        - dms-greeter
+        - qt6ct
+        - danksearch
+        - google-noto-sans-fonts
+        - google-noto-serif-fonts
+        - niri
+        - xwayland-satellite
+        - upower 
+        - spice-vdagent
+        - spice-webdavd
+        - pipewire
+        - mesa-vulkan-drivers
+        - google-crc32c
+        - gnome-keyring
+        - alsa-sof-firmware
+        - bluez-libs
+        - pulseaudio-libs
+        - xdg-desktop-portal-gnome
+        - xdg-desktop-portal-gtk
+        - rofi-wayland
+        - dunst
+        - swaybg
+        - swaylock
+        - swayidle
+        - wl-clipboard
+        - grim
+        - slurp
+        - brightnessctl
+        - pamixer
+        - pavucontrol
+        - wlr-randr
+        - wlsunset
+        - kanshi
+        - network-manager-applet
+        - blueman
+        - bluez-tools
+        - google-noto-emoji-fonts
+        - qt6-qtvirtualkeyboard
+        - qt6-qt5compat
+        - kitty
+        - zathura
+        - zathura-plugins-all
+        - mpv
+        - ffmpeg
+        - ffmpegthumbnailer
+        - mpd
+        - mpc
+        - imv
+        - remmina
+        - virt-manager
+        - tuned-ppd
+        - vulkan-validation-layers
+        - vulkan-tools
+        - alsa-firmware
+        - wireplumber
+        - flatpak
+  - type: default-flatpaks
+    configurations:
+      - notify: true
+        scope: system
+        install:
+          - de.haeckerfelix.Shortwave
+          - net.codelogistics.webapps
+          - app.zen_browser.zen
+  - type: script
+    scripts:
+      - rhun.sh
+  - type: files
+    files:
+      - source: system/
+        destination: /
+  - type: systemd
+    system:
+      enabled:
+        - greetd.service
+        - powertop.service
+  - type: script
+    scripts:
+      - regenerateinitramfs.sh
+  - type: wayblue-signing
+    source: local
