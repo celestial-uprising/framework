@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://blue-build.org
-name: oglaroon
+name: yotta
 description: Celestial Uprising's Immutable Operating System
-base-image: ghcr.io/celestial-uprising/oglaroon-core
+base-image: ghcr.io/celestial-uprising/yotta-core
 image-version: latest
 stages:
   - name: builder
@@ -10,15 +10,19 @@ stages:
       - type: copy
         src: files/scripts/stage3.sh
         dest: /tmp/stage3.sh
+      - type: copy
+        src: files/scripts/stage4.sh
+        dest: /tmp/stage4.sh
       - type: script
         snippets:
           - mkdir -p /tmp/bin
           - |
             bash /tmp/stage3.sh
+            bash /tmp/stage4.sh
 modules:
   - type: os-release
     properties:
-      VARIANT: "oglaroon"
+      VARIANT: "yotta"
   - type: kargs
     kargs:
       - amdgpu.ppfeaturemask=0xffffffff
@@ -27,6 +31,9 @@ modules:
     install:
       install-weak-deps: false
       packages:
+        - tmux
+        - gtk4 
+        - gtk4-layer-shell
         - google-noto-sans-fonts
         - google-noto-serif-fonts
         - niri
@@ -45,7 +52,6 @@ modules:
         - xdg-desktop-portal-gnome
         - xdg-desktop-portal-gtk
         - xfce-polkit
-        - rofi-wayland
         - dunst
         - swaybg
         - swaylock
@@ -89,6 +95,10 @@ modules:
     from: builder
     src: /tmp/bin/
     dest: /usr/bin/
+  - type: copy
+    from: builder
+    src: /tmp/anyrun-plugins/
+    dest: /etc/anyrun/plugins/
   - type: script
     scripts:
       - rhun.sh

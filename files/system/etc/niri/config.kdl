@@ -83,9 +83,8 @@ window-rule {
 }
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
-    Mod+Shift+Return hotkey-overlay-title="Spawn Herdr" { spawn "kitty" "--title" "Herdr" "-e" "herdr"; }
     Mod+Return hotkey-overlay-title="Spawn Kitty" { spawn "kitty" "--title" "Meow!"; }
-    Mod+D hotkey-overlay-title="Run an Application: rofi" { spawn "rofi" "-show" "drun" "-show-icons"; }
+    Mod+D hotkey-overlay-title="Run an Application" { spawn "anyrun" "--config-dir" "/etc/anyrun" ; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
     Alt+F10 allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; }
     Alt+F9 allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
