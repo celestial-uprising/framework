@@ -22,7 +22,7 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - 2/yotta.yml
+          - 1/kappa.yml
     steps:
       - name: Building Stage 1 Images
         uses: blue-build/github-action@v1.13
