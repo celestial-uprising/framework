@@ -16,3 +16,4 @@ cargo binstall bookokrat
 cargo binstall wiki-tui
 cargo binstall asak
 cargo binstall darya
+cargo binstall serie

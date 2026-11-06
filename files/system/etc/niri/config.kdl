@@ -33,7 +33,7 @@ layout {
         off
     }
   }
-spawn-at-startup "waybar"
+spawn-at-startup "ironbar"
 spawn-at-startup "swaybg" "-m" "fill" "-i" "/etc/default/background"
 spawn-at-startup "dunst"
 spawn-at-startup "/usr/libexec/xfce-polkit"

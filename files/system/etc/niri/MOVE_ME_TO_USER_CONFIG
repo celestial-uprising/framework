@@ -1,0 +1,6 @@
+include "/etc/niri/config.kdl"
+
+output "eDP-1" {
+	mode "1366x768@60.059"
+	scale 0.85
+	}

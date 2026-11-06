@@ -3,8 +3,6 @@
     font-size: 14px;
 }
 
-@define-color inactive_module_color #a9a9a9;
-
 window#waybar {
     background-color: rgba(26, 17, 16, 0.5);
     border-color: rgba(100, 114, 125, 0.5);
@@ -98,7 +96,7 @@ window#waybar #window {
 
 #workspaces button {
     background-color: transparent;
-    color: #ffffff;
+    color: #ffb4ab;
 }
 
 #workspaces button:hover {
@@ -135,18 +133,18 @@ window#waybar.bottom #mode {
 }
 
 #battery.charging, #battery.plugged {
-    color: #32cd32;
+    color: #ffb4ab;
 }
 
 @keyframes blink {
     to {
-        background-color: #ffffff;
-        color: #000000;
+        background-color: #ffb4ab;
+        color: rgba(26, 17, 16, 0.5);
     }
 }
 
 #battery.critical:not(.charging) {
-    color: #f53c3c;
+    color: #ffb4ab;
     animation-name: blink;
     animation-duration: 0.5s;
     animation-timing-function: linear;
@@ -157,7 +155,7 @@ window#waybar.bottom #mode {
 #network.disconnected,
 #pulseaudio.muted,
 #wireplumber.muted {
-    color: @inactive_module_color;
+    color: #ffb4ab;
 }
 
 #tray {
@@ -185,7 +183,7 @@ window#waybar.bottom #mode {
 }
 
 #idle_inhibitor {
-    color: @inactive_module_color;
+    color: #ffb4ab;
 }
 
 #idle_inhibitor.activated {
@@ -195,12 +193,12 @@ window#waybar.bottom #mode {
 #mpd.disconnected,
 #mpd.paused,
 #mpd.stopped {
-    color: @inactive_module_color;
+    color: #ffb4ab;
 }
 
 #cpu.high,
 #temperature.critical {
-    color: #eb4d4b;
+    color: #ffb4ab;
 }
 
 #language {
@@ -232,46 +230,46 @@ window#waybar.bottom #mode {
  * Module colors
  */
 #cpu {
-    color: #2ecc71;
+    color: #ffb4ab;
 }
 
 #memory {
-    color: #ba55d3;
+    color: #ffb4ab;
 }
 
 #disk {
-    color: #964B00;
+    color: #ffb4ab;
 }
 
 #backlight {
-    color: #90b1b1;
+    color: #ffb4ab;
 }
 
 #network {
-    color: #00bfff;
+    color: #ffb4ab;
 }
 
 #pulseaudio,
 #wireplumber {
-    color: #f1c40f;
+    color: #ffb4ab;
 }
 
 #temperature {
-    color: #f0932b;
+    color: #ffb4ab;
 }
 
 #mpd {
-    color: #66cc99;
+    color: #ffb4ab;
 }
 
 #mpd.paused {
-    color: #51a37a;
+    color: #ffb4ab;
 }
 
 #language {
-    color: #00b093;
+    color: #ffb4ab;
 }
 
 #keyboard-state {
-    color: #97e1ad;
+    color: #ffb4ab;
 }

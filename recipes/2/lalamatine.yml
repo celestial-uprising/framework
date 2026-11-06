@@ -1,0 +1,110 @@
+# yaml-language-server: $schema=https://blue-build.org
+name: lalamatine
+description: Celestial Uprising's Immutable Operating System
+base-image: ghcr.io/celestial-uprising/lalamatine-core
+image-version: latest
+stages:
+  - name: builder
+    from: quay.io/fedora/fedora:44
+    modules:
+      - type: copy
+        src: files/scripts/stage3.sh
+        dest: /tmp/stage3.sh
+      - type: script
+        snippets:
+          - mkdir -p /tmp/bin
+          - |
+            bash /tmp/stage3.sh
+modules:
+  - type: os-release
+    properties:
+      VARIANT: "lalamatine"
+  - type: kargs
+    kargs:
+      - amdgpu.ppfeaturemask=0xffffffff
+      - amdgpu.sg_display=0
+  - type: dnf
+    install:
+      install-weak-deps: false
+      packages:
+        - google-noto-sans-fonts
+        - google-noto-serif-fonts
+        - niri
+        - xwayland-satellite
+        - upower 
+        - spice-vdagent
+        - spice-webdavd
+        - pipewire
+        - mesa-vulkan-drivers
+        - google-crc32c
+        - gnome-keyring
+        - alsa-sof-firmware
+        - bluez-libs
+        - pulseaudio-libs
+        - sddm
+        - xdg-desktop-portal-gnome
+        - xdg-desktop-portal-gtk
+        - xfce-polkit
+        - rofi-wayland
+        - dunst
+        - swaybg
+        - swaylock
+        - swayidle
+        - wl-clipboard
+        - grim
+        - slurp
+        - brightnessctl
+        - pamixer
+        - pavucontrol
+        - wlr-randr
+        - wlsunset
+        - kanshi
+        - network-manager-applet
+        - blueman
+        - bluez-tools
+        - google-noto-emoji-fonts
+        - qt6-qtvirtualkeyboard
+        - qt6-qt5compat
+        - kitty
+        - zathura
+        - zathura-plugins-all
+        - mpv
+        - ffmpeg
+        - ffmpegthumbnailer
+        - mpd
+        - mpc
+        - imv
+        - remmina
+        - virt-manager
+        - headsetcontrol
+        - mediainfo
+        - playerctl
+        - tuned-ppd
+        - vulkan-validation-layers
+        - vulkan-tools
+        - alsa-firmware
+        - wireplumber
+        - flatpak
+  - type: copy
+    from: builder
+    src: /tmp/bin/
+    dest: /usr/bin/
+  - type: script
+    scripts:
+      - rhun.sh
+      - zen.sh
+      - annoyances-2.sh
+  - type: files
+    files:
+      - source: system/
+        destination: /
+  - type: systemd
+    system:
+      enabled:
+        - fix-wifi-race.service
+        - sddm.service
+  - type: script
+    scripts:
+      - regenerateinitramfs.sh
+  - type: wayblue-signing
+    source: local

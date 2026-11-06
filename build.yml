@@ -5,10 +5,6 @@ on:
   push:
     paths-ignore:
       - "**.md"
-      - "**.jpg"
-      - "**.jpeg"
-      - "**.png"
-      - "**.webp"
   pull_request:
   workflow_dispatch:
 concurrency:
@@ -26,8 +22,7 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - 1/yotta.yml
-          - 1/zetta.yml
+          - 1/c.yml
     steps:
       - name: Building Stage 1 Images
         uses: blue-build/github-action@v1.13
@@ -49,12 +44,9 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - 2/z/m.yml
-          - 2/y/m.yml
-          - 2/z/h.yml
-          - 2/y/h.yml
-          - 2/z/v.yml
-          - 2/y/v.yml
+          - 2/o.yml
+          - 2/v.yml
+          - 2/h.yml
     steps:
       - name: Building Stage 2 Images
         uses: blue-build/github-action@v1.13
@@ -62,7 +54,7 @@ jobs:
           recipe: ${{ matrix.recipe }}
           cosign_private_key: ${{ secrets.SIGNING_SECRET }}
           registry_token: ${{ github.token }}
-          maximize_build_space: false
+          maximize_build_space: true
   stage_three:
     name: Building Stage 3 Images
     runs-on: ubuntu-latest
@@ -75,12 +67,9 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - 3/z/d.yml
-          - 3/y/d.yml
-          - 3/z/g.yml
-          - 3/y/g.yml
-          - 3/z/m.yml
-          - 3/y/m.yml
+          - 3/d.yml
+          - 3/m.yml
+          - 3/g.yml
     steps:
       - name: Building Stage 3 Images
         uses: blue-build/github-action@v1.13
@@ -88,7 +77,7 @@ jobs:
           recipe: ${{ matrix.recipe }}
           cosign_private_key: ${{ secrets.SIGNING_SECRET }}
           registry_token: ${{ github.token }}
-          maximize_build_space: false
+          maximize_build_space: true
   stage_four:
     name: Building Stage 4 Images
     runs-on: ubuntu-latest
@@ -101,8 +90,7 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - 4/z/u.yml
-          - 4/y/u.yml
+          - 4/u.yml
     steps:
       - name: Building Stage 4 Images
         uses: blue-build/github-action@v1.13
@@ -110,4 +98,4 @@ jobs:
           recipe: ${{ matrix.recipe }}
           cosign_private_key: ${{ secrets.SIGNING_SECRET }}
           registry_token: ${{ github.token }}
-          maximize_build_space: false
+          maximize_build_space: true

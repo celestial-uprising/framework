@@ -1,0 +1,48 @@
+hot_reload.config: true
+hot_reload.style: true
+position: top
+#icon_theme: Paper
+start:
+- type: clock
+center:
+- type: workspaces
+- type: launcher
+end:
+- type: notifications
+- type: tray
+- type: clipboard
+  max_items: 5
+  truncate:
+    mode: end
+    length: 30
+- type: volume
+- type: brightness
+- type: battery
+  show_if: |
+    ls /sys/class/power_supply/ | grep --quiet '^BAT'
+- type: custom
+  name: power-menu
+  class: power-menu
+  bar:
+  - type: button
+    name: power-btn
+    label: 󱓞
+    on_click: popup:toggle
+  popup:
+  - type: box
+    orientation: vertical
+    widgets:
+    - type: label
+      name: header
+      label: Power Menu
+    - type: box
+      name: buttons
+      widgets:
+      - type: button
+        class: power-btn
+        label: <span>󰐥</span>
+        on_click: '!shutdown now'
+      - type: button
+        class: power-btn
+        label: <span>󰜉</span>
+        on_click: '!reboot'

@@ -1,0 +1,151 @@
+name: oglaroon-core
+description: Celestial Uprising's Immutable Operating System
+base-image: quay.io/fedora/fedora-bootc
+image-version: rawhide
+stages:
+  - name: builder
+    from: quay.io/fedora/fedora:rawhide
+    modules:
+      - type: copy
+        src: files/scripts/stage1.sh
+        dest: /tmp/stage1.sh
+      - type: copy
+        src: files/scripts/stage2.sh
+        dest: /tmp/stage2.sh
+      - type: script
+        snippets:
+          - mkdir -p /tmp/bin
+          - |
+            bash /tmp/stage1.sh
+            bash /tmp/stage2.sh
+modules:
+  - type: os-release
+    properties:
+      NAME: "Oglaroon"
+      PRETTY_NAME: "Oglaroon b14 by Celestial Uprising"
+      VERSION_CODENAME: "candyglass"
+      ID_LIKE: fedora
+      HOME_URL: "https://github.com/celestial-uprising/framework/"
+      BUG_REPORT_URL: "https://github.com/celestial-uprising/framework/"
+      VARIANT: "oglaroon-core"
+      RELEASE_TYPE: "beta"
+  - type: kargs
+    kargs:
+      - amd_iommu=on
+      - iommu=pt
+      - kvm_amd.nested=1
+      - split_lock_detect=off
+      - transparent_hugepage=always
+      - kvm.ignore_msrs=1
+      - net.ifnames=0
+  - type: dnf
+    install:
+      install-weak-deps: false
+      packages:
+        - gtk4-layer-shell
+        - tmux
+        - firewalld
+        - nftables
+        - zram-generator-defaults
+        - glibc-langpack-en
+        - podman-compose
+        - podman-docker
+        - podman-remote
+        - buildah
+        - skopeo
+        - crun
+        - cryptsetup
+        - lvm2
+        - btrfs-progs
+        - bind-utils
+        - sysstat
+        - strace
+        - tcpdump
+        - amd-ucode-firmware
+        - microcode_ctl
+        - whois
+        - distrobox
+        - sshfs
+        - rsync
+        - iw
+        - iwd
+        - iwlwifi-mvm-firmware
+        - iwlbluetooth-firmware
+        - mediatek-firmware
+        - NetworkManager-wifi
+        - pciutils
+        - usbutils
+        - kernel-modules-extra
+        - tailscale
+        - libvirt-client
+        - vim
+        - nmap
+        - traceroute
+        - uv
+        - neovim
+        - python3-neovim
+        - luarocks
+        - tree-sitter-cli
+        - fd-find
+        - ripgrep
+        - zoxide
+        - bat
+        - eza
+        - fzf
+        - pdfgrep
+        - powertop
+        - nvtop
+        - radeontop
+        - s-tui
+        - lm_sensors
+        - btop
+        - gdu
+        - pastel
+        - git
+        - make
+        - gcc
+        - fontconfig-devel
+        - wget
+        - plymouth-theme-spinner
+        - nodejs
+        - npm
+  - type: copy
+    from: builder
+    src: /tmp/bin/
+    dest: /usr/bin/
+  - type: fonts
+    fonts:
+      nerd-fonts:
+        - VictorMono
+  - type: files
+    files:
+      - source: system/usr/lib/bash/libflyline
+        destination: /usr/lib/bash/libflyline.so
+  - type: files
+    files:
+      - source: system/etc/profile.d/flyline.sh
+        destination: /etc/profile.d/
+  - type: files
+    files:
+      - source: system/etc/profile.d/locale.sh
+        destination: /etc/profile.d/
+  - type: files
+    files:
+      - source: system/etc/profile.d/aliases.sh
+        destination: /etc/profile.d/
+  - type: systemd
+    system:
+      enabled:
+        - tailscaled.service
+        - firewalld.service
+        - iwd.service
+    user:
+      enabled:
+        - podman.socket
+  - type: script
+    scripts:
+      - pi-bolt.sh
+      - annoyances.sh
+      - regenerateinitramfs.sh
+  - type: wayblue-signing
+    source: local
