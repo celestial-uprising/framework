@@ -2,3 +2,4 @@
 set -euo pipefail
 
 rm /usr/share/applications/kitty*
+rm /usr/share/applications/rofi*

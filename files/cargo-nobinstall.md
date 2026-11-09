@@ -1,5 +1,0 @@
-cargo install --git https://github.com/rezigned/upmd.git
-cargo install amdtop
-cargo install netop
-cargo install --locked --git https://github.com/pamburus/termframe.git
-cargo install terminal_gameboy

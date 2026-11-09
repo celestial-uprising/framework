@@ -1,0 +1,170 @@
+name: lalamatine-core
+description: Celestial Uprising's Immutable Operating System
+base-image: quay.io/fedora/fedora-bootc
+image-version: 44
+stages:
+  - name: driver-builder
+    from: quay.io/fedora/fedora-bootc:44
+    modules:
+      - type: containerfile
+        snippets:
+          - RUN dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+          - RUN dnf install -y https://zfsonlinux.org/fedora/zfs-release-3-1.fc44.noarch.rpm
+          - RUN export KVER=$(cd /usr/lib/modules && echo *) && dnf install -y akmod-nvidia zfs-dkms
+          - RUN export KVER=$(cd /usr/lib/modules && echo *) && akmods --kernels $KVER --force && dkms autoinstall -k $KVER && dnf clean all
+  - name: builder
+    from: quay.io/fedora/fedora:44
+    modules:
+      - type: copy
+        src: files/scripts/stage1/*
+        dest: /tmp/
+      - type: script
+        snippets:
+          - mkdir -p /tmp/bin
+          - dnf5 upgrade -y
+          - |
+            bash /tmp/cargo.sh
+            bash /tmp/binstall.sh
+            bash /tmp/golang-lala.sh
+modules:
+  - type: os-release
+    properties:
+      NAME: "Lalamatine"
+      PRETTY_NAME: "Lalamatine b13 by Celestial Uprising"
+      VERSION_CODENAME: "strawbolotl"
+      ID_LIKE: fedora
+      HOME_URL: "https://github.com/celestial-uprising/framework/"
+      BUG_REPORT_URL: "https://github.com/celestial-uprising/framework/"
+      VARIANT: "lalamatine-core"
+      RELEASE_TYPE: "beta"
+  - type: kargs
+    kargs:
+      - amd_iommu=on
+      - iommu=pt
+      - kvm_amd.nested=1
+      - split_lock_detect=off
+      - transparent_hugepage=always
+      - kvm.ignore_msrs=1
+      - net.ifnames=0
+      - rd.driver.blacklist=nouveau
+      - modprobe.blacklist=nouveau
+      - nvidia-drm.modeset=1
+  - type: containerfile
+    snippets:
+      - RUN dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+      - RUN dnf install -y https://zfsonlinux.org/fedora/zfs-release-3-1.fc44.noarch.rpm
+  - type: dnf
+    install:
+      install-weak-deps: false
+      packages:
+        - xorg-x11-drv-nvidia-cuda
+        - libva-nvidia-driver
+        - zfs
+        - firewalld
+        - nftables
+        - zram-generator-defaults
+        - glibc-langpack-en
+        - podman-compose
+        - podman-docker
+        - podman-remote
+        - buildah
+        - skopeo
+        - crun
+        - cryptsetup
+        - lvm2
+        - btrfs-progs
+        - bind-utils
+        - sysstat
+        - strace
+        - tcpdump
+        - amd-ucode-firmware
+        - microcode_ctl
+        - whois
+        - distrobox
+        - sshfs
+        - rsync
+        - iw
+        - iwd
+        - iwlwifi-mvm-firmware
+        - iwlbluetooth-firmware
+        - mediatek-firmware
+        - NetworkManager-wifi
+        - pciutils
+        - usbutils
+        - kernel-modules-extra
+        - tailscale
+        - libvirt-client
+        - vim
+        - nmap
+        - traceroute
+        - uv
+        - neovim
+        - python3-neovim
+        - luarocks
+        - tree-sitter-cli
+        - fd-find
+        - ripgrep
+        - zoxide
+        - bat
+        - eza
+        - fzf
+        - pdfgrep
+        - powertop
+        - nvtop
+        - radeontop
+        - s-tui
+        - lm_sensors
+        - btop
+        - gdu
+        - pastel
+        - git
+        - wget
+        - plymouth-theme-spinner
+        - nodejs
+        - npm
+  - type: containerfile
+    snippets:
+      - COPY --from=driver-builder /usr/lib/modules/ /usr/lib/modules/
+      - COPY --from=driver-builder /var/lib/dkms/ /var/lib/dkms/
+      - RUN echo "blacklist nouveau" > /etc/modprobe.d/blacklist-nouveau.conf
+      - RUN systemctl enable zfs.target zfs-import-scan.service zfs-mount.service
+  - type: copy
+    from: builder
+    src: /tmp/bin/
+    dest: /usr/bin/
+  - type: fonts
+    fonts:
+      nerd-fonts:
+        - VictorMono
+  - type: files
+    files:
+      - source: usr/lib/bash/libflyline
+        destination: /usr/lib/bash/libflyline.so
+  - type: files
+    files:
+      - source: etc/profile.d/flyline.sh
+        destination: /etc/profile.d/
+  - type: files
+    files:
+      - source: etc/profile.d/locale.sh
+        destination: /etc/profile.d/
+  - type: files
+    files:
+      - source: etc/profile.d/aliases.sh
+        destination: /etc/profile.d/
+  - type: systemd
+    system:
+      enabled:
+        - tailscaled.service
+        - firewalld.service
+        - iwd.service
+    user:
+      enabled:
+        - podman.socket
+  - type: script
+    scripts:
+      - pi-bolt.sh
+      - annoyances.sh
+      - regenerateinitramfs.sh
+  - type: wayblue-signing
+    source: local

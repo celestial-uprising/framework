@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://blue-build.org
+name: oglaroon-virt
+description: Celestial Uprising's Immutable Operating System
+base-image: ghcr.io/celestial-uprising/oglaroon-core
+image-version: latest
+modules:
+  - type: os-release
+    properties:
+      VARIANT: "oglaroon-virt"
+  - type: kargs
+    kargs:
+      - console=tty0
+      - console=ttyS0,115200n8
+      - scsi_mod.use_blk_mq=1
+  - type: dnf
+    install:
+      install-weak-deps: false
+      packages:
+        - spice-vdagent
+        - qemu-guest-agent
+  - type: files
+    files:
+      - source: extras/dracut-virtio.conf
+        destination: /etc/dracut.conf.d/virtio.conf
+  - type: script
+    scripts:
+      - regenerateinitramfs.sh
+  - type: wayblue-signing
+    source: local
