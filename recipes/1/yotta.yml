@@ -1,4 +1,4 @@
-name: oglaroon-core
+name: yotta-core
 description: Celestial Uprising's Immutable Operating System
 base-image: quay.io/fedora/fedora-bootc
 image-version: rawhide
@@ -20,14 +20,14 @@ stages:
 modules:
   - type: os-release
     properties:
-      NAME: "Oglaroon"
-      PRETTY_NAME: "Oglaroon b19 by Celestial Uprising"
-      VERSION_CODENAME: "strawbolotl"
+      NAME: "Yotta"
+      PRETTY_NAME: "Yotta by Celestial Uprising"
+      VERSION_CODENAME: "testing"
       ID_LIKE: fedora
       HOME_URL: "https://github.com/celestial-uprising/framework/"
       BUG_REPORT_URL: "https://github.com/celestial-uprising/framework/"
-      VARIANT: "oglaroon-core"
-      RELEASE_TYPE: "beta"
+      VARIANT: "yotta-core"
+      RELEASE_TYPE: "alpha"
   - type: kargs
     kargs:
       - amd_iommu=on

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if grep -q "pku" /proc/cpuinfo && grep -q "vaes" /proc/cpuinfo; then
+	exec /usr/bin/mgba-qt-zen3 "$@"
+else
+	exec /usr/bin/mgba-qt-stoney "$@"
+fi

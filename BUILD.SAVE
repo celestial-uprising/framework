@@ -1,0 +1,101 @@
+name: bluebuild
+on:
+  schedule:
+    - cron: "00 06 * * *"
+  push:
+    paths-ignore:
+      - "**.md"
+  pull_request:
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
+  cancel-in-progress: true
+jobs:
+  stage_one:
+    name: Build Stage 1 Images
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        recipe:
+          - 1/c.yml
+    steps:
+      - name: Building Stage 1 Images
+        uses: blue-build/github-action@v1.13
+        with:
+          recipe: ${{ matrix.recipe }}
+          cosign_private_key: ${{ secrets.SIGNING_SECRET }}
+          registry_token: ${{ github.token }}
+          pr_event_number: ${{ github.event.number }}
+          maximize_build_space: true
+  stage_two:
+    name: Building Stage 2 Images
+    runs-on: ubuntu-latest
+    needs: stage_one
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        recipe:
+          - 2/o.yml
+          - 2/v.yml
+          - 2/h.yml
+    steps:
+      - name: Building Stage 2 Images
+        uses: blue-build/github-action@v1.13
+        with:
+          recipe: ${{ matrix.recipe }}
+          cosign_private_key: ${{ secrets.SIGNING_SECRET }}
+          registry_token: ${{ github.token }}
+          maximize_build_space: true
+  stage_three:
+    name: Building Stage 3 Images
+    runs-on: ubuntu-latest
+    needs: stage_two
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        recipe:
+          - 3/d.yml
+          - 3/m.yml
+          - 3/g.yml
+    steps:
+      - name: Building Stage 3 Images
+        uses: blue-build/github-action@v1.13
+        with:
+          recipe: ${{ matrix.recipe }}
+          cosign_private_key: ${{ secrets.SIGNING_SECRET }}
+          registry_token: ${{ github.token }}
+          maximize_build_space: true
+  stage_four:
+    name: Building Stage 4 Images
+    runs-on: ubuntu-latest
+    needs: stage_three
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        recipe:
+          - 4/u.yml
+    steps:
+      - name: Building Stage 4 Images
+        uses: blue-build/github-action@v1.13
+        with:
+          recipe: ${{ matrix.recipe }}
+          cosign_private_key: ${{ secrets.SIGNING_SECRET }}
+          registry_token: ${{ github.token }}
+          maximize_build_space: true

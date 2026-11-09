@@ -1,12 +1,12 @@
 # yaml-language-server: $schema=https://blue-build.org
-name: oglaroon-muse
+name: yotta-muse
 description: Celestial Uprising's Immutable Operating System
-base-image: ghcr.io/celestial-uprising/oglaroon
+base-image: ghcr.io/celestial-uprising/yotta
 image-version: latest
 modules:
   - type: os-release
     properties:
-      VARIANT: "oglaroon-muse"
+      VARIANT: "yotta-muse"
   - type: kargs
     kargs:
       - pcie_aspm=off

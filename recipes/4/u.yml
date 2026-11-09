@@ -1,12 +1,12 @@
 # yaml-language-server: $schema=https://blue-build.org
-name: oglaroon-unholy
+name: yotta-unholy
 description: Celestial Uprising's Immutable Operating System
-base-image: ghcr.io/celestial-uprising/oglaroon-dev
+base-image: ghcr.io/celestial-uprising/yotta-dev
 image-version: latest
 modules:
   - type: os-release
     properties:
-      VARIANT: "oglaroon-unholy"
+      VARIANT: "yotta-unholy"
   - type: dnf
     repos:
       nonfree: rpmfusion

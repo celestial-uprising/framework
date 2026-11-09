@@ -1,12 +1,12 @@
 # yaml-language-server: $schema=https://blue-build.org
-name: oglaroon-headless
+name: yotta-headless
 description: Celestial Uprising's Immutable Operating System
-base-image: ghcr.io/celestial-uprising/oglaroon-core
+base-image: ghcr.io/celestial-uprising/yotta-core
 image-version: latest
 modules:
   - type: os-release
     properties:
-      VARIANT: "oglaroon-headless"
+      VARIANT: "yotta-headless"
   - type: kargs
     kargs:
       - amdgpu.ppfeaturemask=0xffffffff
