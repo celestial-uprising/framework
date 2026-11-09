@@ -30,13 +30,10 @@ modules:
       install-weak-deps: false
       packages:
         - qt6-qtbase
-        - libedit
-        - ffmpeg-libs
         - libzip
         - libpng
         - zlib
         - SDL2
-        - glibc
         - gtk4 
         - gtk4-layer-shell
         - rofi-wayland
