@@ -27,7 +27,7 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr/local \
         -DCMAKE_CXX_FLAGS="-march=znver3 -O3 -flto -fuse-linker-plugin -ffast-math" \
         ..
 make -j$(nproc)
-cp bin/mgba-qt /tmp/bin/mgba-qt-zen3
+cp qt/mgba-qt /tmp/bin/mgba-qt-zen3
 
 # --- PASS 2: Stoney Ridge  ---
 mkdir -p /tmp/mgba/build-stoney && cd /tmp/mgba/build-stoney
@@ -41,5 +41,5 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr/local \
         -DCMAKE_CXX_FLAGS="-march=bdver4 -O3 -flto -fuse-linker-plugin -ffast-math" \
         ..
 make -j$(nproc)
+cp qt/mgba-qt /tmp/bin/mgba-qt-stoney
 make install
-cp /usr/local/bin/mgba-qt /tmp/bin/mgba-qt-stoney
