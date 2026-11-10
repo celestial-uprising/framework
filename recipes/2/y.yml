@@ -100,16 +100,12 @@ modules:
     dest: /usr/bin/
   - type: copy
     from: builder
-    src: /tmp/usr/local/share/mgba/
-    dest: /usr/local/share/mgba/
+    src: /tmp/mgba/res/iconset/
+    dest: /usr/share/icons/hicolor/
   - type: copy
     from: builder
-    src: /tmp/usr/local/share/icons/hicolor
-    dest: /usr/local/share/icons/hicolor
-  - type: copy
-    from: builder
-    src: /tmp/usr/local/share/io.mgba.mGBA.desktop
-    dest: /usr/local/share/applications/io.mgba.mGBA.desktop
+    src: /tmp/mgba/res/io.mgba.mGBA.desktop
+    dest: /usr/share/applications/io.mgba.mGBA.desktop
   - type: script
     scripts:
       - rhun.sh
