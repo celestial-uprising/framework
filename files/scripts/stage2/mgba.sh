@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -oue pipefail
 
-RUN dnf install -y --setopt=install_weak_deps=False \
+dnf install -y --setopt=install_weak_deps=False \
         gcc \
         gcc-c++ \
         cmake \
