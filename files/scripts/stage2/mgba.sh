@@ -22,7 +22,7 @@ dnf install -y --setopt=install_weak_deps=False \
     dnf clean all && \
     rm -rf /var/cache/dnf
 
-git clone --depth 1 https://github.com/mgba-emu/mgba.git /tmp/mgba
+git clone https://github.com/mgba-emu/mgba.git /tmp/mgba
 
 # --- PASS 1: Zen 3 ---
 mkdir -p /tmp/mgba/build-zen3 && cd /tmp/mgba/build-zen3
