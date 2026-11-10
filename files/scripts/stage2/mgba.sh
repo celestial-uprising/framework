@@ -57,4 +57,12 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr \
     ..
 make -j$(nproc)
 cp qt/mgba-qt /tmp/bin/mgba-qt-v3
-make install
+
+mkdir -p /tmp/hicolor/{16x16,32x32,48x48,64x64,128x128,256x256,512x512}/apps
+mv /tmp/mgba/res/mgba-16.png   /tmp/hicolor/16x16/apps/io.mgba.mGBA.png
+mv /tmp/mgba/res/mgba-32.png   /tmp/hicolor/32x32/apps/io.mgba.mGBA.png
+mv /tmp/mgba/res/mgba-48.png   /tmp/hicolor/48x48/apps/io.mgba.mGBA.png
+mv /tmp/mgba/res/mgba-64.png   /tmp/hicolor/64x64/apps/io.mgba.mGBA.png
+mv /tmp/mgba/res/mgba-128.png  /tmp/hicolor/128x128/apps/io.mgba.mGBA.png
+mv /tmp/mgba/res/mgba-256.png  /tmp/hicolor/256x256/apps/io.mgba.mGBA.png
+mv /tmp/mgba/res/mgba-512.png  /tmp/hicolor/512x512/apps/io.mgba.mGBA.png

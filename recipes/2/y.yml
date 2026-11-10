@@ -100,12 +100,16 @@ modules:
     dest: /usr/bin/
   - type: copy
     from: builder
-    src: /tmp/mgba/res/iconset/
-    dest: /usr/share/icons/hicolor/
+    src: /tmp/mgba/res/
+    dest: /usr/share/mgba/
   - type: copy
     from: builder
     src: /tmp/mgba/res/mgba-qt.desktop
     dest: /usr/share/applications/mgba-qt.desktop
+  - type: copy
+    from: builder
+    src: /tmp/hicolor/
+    dest: /usr/share/icons/hicolor/
   - type: script
     scripts:
       - rhun.sh
