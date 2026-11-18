@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Eilmeldung
+Exec=eilmeldung
+Icon=/usr/share/pixmaps/eilmeldung.png
+Terminal=true
+Categories=ConsoleOnly;
+Keywords=terminal;
+GenericName=customizable & powerful RSS reader

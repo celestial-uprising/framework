@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Herdr
+Exec=herdr
+Icon=/usr/share/pixmaps/herdr.svg
+Terminal=true
+Categories=ConsoleOnly;
+Keywords=terminal;
+GenericName=agent-aware terminal multiplexor

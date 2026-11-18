@@ -6,15 +6,8 @@ start:
 - type: clock
 center:
 - type: workspaces
-- type: launcher
 end:
-- type: notifications
 - type: tray
-- type: clipboard
-  max_items: 5
-  truncate:
-    mode: end
-    length: 30
 - type: volume
 - type: brightness
 - type: battery

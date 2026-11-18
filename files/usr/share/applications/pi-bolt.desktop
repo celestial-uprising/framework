@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Pi-Bolt
+Exec=pi-bolt
+Icon=/usr/share/pixmaps/pi-bolt.svg
+Terminal=true
+Categories=ConsoleOnly;
+Keywords=terminal;
+GenericName=Pi you already use compiled to machine code

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=rura
+Exec=rura
+Icon=/usr/share/pixmaps/rura.svg
+Terminal=true
+Categories=ConsoleOnly;
+Keywords=terminal;
+GenericName=interactive shell pipeline scratchpad

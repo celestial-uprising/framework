@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Edamame
+Exec=edamame
+Icon=/usr/share/pixmaps/edamame.svg
+Terminal=true
+Categories=ConsoleOnly;
+Keywords=terminal;
+GenericName=MD editor that stays rendered while editing

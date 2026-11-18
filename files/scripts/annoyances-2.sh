@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-rm /usr/share/applications/kitty*
+rm /etc/profile.d/*.csh
 rm /usr/share/applications/rofi*

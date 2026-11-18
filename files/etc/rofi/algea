@@ -1,0 +1,165 @@
+/******************************************************************************
+- Celestial Uprising's Rofi Theme
+- Copyright: Amelia Shepherd (2026)
+ ******************************************************************************/
+* {
+    crimson:             #d98a8a;
+    plum:                #9b7e9f;
+    coral:               #ffb4ab;
+    algae:               #b5bd91;
+    red:                 #1a1110;
+    pink:                #e1b8bc;
+    spacing:             2;
+    sc:                  #9b7e9f40;
+    bc:                  #ffb4abaa;
+    bg:                  #1a111044;
+    text:                #e1b8bc;
+    font:                "Victor Mono Nerd Font 16";
+}
+
+window {
+    width:               25em;
+    background-color:    #1a1110cc;
+    border-color:        @bc;
+    border:              1px;
+    padding:             10px;
+    border-radius:       14px;
+}
+
+mainbox {
+    background-color:    transparent;
+    border:              0;
+    padding:             0;
+    spacing:             8px;
+}
+
+message {
+    background-color:    @bg;
+    border:              0;
+    padding:             4px;
+    border-radius:       8px;
+}
+
+textbox {
+    background-color:    transparent;
+    text-color:          @text;
+}
+
+listview {
+    lines:               8;
+    columns:             1;
+    fixed-height:        false;
+    border:              0;
+    spacing:             2px;
+    scrollbar:           false;
+    padding:             0px;
+    background-color:    transparent;
+}
+
+element {
+    border:              0;
+    padding:             6px 8px;
+    border-radius:       8px;
+}
+
+element-text {
+    background-color:    transparent;
+    text-color:          @text;
+    highlight:           bold #b5bd91;
+}
+
+element.normal.normal {
+    background-color:    transparent;
+    text-color:          @text;
+}
+
+element.normal.urgent {
+    background-color:    transparent;
+    text-color:          @text;
+}
+
+element.normal.active {
+    background-color:    transparent;
+    text-color:          @text;
+}
+
+element.selected.normal {
+    background-color:    @sc;
+    text-color:          @text;
+}
+
+element.selected.urgent {
+    background-color:    @sc;
+    text-color:          @text;
+}
+
+element.selected.active {
+    background-color:    @sc;
+    text-color:          @text;
+}
+
+element.alternate.normal {
+    background-color:    transparent;
+    text-color:          @text;
+}
+
+element.alternate.urgent {
+    background-color:    transparent;
+    text-color:          @text;
+}
+
+element.alternate.active {
+    background-color:    transparent;
+    text-color:          @text;
+}
+
+scrollbar {
+    width:               4px;
+    border:              0;
+    handle-width:        8px;
+    padding:             0;
+}
+
+mode-switcher {
+    border:              0;
+}
+
+button.selected {
+    background-color:    @sc;
+    text-color:          @text;
+    border-radius:       8px;
+}
+
+inputbar {
+    spacing:             0;
+    text-color:          @text;
+    padding:             8px;
+    background-color:    @bg;
+    border-radius:       8px;
+    children:            [ prompt, textbox-prompt-colon, entry, case-indicator ];
+}
+
+case-indicator {
+    spacing:             0;
+    text-color:          @plum;
+}
+
+entry {
+    spacing:             0;
+    text-color:          @text;
+    background-color:    transparent;
+}
+
+prompt {
+    spacing:             0;
+    text-color:          @text;
+    background-color:    transparent;
+}
+
+textbox-prompt-colon {
+    expand:              false;
+    str:                 ":";
+    margin:              0px 0.3em 0em 0em;
+    text-color:          @text;
+    background-color:    transparent;
+}

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Solipsist
+Exec=solipsist
+Icon=/usr/share/pixmaps/solipsist.svg
+Terminal=true
+Categories=ConsoleOnly;
+Keywords=terminal;
+GenericName=think work & collaborate with local AI agent in MD

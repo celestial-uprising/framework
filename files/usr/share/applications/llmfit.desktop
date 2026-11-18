@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=LLM Fit
+Exec=llmfit
+Icon=/usr/share/pixmaps/llmfit.svg
+Terminal=true
+Categories=ConsoleOnly;
+Keywords=terminal;
+GenericName=find LLMs based on system specs

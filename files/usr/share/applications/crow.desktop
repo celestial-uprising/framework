@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Crow
+Exec=crow
+Icon=/usr/share/pixmaps/crow.svg
+Terminal=false
+Categories=Development;System;Utility;
+Keywords=ssh;server;fleet;sysadmin;firewall;logs;
+StartupWMClass=rs.crow.Crow
+GenericName=high-density agentless fleet manager for linux servers

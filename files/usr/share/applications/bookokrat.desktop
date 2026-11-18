@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Bookokrat
+Exec=bookokrat
+Icon=/usr/share/pixmaps/bookokrat.svg
+Terminal=true
+Categories=ConsoleOnly;
+Keywords=terminal;
+GenericName=terminal EPUB & PDF reader

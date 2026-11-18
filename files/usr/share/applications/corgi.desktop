@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Corgi
+Exec=corgi
+Icon=/usr/share/pixmaps/corgi.png
+Terminal=true
+Categories=ConsoleOnly;
+Keywords=terminal;
+GenericName=terminal multiplexor for humans and agents

@@ -9,9 +9,9 @@
     --margin-sm: 0.5em;
     --radius-full: 999px;
     --radius-sm: 6px;
-    --font-sm: 10px;
-    --font-md: 11px;
-    --font-lg: 24px;
+    --font-sm: 13px;
+    --font-md: 14px;
+    --font-lg: 15px;
 }
 
 /* Global Reset */
@@ -20,7 +20,7 @@
     border-radius: 0;
     box-shadow: none;
     background-image: none;
-    font_family: "VictorMono Nerd Font Mono":
+    font-family: "VictorMono Nerd Font Mono";
     font-size: var(--font-md);
     font-weight: bold;
 }

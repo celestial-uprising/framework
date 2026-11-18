@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Left Clojure/EDN brace -->
+  <path d="M 10.5 6.5 C 7.5 6.5, 7.5 9.5, 7.5 12.5 C 7.5 14.5, 5.5 16, 4.5 16 C 5.5 16, 7.5 17.5, 7.5 19.5 C 7.5 22.5, 7.5 25.5, 10.5 25.5" fill="none" stroke="#5881D8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+  
+  <!-- Right Clojure/EDN brace -->
+  <path d="M 21.5 6.5 C 24.5 6.5, 24.5 9.5, 24.5 12.5 C 24.5 14.5, 26.5 16, 27.5 16 C 26.5 16, 24.5 17.5, 24.5 19.5 C 24.5 22.5, 24.5 25.5, 21.5 25.5" fill="none" stroke="#63B85C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+
+  <!-- Single clean edamame bean in the center -->
+  <ellipse cx="16" cy="16" rx="4.2" ry="6.2" transform="rotate(-25 16 16)" fill="#82D651" stroke="#234F1E" stroke-width="1.8" />
+  <!-- Subtle bean crease -->
+  <path d="M 14.2 13.5 C 13.5 15.2, 14.2 17.2, 15.5 18.5" fill="none" stroke="#234F1E" stroke-width="1.4" stroke-linecap="round" />
+</svg>

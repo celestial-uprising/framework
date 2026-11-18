@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Croft
+Exec=croft
+Icon=/usr/share/pixmaps/croft.png
+Terminal=true
+Categories=ConsoleOnly;
+Keywords=terminal;
+GenericName=3 pane VS-Code style terminal workspace IDE

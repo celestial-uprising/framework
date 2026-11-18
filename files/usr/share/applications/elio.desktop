@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Elio
+Exec=elio
+Icon=/usr/share/pixmaps/elio.png
+Terminal=true
+Categories=ConsoleOnly;
+Keywords=terminal;
+GenericName=file manager with rich previews

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Papr
+Exec=papr
+Icon=/usr/share/pixmaps/papr.png
+Terminal=true
+Categories=ConsoleOnly;
+Keywords=terminal;
+GenericName=fast workspace built for academic research
