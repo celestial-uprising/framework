@@ -15,7 +15,6 @@ stages:
           - mkdir -p /tmp/bin
           - dnf5 upgrade -y
           - |
-            bash /tmp/ironbar.sh
             bash /tmp/rhun.sh
             bash /tmp/solipsist.sh
             bash /tmp/crow.sh
