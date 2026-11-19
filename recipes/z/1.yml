@@ -9,34 +9,12 @@ stages:
     modules:
       - type: containerfile
         snippets:
-          - |
-            RUN dnf install -y \
-                  https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
-                  https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm \
-                  https://zfsonlinux.org/fedora/zfs-release-3-1.fc44.noarch.rpm && \
-                python3 -c '
-            import glob
-
-            for path in sorted(glob.glob("/etc/yum.repos.d/rpmfusion*.repo")):
-                with open(path, "r", encoding="utf-8") as f:
-                    content = f.read()
-                is_nonfree = "nonfree" in path
-                inc = "includepkgs=*nvidia*,*cuda*" if is_nonfree else "includepkgs=*nvidia*,*vaapi*"
-                exc = "excludepkgs=ffmpeg*,libav*"
-                lines = []
-                for line in content.splitlines():
-                    lines.append(line)
-                    if line.startswith("[") and line.endswith("]") and not line.endswith("-source]") and not line.endswith("-debuginfo]"):
-                        lines.append(inc)
-                        lines.append(exc)
-                with open(path, "w", encoding="utf-8") as f:
-                    f.write("\n".join(lines) + "\n")
-            ' && \
-                KVER=$(cd /usr/lib/modules && echo *) && \
-                dnf install -y akmod-nvidia zfs-dkms && \
-                akmods --kernels "$KVER" --force && \
-                dkms autoinstall -k "$KVER" && \
-                dnf clean all
+          - RUN dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+          - RUN dnf install -y https://zfsonlinux.org/fedora/zfs-release-3-1.fc44.noarch.rpm
+          - RUN sed -i -E '/^\[rpmfusion-free(-updates)?\]/a includepkgs=*nvidia*,*vaapi*\nexcludepkgs=ffmpeg*,libav*' /etc/yum.repos.d/rpmfusion-free*.repo
+          - RUN sed -i -E '/^\[rpmfusion-nonfree(-updates)?\]/a includepkgs=*nvidia*,*cuda*\nexcludepkgs=ffmpeg*,libav*' /etc/yum.repos.d/rpmfusion-nonfree*.repo
+          - RUN export KVER=$(cd /usr/lib/modules && echo *) && dnf install -y akmod-nvidia zfs-dkms
+          - RUN export KVER=$(cd /usr/lib/modules && echo *) && akmods --kernels $KVER --force && dkms autoinstall -k $KVER && dnf clean all
 
   - name: builder
     from: quay.io/fedora/fedora:44
@@ -87,29 +65,10 @@ modules:
 
   - type: containerfile
     snippets:
-      - |
-        RUN dnf install -y \
-              https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
-              https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm \
-              https://zfsonlinux.org/fedora/zfs-release-3-1.fc44.noarch.rpm && \
-            python3 -c '
-            import glob
-
-            for path in sorted(glob.glob("/etc/yum.repos.d/rpmfusion*.repo")):
-                with open(path, "r", encoding="utf-8") as f:
-                    content = f.read()
-                is_nonfree = "nonfree" in path
-                inc = "includepkgs=*nvidia*,*cuda*" if is_nonfree else "includepkgs=*nvidia*,*vaapi*"
-                exc = "excludepkgs=ffmpeg*,libav*"
-                lines = []
-                for line in content.splitlines():
-                    lines.append(line)
-                    if line.startswith("[") and line.endswith("]") and not line.endswith("-source]") and not line.endswith("-debuginfo]"):
-                        lines.append(inc)
-                        lines.append(exc)
-                with open(path, "w", encoding="utf-8") as f:
-                    f.write("\n".join(lines) + "\n")
-            '
+      - RUN dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+      - RUN dnf install -y https://zfsonlinux.org/fedora/zfs-release-3-1.fc44.noarch.rpm
+      - RUN sed -i -E '/^\[rpmfusion-free(-updates)?\]/a includepkgs=*nvidia*,*vaapi*\nexcludepkgs=ffmpeg*,libav*' /etc/yum.repos.d/rpmfusion-free*.repo
+      - RUN sed -i -E '/^\[rpmfusion-nonfree(-updates)?\]/a includepkgs=*nvidia*,*cuda*\nexcludepkgs=ffmpeg*,libav*' /etc/yum.repos.d/rpmfusion-nonfree*.repo
 
   - type: dnf
     install:
@@ -255,10 +214,7 @@ modules:
 
   - type: containerfile
     snippets:
-      - |
-        RUN dnf remove -y rpmfusion-free-release rpmfusion-nonfree-release && \
-            rm -f /etc/yum.repos.d/rpmfusion*.repo && \
-            dnf clean all
+      - RUN dnf remove -y rpmfusion-free-release rpmfusion-nonfree-release && rm -f /etc/yum.repos.d/rpmfusion*.repo && dnf clean all
 
   - type: script
     scripts:
