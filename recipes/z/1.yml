@@ -2,7 +2,6 @@ name: zetta-core
 description: Celestial Uprising's Immutable Operating System
 base-image: quay.io/fedora/fedora-bootc
 image-version: 44
-
 stages:
   - name: driver-builder
     from: quay.io/fedora/fedora-bootc:44
@@ -15,29 +14,6 @@ stages:
           - RUN sed -i -E '/^\[rpmfusion-nonfree(-updates)?\]/a includepkgs=*nvidia*,*cuda*\nexcludepkgs=ffmpeg*,libav*' /etc/yum.repos.d/rpmfusion-nonfree*.repo
           - RUN export KVER=$(cd /usr/lib/modules && echo *) && dnf install -y akmod-nvidia zfs-dkms
           - RUN export KVER=$(cd /usr/lib/modules && echo *) && akmods --kernels $KVER --force && dkms autoinstall -k $KVER && dnf clean all
-
-  - name: builder
-    from: quay.io/fedora/fedora:44
-    modules:
-      - type: copy
-        src: files/scripts/stage1/*
-        dest: /tmp/
-      - type: script
-        snippets:
-          - mkdir -p /tmp/bin
-          - dnf5 upgrade -y
-          - |
-            bash /tmp/netop.sh
-            bash /tmp/asak.sh
-            bash /tmp/terminactory.sh
-            bash /tmp/binstall.sh
-            bash /tmp/golang-44.sh
-            bash /tmp/tidemail.sh
-            bash /tmp/corgi.sh
-            bash /tmp/kb.sh
-            bash /tmp/llmv.sh
-            bash /tmp/pi-bolt.sh
-
 modules:
   - type: os-release
     properties:
@@ -49,7 +25,6 @@ modules:
       BUG_REPORT_URL: "https://github.com/celestial-uprising/zetta/"
       VARIANT: "zetta-core"
       RELEASE_TYPE: "alpha"
-
   - type: kargs
     kargs:
       - amd_iommu=on
@@ -62,14 +37,12 @@ modules:
       - rd.driver.blacklist=nouveau
       - modprobe.blacklist=nouveau
       - nvidia-drm.modeset=1
-
   - type: containerfile
     snippets:
       - RUN dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
       - RUN dnf install -y https://zfsonlinux.org/fedora/zfs-release-3-1.fc44.noarch.rpm
       - RUN sed -i -E '/^\[rpmfusion-free(-updates)?\]/a includepkgs=*nvidia*,*vaapi*\nexcludepkgs=ffmpeg*,libav*' /etc/yum.repos.d/rpmfusion-free*.repo
       - RUN sed -i -E '/^\[rpmfusion-nonfree(-updates)?\]/a includepkgs=*nvidia*,*cuda*\nexcludepkgs=ffmpeg*,libav*' /etc/yum.repos.d/rpmfusion-nonfree*.repo
-
   - type: dnf
     install:
       install-weak-deps: false
@@ -144,39 +117,24 @@ modules:
         - plymouth-theme-spinner
         - nodejs
         - npm
-
   - type: containerfile
     snippets:
       - COPY --from=driver-builder /usr/lib/modules/ /usr/lib/modules/
       - COPY --from=driver-builder /var/lib/dkms/ /var/lib/dkms/
       - RUN echo "blacklist nouveau" > /etc/modprobe.d/blacklist-nouveau.conf
       - RUN systemctl enable zfs.target zfs-import-scan.service zfs-mount.service
-
-  - type: copy
-    from: builder
-    src: /tmp/bin/
-    dest: /usr/bin/
-
-  - type: copy
-    from: builder
-    src: /tmp/skel/
-    dest: /etc/skel/
-
   - type: fonts
     fonts:
       nerd-fonts:
         - VictorMono
         - JetBrainsMono
-
   - type: files
     files:
       - source: extras/aoccv6/
         destination: /tmp/
-
   - type: script
     scripts:
       - aoccv6.sh
-
   - type: files
     files:
       - source: usr/lib/bash/libflyline
@@ -186,17 +144,14 @@ modules:
     files:
       - source: etc/profile.d/flyline.sh
         destination: /etc/profile.d/
-
   - type: files
     files:
       - source: etc/profile.d/locale.sh
         destination: /etc/profile.d/
-
   - type: files
     files:
       - source: etc/profile.d/aliases.sh
         destination: /etc/profile.d/
-
   - type: systemd
     system:
       enabled:
@@ -206,19 +161,14 @@ modules:
     user:
       enabled:
         - podman.socket
-
   - type: script
     scripts:
-      - bash-completion-helper.sh
       - annoyances.sh
-
   - type: containerfile
     snippets:
       - RUN dnf remove -y rpmfusion-free-release rpmfusion-nonfree-release && rm -f /etc/yum.repos.d/rpmfusion*.repo && dnf clean all
-
   - type: script
     scripts:
       - regenerateinitramfs.sh
-
   - type: wayblue-signing
     source: local
