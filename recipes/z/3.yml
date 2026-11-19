@@ -36,10 +36,6 @@ modules:
       packages:
         - wtype
         - voxtype
-        - fontconfig-devel 
-        - libxkbcommon-devel
-        - libxcb-devel
-        - wayland-devel
         - loupe
         - clapper
         - mgba-qt
