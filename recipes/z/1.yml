@@ -8,10 +8,21 @@ stages:
     modules:
       - type: containerfile
         snippets:
-          - RUN dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-          - RUN dnf install -y https://zfsonlinux.org/fedora/zfs-release-3-1.fc44.noarch.rpm
-          - RUN export KVER=$(cd /usr/lib/modules && echo *) && dnf install -y akmod-nvidia zfs-dkms
-          - RUN export KVER=$(cd /usr/lib/modules && echo *) && akmods --kernels $KVER --force && dkms autoinstall -k $KVER && dnf clean all
+          - |
+            dnf install -y \
+              https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
+              https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm \
+              https://zfsonlinux.org/fedora/zfs-release-3-1.fc44.noarch.rpm && \
+            dnf config-manager setopt \
+              "rpmfusion-free*.includepkgs=*nvidia*,*vaapi*" \
+              "rpmfusion-free*.excludepkgs=ffmpeg*,libav*" \
+              "rpmfusion-nonfree*.includepkgs=*nvidia*,*cuda*" \
+              "rpmfusion-nonfree*.excludepkgs=ffmpeg*,libav*" && \
+            KVER=$(cd /usr/lib/modules && echo *) && \
+            dnf install -y akmod-nvidia zfs-dkms && \
+            akmods --kernels "$KVER" --force && \
+            dkms autoinstall -k "$KVER" && \
+            dnf clean all
   - name: builder
     from: quay.io/fedora/fedora:44
     modules:
@@ -30,13 +41,15 @@ stages:
             bash /tmp/golang-44.sh
             bash /tmp/tidemail.sh
             bash /tmp/corgi.sh
+            bash /tmp/kb.sh
+            bash /tmp/llmv.sh
             bash /tmp/pi-bolt.sh
 modules:
   - type: os-release
     properties:
       NAME: "Zetta"
-      PRETTY_NAME: "Zetta a01 by Celestial Uprising"
-      VERSION_CODENAME: "birbs"
+      PRETTY_NAME: "Zetta a05 by Celestial Uprising"
+      VERSION_CODENAME: "raven"
       ID_LIKE: fedora
       HOME_URL: "https://github.com/celestial-uprising/zetta/"
       BUG_REPORT_URL: "https://github.com/celestial-uprising/zetta/"
@@ -56,8 +69,16 @@ modules:
       - nvidia-drm.modeset=1
   - type: containerfile
     snippets:
-      - RUN dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-      - RUN dnf install -y https://zfsonlinux.org/fedora/zfs-release-3-1.fc44.noarch.rpm
+      - |
+        dnf install -y \
+          https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
+          https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm \
+          https://zfsonlinux.org/fedora/zfs-release-3-1.fc44.noarch.rpm && \
+        dnf config-manager setopt \
+          "rpmfusion-free*.includepkgs=*nvidia*,*vaapi*" \
+          "rpmfusion-free*.excludepkgs=ffmpeg*,libav*" \
+          "rpmfusion-nonfree*.includepkgs=*nvidia*,*cuda*" \
+          "rpmfusion-nonfree*.excludepkgs=ffmpeg*,libav*"
   - type: dnf
     install:
       install-weak-deps: false
@@ -68,6 +89,8 @@ modules:
         - xorg-x11-drv-nvidia-cuda
         - libva-nvidia-driver
         - zfs
+        - mpv
+        - chromium-headless
         - distcc
         - ccache
         - smartmontools
@@ -78,24 +101,15 @@ modules:
         - rizin
         - gh
         - firewalld
-        - nftables
         - zram-generator-defaults
         - glibc-langpack-en
         - podman-compose
         - podman-docker
         - podman-remote
         - buildah
-        - skopeo
-        - crun
-        - cryptsetup
-        - lvm2
-        - btrfs-progs
-        - bind-utils
         - sysstat
         - strace
         - tcpdump
-        - amd-ucode-firmware
-        - microcode_ctl
         - whois
         - distrobox
         - sshfs
@@ -192,6 +206,16 @@ modules:
         - podman.socket
   - type: script
     scripts:
+      - bash-completion-helper.sh
       - annoyances.sh
+  - type: containerfile
+    snippets:
+      - |
+        dnf remove -y rpmfusion-free-release rpmfusion-nonfree-release && \
+        rm -f /etc/yum.repos.d/rpmfusion*.repo && \
+        dnf clean all
+  - type: script
+    scripts:
       - regenerateinitramfs.sh
-  - type: signing
+  - type: wayblue-signing
+    source: local

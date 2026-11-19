@@ -1,0 +1,7 @@
+# written by rhun when it installed this folder
+source = github
+repository = rhun-editor/markdown
+tag = v0.1.0
+sha256 = 31757539a2531822322339b2debc45739fbc93de8c78c857357603b15c76f984
+reviewed = yes
+installed = 2026-11-18T06:26:33Z

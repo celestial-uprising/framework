@@ -23,7 +23,6 @@ cargo binstall --root /tmp --no-confirm \
 	upmd \
 	herdr \
 	llmfit \
-	splashboard \
 	xfr \
 	eilmeldung \
 	swaptop \

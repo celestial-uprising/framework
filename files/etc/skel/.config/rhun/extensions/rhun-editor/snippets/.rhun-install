@@ -1,0 +1,7 @@
+# written by rhun when it installed this folder
+source = github
+repository = rhun-editor/snippets
+tag = v0.3.0
+sha256 = 143f7367bb7e633beae5f07665b4832b3f8e13ff7d9a7a41c5aa4a0b08c371a9
+reviewed = yes
+installed = 2026-11-18T06:25:35Z

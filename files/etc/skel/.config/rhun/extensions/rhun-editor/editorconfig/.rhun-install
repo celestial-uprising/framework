@@ -1,0 +1,7 @@
+# written by rhun when it installed this folder
+source = github
+repository = rhun-editor/editorconfig
+tag = v0.2.1
+sha256 = 2a4a377f635dd43c70311fdc5f113844a005bd7ef752efca113d3adf2e2d2f96
+reviewed = yes
+installed = 2026-11-18T06:25:35Z

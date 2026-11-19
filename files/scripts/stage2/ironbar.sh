@@ -5,9 +5,17 @@ mkdir -p /tmp/bin
 
 dnf5 install -y \
 	cargo \
-	curl \
-	tar 
+	rustc \
+	pkg-config \
+	make \
+	gcc \
+	gtk4-devel \
+	gtk4-layer-shell-devel \
+	dbus-devel \
+	pkgconf-pkg-config \
+	pulseaudio-libs-devel \
+	libinput-devel \
+	libevdev-devel \
+	luajit-devel
 
-curl -fsSL https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-x86_64-unknown-linux-musl.tgz | tar -xz -C /usr/bin cargo-binstall
-
-cargo binstall --root /tmp ironbar
+cargo install --root /tmp ironbar

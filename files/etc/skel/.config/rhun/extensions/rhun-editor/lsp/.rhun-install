@@ -1,0 +1,7 @@
+# written by rhun when it installed this folder
+source = github
+repository = rhun-editor/lsp
+tag = v0.3.5
+sha256 = 39517721acc1c53046a783a8cd995190d8c78be375cf0584fda09d2773e85f12
+reviewed = yes
+installed = 2026-11-18T06:25:35Z

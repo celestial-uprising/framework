@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="380" height="290" viewBox="15 60 380 290">
+  <!-- KittyBrowser: a glass cat head holding a planet, with a tilted ring.
+       src/splash.rs sends a light round the ring and needs its ellipse
+       (centre 197,212, half widths 152 and 38, tilted -15 degrees), the
+       sphere (centre 205,225, radius 100) and this viewBox's origin. -->
+  <defs>
+    <linearGradient id="shell" gradientUnits="userSpaceOnUse" x1="95" y1="0" x2="315" y2="0">
+      <stop offset="0" stop-color="#d257ff"/>
+      <stop offset="0.45" stop-color="#8a6bff"/>
+      <stop offset="1" stop-color="#22b6ff"/>
+    </linearGradient>
+    <linearGradient id="earL" x1="0" y1="0" x2="0.2" y2="1">
+      <stop offset="0" stop-color="#ffeaff"/>
+      <stop offset="0.35" stop-color="#d878ff" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#7a2dd0" stop-opacity="0.55"/>
+    </linearGradient>
+    <linearGradient id="earR" x1="0" y1="0" x2="-0.2" y2="1">
+      <stop offset="0" stop-color="#e8fbff"/>
+      <stop offset="0.35" stop-color="#48c4ff" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#1f62e0" stop-opacity="0.55"/>
+    </linearGradient>
+    <radialGradient id="glass" gradientUnits="userSpaceOnUse" cx="205" cy="215" r="125">
+      <stop offset="0.6" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.55"/>
+    </radialGradient>
+    <radialGradient id="sphere" gradientUnits="userSpaceOnUse" cx="190" cy="200" r="110">
+      <stop offset="0" stop-color="#141a5c"/>
+      <stop offset="0.55" stop-color="#0a0c40"/>
+      <stop offset="0.85" stop-color="#2a228c"/>
+      <stop offset="1" stop-color="#4a40d0"/>
+    </radialGradient>
+    <radialGradient id="cyan" gradientUnits="userSpaceOnUse" cx="275" cy="215" r="90">
+      <stop offset="0" stop-color="#2fb8ff" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#2fb8ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="violet" gradientUnits="userSpaceOnUse" cx="140" cy="285" r="80">
+      <stop offset="0" stop-color="#b04dff" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#b04dff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="rim" gradientUnits="userSpaceOnUse" x1="105" y1="0" x2="305" y2="0">
+      <stop offset="0" stop-color="#c46bff"/>
+      <stop offset="0.5" stop-color="#6f74ff"/>
+      <stop offset="1" stop-color="#36c3ff"/>
+    </linearGradient>
+    <linearGradient id="ring" gradientUnits="userSpaceOnUse" x1="50" y1="0" x2="343" y2="0">
+      <stop offset="0" stop-color="#c25cff"/>
+      <stop offset="0.15" stop-color="#ffc8ff"/>
+      <stop offset="0.45" stop-color="#ffffff"/>
+      <stop offset="0.7" stop-color="#a6eaff"/>
+      <stop offset="1" stop-color="#26b8ff"/>
+    </linearGradient>
+    <filter id="bloom" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="9" result="wide"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="near"/>
+      <feMerge><feMergeNode in="wide"/><feMergeNode in="near"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.5"/>
+    </filter>
+    <!-- The near half of the ring, fading in across the ends so it joins the
+         far half without a seam. In the ring's own (rotated) coordinates. -->
+    <linearGradient id="nearFade" gradientUnits="userSpaceOnUse" x1="0" y1="-14" x2="0" y2="14">
+      <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="1"/>
+    </linearGradient>
+    <mask id="near" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="-220" y="-80" width="440" height="160">
+      <rect x="-220" y="-80" width="440" height="160" fill="url(#nearFade)"/>
+    </mask>
+    <path id="head" d="M106 205 C103 160 103 112 110 98 C114 90 122 87 130 91 C150 101 168 114 180 128 A100 100 0 0 1 230 128 C242 114 260 101 280 91 C288 87 296 90 300 98 C307 112 307 160 304 205 A100 100 0 1 1 106 205 Z"/>
+  </defs>
+
+  <rect x="15" y="60" width="380" height="290" fill="#000"/>
+
+  <!-- The whole ring, behind everything: the planet hides its far half. -->
+  <g transform="translate(197 212) rotate(-15)" filter="url(#bloom)">
+    <ellipse rx="152" ry="38" fill="none" stroke="url(#ring)" stroke-width="13"/>
+  </g>
+
+  <!-- The planet, and the glass ears growing from it. -->
+  <circle cx="205" cy="225" r="100" fill="url(#sphere)"/>
+  <circle cx="205" cy="225" r="100" fill="url(#cyan)"/>
+  <circle cx="205" cy="225" r="100" fill="url(#violet)"/>
+  <path d="M106 205 C103 160 103 112 110 98 C114 90 122 87 130 91 C150 101 168 114 180 128 A100 100 0 0 0 106 205 Z" fill="url(#earL)"/>
+  <path d="M304 205 C307 160 307 112 300 98 C296 90 288 87 280 91 C260 101 242 114 230 128 A100 100 0 0 1 304 205 Z" fill="url(#earR)"/>
+  <use href="#head" fill="none" stroke="url(#shell)" stroke-width="4" filter="url(#bloom)"/>
+  <circle cx="205" cy="225" r="99" fill="none" stroke="url(#rim)" stroke-width="3" filter="url(#bloom)"/>
+  <path d="M128 175 A88 88 0 0 1 236 136" fill="none" stroke="#fff" stroke-opacity="0.5" stroke-width="2.5" stroke-linecap="round" filter="url(#soft)"/>
+
+  <!-- The near half of the ring, in front of the planet. -->
+  <g transform="translate(197 212) rotate(-15)" mask="url(#near)">
+    <ellipse rx="152" ry="38" fill="none" stroke="url(#ring)" stroke-width="19" filter="url(#bloom)"/>
+    <ellipse rx="152" ry="38" fill="none" stroke="#fff" stroke-opacity="0.8" stroke-width="7"/>
+  </g>
+</svg>

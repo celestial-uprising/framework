@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=LLM Visuals
+Exec=llm-visuals
+Icon=/usr/share/pixmaps/llmv.svg
+Terminal=true
+Categories=ConsoleOnly;
+Keywords=terminal;
+GenericName=live terminal dashboard for the LLM running on your machine

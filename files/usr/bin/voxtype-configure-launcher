@@ -1,0 +1,123 @@
+#!/bin/sh
+# voxtype-configure-launcher
+#
+# Open the available graphical settings frontend, or `voxtype configure`
+# in a terminal when no GUI is integrated. The terminal class is set to
+# `voxtype` so compositor rules (Hyprland windowrulev2,
+# Sway for_window, …) can float and size the window.
+#
+# Picked up by /usr/share/applications/voxtype-configure.desktop, which is
+# in turn surfaced in Walker, fuzzel, rofi, dmenu, KRunner, GNOME Activities.
+
+# Prefer an installed graphical settings frontend. The tray and desktop entry
+# deliberately share this resolver. Do not confuse the GTK OSD with settings.
+set -eu
+
+if [ -z "${WAYLAND_DISPLAY:-}${DISPLAY:-}" ]; then
+    printf '%s\n' 'voxtype-configure-launcher: no graphical session; run voxtype configure in your terminal' >&2
+    exit 1
+fi
+
+# Hold the lock across the terminal's lifetime. Quickshell's open IPC is itself
+# idempotent. Repeated concurrent requests must not spawn several terminals.
+if [ "${1:-}" != --locked ] && [ -n "${XDG_RUNTIME_DIR:-}" ] && command -v flock >/dev/null 2>&1; then
+    exec flock -n -E 0 "$XDG_RUNTIME_DIR/voxtype-settings.lock" /bin/sh "$0" --locked
+fi
+
+# The integrated plugin is only available if its real IPC target responds.
+# `open`, not `toggle`, focuses/presents without closing an existing app.
+if command -v omarchy-shell >/dev/null 2>&1 && command -v timeout >/dev/null 2>&1; then
+    reply=$(timeout 3 omarchy-shell io.voxtype.settings open 2>/dev/null) || reply=
+    if [ "$reply" = ok ]; then exit 0; fi
+fi
+
+# A separately packaged graphical settings frontend (including GTK) advertises
+# itself through a real XDG desktop entry. gio implements desktop Exec quoting
+# and field-code expansion; never eval an Exec line. There is no built-in GTK
+# settings app today, and voxtype-osd-gtk4 must never be launched as one.
+if command -v gio >/dev/null 2>&1; then
+    data_dirs="${XDG_DATA_HOME:-$HOME/.local/share}:${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
+    old_ifs=$IFS
+    IFS=:
+    for base in $data_dirs; do
+        IFS=$old_ifs
+        for desktop in "$base"/applications/*voxtype*.desktop "$base"/applications/*Voxtype*.desktop; do
+            [ -f "$desktop" ] || continue
+            grep -q '^Type=Application' "$desktop" || continue
+            grep -q '^Categories=.*Settings' "$desktop" || continue
+            if grep -Eq '^(Hidden|Terminal)=true|^Exec=.*(voxtype-configure-launcher|voxtype-osd)' "$desktop"; then continue; fi
+            # Categories=Settings is the installed frontend's declaration;
+            # do not guess its toolkit or impose an invented binary name.
+            if gio launch "$desktop"; then exit 0; fi
+        done
+        IFS=:
+    done
+    IFS=$old_ifs
+fi
+
+# Order of preference. $TERMINAL wins if it's set and resolvable.
+candidates="${TERMINAL:-} ghostty alacritty kitty foot wezterm konsole gnome-terminal xterm xfce4-terminal"
+
+term=""
+for c in $candidates; do
+    [ -z "$c" ] && continue
+    if command -v "$c" >/dev/null 2>&1; then
+        term="$c"
+        break
+    fi
+done
+
+if [ -z "$term" ]; then
+    notify-send -a Voxtype "Voxtype Configuration" \
+        "No terminal emulator found. Install ghostty, alacritty, kitty, foot, wezterm, xterm or xfce4-terminal." \
+        2>/dev/null || true
+    echo "voxtype-configure-launcher: no terminal emulator found" >&2
+    exit 1
+fi
+
+# On Hyprland, register windowrules for our class so the configure
+# terminal opens as a centered floating window instead of tiling. The
+# rules are keyed by class:^(voxtype)$ so they only match the launcher
+# window, not other terminal sessions. hyprctl returns non-zero on
+# non-Hyprland compositors and we silently ignore that.
+if command -v hyprctl >/dev/null 2>&1; then
+    hyprctl keyword windowrulev2 'float, class:^(voxtype)$' >/dev/null 2>&1 || true
+    hyprctl keyword windowrulev2 'size 1200 800, class:^(voxtype)$' >/dev/null 2>&1 || true
+    hyprctl keyword windowrulev2 'center, class:^(voxtype)$' >/dev/null 2>&1 || true
+fi
+
+# Each terminal flags the window class differently. Set class=voxtype
+# so the compositor rule we ship can match it.
+case "$term" in
+    ghostty)
+        exec "$term" --class=voxtype --command="voxtype configure"
+        ;;
+    alacritty)
+        exec "$term" --class voxtype -e voxtype configure
+        ;;
+    kitty)
+        exec "$term" --class voxtype voxtype configure
+        ;;
+    wezterm)
+        exec "$term" start --class voxtype -- voxtype configure
+        ;;
+    foot)
+        exec "$term" --app-id voxtype voxtype configure
+        ;;
+    xterm)
+        exec "$term" -class voxtype -e voxtype configure
+        ;;
+    konsole)
+        exec "$term" -e voxtype configure
+        ;;
+    gnome-terminal)
+        exec "$term" -- voxtype configure
+        ;;
+    xfce4-terminal)
+        exec "$term" --geometry 110x34 --command="voxtype configure"
+        ;;
+    *)
+        # Unknown but available terminal — fall through with -e.
+        exec "$term" -e voxtype configure
+        ;;
+esac

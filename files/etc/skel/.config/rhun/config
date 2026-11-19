@@ -1,0 +1,106 @@
+# rhun configuration. Also editable from Settings (ctrl+,).
+# Changes are picked up while rhun is running.
+
+[ui]
+follow_system = false
+theme = ristretto
+dark_theme = ristretto
+light_theme = ristretto
+scale = 1.0
+font_size = 12
+font = /usr/share/fonts/nerd-fonts/VictorMono/VictorMonoNerdFontMono-Oblique.ttf
+file_icons = 
+sidebar = true
+sidebar_width = 200
+agents_panel = false
+agents_width = 350
+tooltips = true
+auto_hide_scrollbars = true
+decorations = auto
+scroll_sensitivity = 1.0
+fast_scroll_sensitivity = 4.0
+
+[editor]
+font_size = 13
+font = /usr/share/fonts/nerd-fonts/VictorMono/VictorMonoNerdFontMono-Regular.ttf
+line_height = 1.5
+tab_width = 4
+insert_spaces = true
+line_numbers = true
+highlight_line = true
+animate_disk_changes = true
+match_brackets = true
+indent_guides = true
+word_wrap = true
+whitespace = false
+cursor_blink = true
+smooth_caret = true
+auto_pairs = true
+multi_cursor_paste = spread
+multi_cursor_modifier = alt
+scroll_past_end = true
+vim_mode = true
+complete_replace = false
+complete_commit_characters = true
+lightbulb = true
+format_on_type = true
+format_on_paste = false
+folding = true
+inline_complete = true
+inline_complete_delay = 300
+color_swatches = true
+highlight_occurrences = true
+code_lens = true
+inlay_hints = true
+semantic_highlighting = true
+
+[files]
+trim_trailing_whitespace = true
+final_newline = false
+format_on_save = false
+format_on_save_timeout = 2000
+code_actions_on_save = 
+code_actions_on_save_timeout = 2000
+restore_session = true
+restore_project = true
+exclude = .git node_modules target build .cache __pycache__ .venv .idea .DS_Store
+
+[agents]
+claude = false
+codex = false
+grok = false
+opencode = false
+
+[terminal]
+shell = /usr/bin/bash
+font_size = 11
+font = /usr/share/fonts/nerd-fonts/VictorMono/VictorMonoNerdFontMono-Regular.ttf
+line_height = 1.0
+scrollback = 100000
+height = 275
+
+[git]
+enabled = true
+commit_ai = off
+commit_model = qwen2.5-coder:1.5b
+
+[extensions]
+secrets = system
+
+[updates]
+check = false
+extensions = install
+
+[debug]
+show_on_start = true
+keys_in_terminal = true
+console_lines = 100000
+
+[remote]
+agent_binary = 
+
+[testing]
+gutter = true
+
+[keys]
+# ctrl+shift+d = duplicate_line

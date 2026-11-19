@@ -1,9 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=LazyJournal
-Exec=lazyjournal
-Icon=/usr/share/pixmaps/lazyjournal.png
-Terminal=true
-Categories=ConsoleOnly;
-Keywords=terminal;
-GenericName=convenient UI for journalctl

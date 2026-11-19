@@ -1,0 +1,7 @@
+# written by rhun when it installed this folder
+source = github
+repository = rhun-editor/debug
+tag = v0.1.1
+sha256 = 9ccbac3e850eab926a68946888c69496d3220c20d0f26bfb1fc30df0b54ea02f
+reviewed = yes
+installed = 2026-11-18T06:26:49Z

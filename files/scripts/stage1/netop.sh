@@ -11,5 +11,3 @@ dnf5 install -y \
 	libpcap-devel
 
 cargo install --root /tmp netop
-
-

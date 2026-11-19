@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <!-- Deep Cyberpunk Midnight Chassis -->
+    <linearGradient id="cyberBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#131126" />
+      <stop offset="100%" stop-color="#070612" />
+    </linearGradient>
+
+    <!-- Outer Neon Cyan to Hot Magenta Rim -->
+    <linearGradient id="neonRim" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f5ff" />
+      <stop offset="50%" stop-color="#ff007f" />
+      <stop offset="100%" stop-color="#00f5ff" />
+    </linearGradient>
+
+    <!-- Cyan Trace Gradient -->
+    <linearGradient id="cyanTrace" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f5ff" />
+      <stop offset="100%" stop-color="#3b82f6" />
+    </linearGradient>
+
+    <!-- Magenta Trace Gradient -->
+    <linearGradient id="pinkTrace" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff2a85" />
+      <stop offset="100%" stop-color="#a855f7" />
+    </linearGradient>
+
+    <!-- Core Energy Spark Gradient -->
+    <linearGradient id="coreSpark" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff007f" />
+      <stop offset="50%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#00f5ff" />
+    </linearGradient>
+
+    <!-- Subtle Neon Glow Filter -->
+    <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Outer Rounded Squircle Chassis -->
+  <rect x="3" y="3" width="58" height="58" rx="15" fill="url(#cyberBg)" stroke="url(#neonRim)" stroke-width="2.5" filter="url(#neonGlow)" />
+
+  <!-- Inner Recessed Bezel -->
+  <rect x="7" y="7" width="50" height="50" rx="11" fill="none" stroke="#ff007f" stroke-width="1" opacity="0.65" />
+
+  <!-- Corner Brass/Gold Mounting Rivets -->
+  <g fill="#090814" stroke="#f59e0b" stroke-width="1.5">
+    <circle cx="12" cy="12" r="2.3" />
+    <circle cx="52" cy="12" r="2.3" />
+    <circle cx="12" cy="52" r="2.3" />
+    <circle cx="52" cy="52" r="2.3" />
+  </g>
+
+  <!-- Glowing Neon PCB Traces & Vias -->
+  <g fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" filter="url(#neonGlow)">
+    <!-- Cyan Traces (Top-Left & Bottom-Right) -->
+    <path d="M 14 23 L 21 23 L 25 27" stroke="url(#cyanTrace)" />
+    <path d="M 24 13 L 24 19 L 28 23" stroke="url(#cyanTrace)" />
+    <path d="M 14 37 L 19 37 L 24 32" stroke="url(#cyanTrace)" />
+    <path d="M 41 37 L 45 41 L 50 41" stroke="url(#cyanTrace)" />
+    <path d="M 36 41 L 36 47 L 40 51" stroke="url(#cyanTrace)" />
+
+    <!-- Magenta Traces (Top-Right & Bottom-Left) -->
+    <path d="M 40 13 L 40 19 L 36 23" stroke="url(#pinkTrace)" />
+    <path d="M 50 26 L 44 26 L 40 30" stroke="url(#pinkTrace)" />
+    <path d="M 28 41 L 28 47 L 24 51" stroke="url(#pinkTrace)" />
+    <path d="M 15 44 L 20 44 L 24 40" stroke="url(#pinkTrace)" />
+    <path d="M 49 33 L 43 33 L 40 36" stroke="url(#pinkTrace)" />
+  </g>
+
+  <!-- Trace Endpoint Via Rings -->
+  <g fill="#090814" stroke-width="1.5">
+    <circle cx="13" cy="23" r="1.5" stroke="#00f5ff" />
+    <circle cx="24" cy="12" r="1.5" stroke="#00f5ff" />
+    <circle cx="51" cy="41" r="1.5" stroke="#00f5ff" />
+    <circle cx="40" cy="12" r="1.5" stroke="#ff2a85" />
+    <circle cx="51" cy="26" r="1.5" stroke="#ff2a85" />
+    <circle cx="24" cy="52" r="1.5" stroke="#ff2a85" />
+  </g>
+
+  <!-- Central Processor / Die Package -->
+  <rect x="22" y="22" width="20" height="20" rx="4" fill="#0d0b1e" stroke="#64748b" stroke-width="1.5" />
+
+  <!-- Metallic IC Pins -->
+  <g fill="#94a3b8">
+    <!-- Top & Bottom Pins -->
+    <rect x="26" y="19.5" width="2" height="2.5" rx="0.5" />
+    <rect x="31" y="19.5" width="2" height="2.5" rx="0.5" />
+    <rect x="36" y="19.5" width="2" height="2.5" rx="0.5" />
+    <rect x="26" y="42" width="2" height="2.5" rx="0.5" />
+    <rect x="31" y="42" width="2" height="2.5" rx="0.5" />
+    <rect x="36" y="42" width="2" height="2.5" rx="0.5" />
+    <!-- Left & Right Pins -->
+    <rect x="19.5" y="26" width="2.5" height="2" rx="0.5" />
+    <rect x="19.5" y="31" width="2.5" height="2" rx="0.5" />
+    <rect x="19.5" y="36" width="2.5" height="2" rx="0.5" />
+    <rect x="42" y="26" width="2.5" height="2" rx="0.5" />
+    <rect x="42" y="31" width="2.5" height="2" rx="0.5" />
+    <rect x="42" y="36" width="2.5" height="2" rx="0.5" />
+  </g>
+
+  <!-- Core Overclocked Lightning / Energy Surge -->
+  <circle cx="32" cy="32" r="5" fill="#ff007f" opacity="0.35" filter="url(#neonGlow)" />
+  <path d="M 35.5 24.5 L 28.5 32 L 32.5 32 L 28.5 39.5 L 36.5 31.5 L 32.5 31.5 Z" fill="url(#coreSpark)" filter="url(#neonGlow)" />
+</svg>

@@ -1,0 +1,85 @@
+engine = "whisper"
+state_file = "auto"
+
+[hotkey]
+# Enable this if you're on X11, using a compositor without key-release support,
+enabled = false
+key = "SCROLLLOCK"
+modifiers = []
+# - push_to_talk:toggle 
+# mode = "push_to_talk"
+
+# [hotkey.profile_modifiers]
+# LEFTSHIFT = "translate"   # Shift+hotkey activates [profiles.translate]
+# RIGHTALT = "formal"       # RightAlt+hotkey activates [profiles.formal]
+
+[audio]
+# List devices with: voxtype info devices
+device = "default"
+sample_rate = 16000
+max_duration_secs = 60
+pause_media = true
+
+[audio.feedback]
+enabled = true
+theme = "mechanical"
+# volume = 0.7
+
+[whisper]
+model = "/etc/voxtype/whisper/ggml-base.en.bin"
+backend = "vulkan"
+# - local:remote
+mode = "local"
+language = "en"
+translate = true
+on_demand_loading = false
+# gpu_isolation = true
+# context_window_optimization = true
+
+[output]
+fallback_to_clipboard = true
+pre_type_delay_ms = 85
+type_delay_ms = 0
+# - type:clipboard:paste
+mode = "type"
+# -  paste_keys = "shift+insert" : paste_keys = "ctrl+v" : paste_keys = "ctrl+shift+v"
+paste_keys = "shift+insert"
+
+[output.notification]
+on_recording_start = true
+on_recording_stop = true
+on_transcription = true
+on_no_speech = true
+show_edits = true
+
+# [output.post_process]
+# command = "ollama run llama3.2:1b 'Clean up this dictation. Fix grammar, remove filler words. Output only the cleaned text:'"
+# timeout_ms = 30000  # 30 second timeout (generous for LLM)
+
+[text]
+spoken_punctuation = true
+filter_filler_words = true
+collapse_restarts = false
+repair_sentence_breaks = true
+format_numbers = true
+# replacements = { "vox type" = "voxtype" }
+
+[osd]
+frontend = "native"
+
+[vad]
+enabled = true
+backend = "energy"
+threshold = 0.5
+min_speech_duration_ms = 100
+
+[status]
+icon_theme = "nerd-font"
+
+[tray]
+enabled = true
+# [status.icons]
+# idle = "🎙️"
+# recording = "🎤"
+# transcribing = "⏳"
+# stopped = ""

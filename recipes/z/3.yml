@@ -30,10 +30,13 @@ modules:
   - type: dnf
     repos:
       copr:
+        - scottames/voxtype
         - archjun/mgba
     install:
       install-weak-deps: false
       packages:
+        - wtype
+        - voxtype
         - fontconfig-devel 
         - libxkbcommon-devel
         - libxcb-devel
@@ -127,4 +130,5 @@ modules:
     scripts:
       - perm-fix.sh
       - regenerateinitramfs.sh
-  - type: signing
+  - type: wayblue-signing
+    source: local

@@ -1,0 +1,7 @@
+# written by rhun when it installed this folder
+source = github
+repository = rhun-editor/essentials
+tag = v0.1.0
+sha256 = 2ea1189bf65ed7980c5c596e126fd2c2fd51115c86b7a2328c0fac5b055f5d33
+reviewed = yes
+installed = 2026-11-18T06:25:35Z

@@ -22,7 +22,6 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - y/1.yml
           - z/1.yml
     steps:
       - name: Building Stage 1 Images
@@ -45,8 +44,6 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - y/2.yml
-          - y/3.yml
           - z/2.yml
           - z/3.yml
     steps:
@@ -69,7 +66,6 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - y/4.yml
           - z/4.yml
     steps:
       - name: Building Stage 3 Images

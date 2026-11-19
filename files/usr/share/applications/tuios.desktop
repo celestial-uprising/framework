@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=tuiOS
+Exec=tuios
+Icon=/usr/share/pixmaps/tuios.svg
+Terminal=true
+Categories=ConsoleOnly;
+Keywords=terminal;
+GenericName=workspace manager who knows where your agents are

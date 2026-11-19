@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=KittyBrowser
+Exec=kb
+Icon=/usr/share/pixmaps/kb.svg
+Terminal=true
+Categories=ConsoleOnly;
+Keywords=terminal;
+GenericName=terminal-native, modern web-browser

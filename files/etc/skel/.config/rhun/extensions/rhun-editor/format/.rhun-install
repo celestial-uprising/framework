@@ -1,0 +1,7 @@
+# written by rhun when it installed this folder
+source = github
+repository = rhun-editor/format
+tag = v0.3.0
+sha256 = 3bec1e4c644263f005d2af277b04c65eea6986185f3f2babeba7421ea5f526ed
+reviewed = yes
+installed = 2026-11-18T06:25:35Z
